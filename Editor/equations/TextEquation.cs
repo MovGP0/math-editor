@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
-using System.Globalization;
 using System.Xml.Linq;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
