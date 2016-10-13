@@ -117,9 +117,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Microsoft_Windows_Themes:ListBoxChrome x:Name="Bd" BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="true">
+                    <Border x:Name="Bd" BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="true">
                         <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                    </Microsoft_Windows_Themes:ListBoxChrome>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
