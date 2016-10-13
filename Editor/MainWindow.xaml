@@ -60,7 +60,6 @@
                         <MenuItem Header="_TIFF" Click="exportMenuItem_Click" Tag="tif"/>
                         <MenuItem Header="_WMP" Click="exportMenuItem_Click"  Tag="wdp"/>
                     </MenuItem>
-                    <!--<MenuItem x:Name="printMenuItem" Header="_Print"    Command="Print"/>-->
                     <MenuItem x:Name="exitMenuItem" Header="E_xit"  Command="Close"/>
                 </MenuItem>
                 <MenuItem x:Name="editMenuItem" Header="_Edit">
@@ -97,7 +96,6 @@
                 <MenuItem x:Name="helpMenuItem" Header="_Help">
                     <MenuItem x:Name="contentsMenuItem" Header="_Contents" Click="contentsMenuItem_Click"/>
                     <MenuItem x:Name="fbMenuItem" Header="_Facebook Page" Click="fbMenuItem_Click"/>
-                    <!--<MenuItem x:Name="videoMenuItem" Header="_Video (YouTube)" Click="videoMenuItem_Click"></MenuItem>-->
                     <Separator />
                     <MenuItem x:Name="aboutMenuItem" Header="_About" Click="aboutMenuItem_Click"/>
                 </MenuItem>
@@ -106,39 +104,19 @@
         <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="0,2,0,4">
             <ToolBarTray  IsLocked="True">
                 <ToolBar Band="0" BandIndex="1"  Height="30" Loaded="ToolBar_Loaded">
-                    <Button x:Name="saveButton" Command="Save" ToolTip="Save"  ToolTipService.ShowOnDisabled="True">
-                        <Image Source="images\gui\save.png" />
-                    </Button>
-                    <Button x:Name="saveAsButton" Command="SaveAs" ToolTip="Save As"  ToolTipService.ShowOnDisabled="True">
-                        <Image Source="images\gui\saveas.png" />
-                    </Button>
-                    <Button x:Name="openButton"  Command="Open" ToolTip="Open"  ToolTipService.ShowOnDisabled="True">
-                        <Image Source="images\gui\open.png" />
-                    </Button>
+                    <Button x:Name="saveButton" Command="Save" ToolTip="Save"  ToolTipService.ShowOnDisabled="True" Style="{StaticResource SaveButton}" />
+                    <Button x:Name="saveAsButton" Command="SaveAs" ToolTip="Save As"  ToolTipService.ShowOnDisabled="True" Style="{StaticResource SaveAsButton}" />
+                    <Button x:Name="openButton" Command="Open" ToolTip="Open" ToolTipService.ShowOnDisabled="True" Style="{StaticResource OpenButton}" />
                     <Separator />
-                    <Button x:Name="undoButton" Command="Undo" ToolTip="Undo" IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <editor:AutoGreyableImage Source="images\gui\undo.png" />
-                    </Button>
-                    <Button x:Name="redoButton" Command="Redo" ToolTip="Redo"  IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <editor:AutoGreyableImage Source="images\gui\redo.png"/>
-                    </Button>
+                    <Button x:Name="undoButton" Command="Undo" ToolTip="Undo" IsEnabled="False" ToolTipService.ShowOnDisabled="True" Style="{StaticResource UndoButton}" />
+                    <Button x:Name="redoButton" Command="Redo" ToolTip="Redo" IsEnabled="False" ToolTipService.ShowOnDisabled="True" Style="{StaticResource RedoButton}" />
                     <Separator/>
-                    <Button x:Name="zoomoutButton" Command="DecreaseZoom" ToolTip="Zoom out" ToolTipService.ShowOnDisabled="True">
-                        <editor:AutoGreyableImage Source="images\gui\zoomout.png"/>
-                    </Button>
-                    <Button x:Name="zoominButton" Command="IncreaseZoom" ToolTip="Zoom in" ToolTipService.ShowOnDisabled="True">
-                        <editor:AutoGreyableImage Source="images\gui\zoomin.png" />
-                    </Button>
+                    <Button x:Name="zoomoutButton" Command="DecreaseZoom" ToolTip="Zoom out" ToolTipService.ShowOnDisabled="True" Style="{StaticResource ZoomoutButton}" />
+                    <Button x:Name="zoominButton" Command="IncreaseZoom" ToolTip="Zoom in" ToolTipService.ShowOnDisabled="True" Style="{StaticResource ZoominButton}" />
                     <Separator />
-                    <Button x:Name="cutButton" Command="Cut" ToolTip="Cut" IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <editor:AutoGreyableImage Source="images\gui\cut.png" />
-                    </Button>
-                    <Button x:Name="copyButton" Command="Copy" ToolTip="Copy" IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <editor:AutoGreyableImage Source="images\gui\copy.png"/>
-                    </Button>
-                    <Button x:Name="pasteButton" Command="Paste" ToolTip="Paste" ToolTipService.ShowOnDisabled="True">
-                        <Image Source="images\gui\paste.png"/>
-                    </Button>
+                    <Button x:Name="cutButton" Command="Cut" ToolTip="Cut" IsEnabled="False"  ToolTipService.ShowOnDisabled="True" Style="{StaticResource CutButton}" />
+                    <Button x:Name="copyButton" Command="Copy" ToolTip="Copy" IsEnabled="False"  ToolTipService.ShowOnDisabled="True" Style="{StaticResource CopyButton}" />
+                    <Button x:Name="pasteButton" Command="Paste" ToolTip="Paste" ToolTipService.ShowOnDisabled="True" Style="{StaticResource PasteButton}" />
                     <Separator />
                     <ComboBox Name="equationFontCombo" Width="100" DropDownClosed="EquationFontCombo_DropDownClosed" SelectedIndex="0">
                         <ComboBoxItem Tag="STIXGeneral">STIX</ComboBoxItem>
@@ -169,7 +147,6 @@
                     <ToggleButton x:Name="boldToggleButton" IsThreeState="False" ToolTip="Bold" IsChecked="{Binding Path=InputBold}">
                         <Image Source="images\gui\bold.png" />
                     </ToggleButton>
-                    <!--<ToggleButton IsEnabled="{Binding Path=EditorMode, Converter={StaticResource editorModeToBoolconverter}}" x:Name="italicToggleButton" IsThreeState="False" ToolTip="Italic" IsChecked="{Binding Path=InputItalic}">-->
                     <ToggleButton x:Name="italicToggleButton" IsThreeState="False" ToolTip="Italic" IsChecked="{Binding Path=InputItalic}">
                         <Image Source="images\gui\italic.png" />
                     </ToggleButton>

@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrowType.cs" />
-    <Compile Include="AutoGreyableImage.cs" />
     <Compile Include="BoxType.cs" />
     <Compile Include="BracketSignType.cs" />
     <Compile Include="Caret.cs" />
@@ -64,6 +63,8 @@
     <Compile Include="CommandType.cs" />
     <Compile Include="FontFactory.cs" />
     <Compile Include="FontType.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Shaders\GrayscaleEffect.cs" />
     <Compile Include="HAlignment.cs" />
     <Compile Include="HorizontalBracketSignType.cs" />
     <Compile Include="IntegralType.cs" />
@@ -78,6 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Development.snk" />
+    <None Include="Shaders\Build-Shader.cmd" />
+    <Resource Include="Shaders\GrayscaleEffect.ps" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\GrayscaleEffect.hlsl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

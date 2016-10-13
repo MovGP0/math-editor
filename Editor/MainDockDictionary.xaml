@@ -1,0 +1,219 @@
+<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	xmlns:local="clr-namespace:Editor"
+	xmlns:c="clr-namespace:Editor;assembly=Editor.Common">
+    <Style x:Key="UndoButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\undo.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\undo.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="OpenButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\open.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\open.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="RedoButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\redo.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\redo.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ZoomoutButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\zoomout.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\zoomout.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ZoominButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\zoomin.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\zoomin.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CutButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\cut.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\cut.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CopyButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\copy.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\copy.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PasteButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\paste.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\paste.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SaveAsButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\saveas.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\saveas.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SaveButton" TargetType="Button">
+        <Setter Property="Content">
+            <Setter.Value>
+                <Image Source="images\gui\save.png" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="images\gui\save.png">
+                            <Image.Effect>
+                                <c:GrayscaleEffect />
+                            </Image.Effect>
+                        </Image>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
