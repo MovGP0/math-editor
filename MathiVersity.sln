@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Common", "Editor.Common\Editor.Common.csproj", "{9C3A4FD4-6043-4A64-B00C-98ABFDCFDB68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Equations", "Editor.Equations\Editor.Equations.csproj", "{590AE26D-3ACA-422D-B3F3-7BC11408853B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,18 @@ Global
 		{9C3A4FD4-6043-4A64-B00C-98ABFDCFDB68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9C3A4FD4-6043-4A64-B00C-98ABFDCFDB68}.Release|x86.ActiveCfg = Release|Any CPU
 		{9C3A4FD4-6043-4A64-B00C-98ABFDCFDB68}.Release|x86.Build.0 = Release|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Debug|x86.Build.0 = Debug|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Release|x86.ActiveCfg = Release|Any CPU
+		{590AE26D-3ACA-422D-B3F3-7BC11408853B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

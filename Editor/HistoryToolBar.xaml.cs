@@ -25,7 +25,7 @@ namespace Editor
             if (data.Length > 0)
             {
                 string[] list = data.Split(',');
-                foreach (var s in list)
+                foreach (var s in list.Where(s => !string.IsNullOrEmpty(s)))
                 {
                     recentList.Add(s);
                     usedCount.Add(s, 0);

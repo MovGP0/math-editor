@@ -15,7 +15,7 @@ namespace Editor
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, System.Windows.Forms.IWin32Window, INotifyPropertyChanged
+    public partial class MainWindow : Window, System.Windows.Forms.IWin32Window, INotifyPropertyChanged, IMainWindow
     {
         public event PropertyChangedEventHandler PropertyChanged = (x, y) => { };
         string version = Assembly.GetEntryAssembly().GetName().Version.ToString();
@@ -789,24 +789,6 @@ namespace Editor
             Window settingsWindow = new SettingsWindow();
             settingsWindow.Owner = this;
             settingsWindow.Show();
-        }
-    }
-    public static class StatusBarHelper
-    {
-        static MainWindow window = null;
-        public static void Init(MainWindow _window)
-        {
-            window = _window;
-        }
-
-        public static void PrintStatusMessage(string message)
-        {
-            window.SetStatusBarMessage(message);
-        }
-
-        public static void ShowCoordinates(string message)
-        {
-            window.ShowCoordinates(message);
         }
     }
 }

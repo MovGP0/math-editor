@@ -31,7 +31,7 @@ namespace Editor
                 }
                 var fileMap = new ExeConfigurationFileMap { ExeConfigFilename = PublicConfigFilePath };
                 _config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
-                _appSection = _config.AppSettings;//(AppSettingsSection)config.GetSection("appSettings");
+                _appSection = _config.AppSettings;
                 if (!existed)
                 {
                     SetConfigurationValue(KeyName.Version, Assembly.GetEntryAssembly().GetName().Version.ToString());

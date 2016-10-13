@@ -73,6 +73,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignCompositeSymbol.cs" />
+    <Compile Include="StatusBarHelper.cs" />
     <Compile Include="VAlignment.cs" />
   </ItemGroup>
   <ItemGroup>

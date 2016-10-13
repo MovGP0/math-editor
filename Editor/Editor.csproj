@@ -97,72 +97,12 @@
     <Compile Include="CodepointWindow.xaml.cs">
       <DependentUpon>CodepointWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="equations\Common\CopyDataObject.cs" />
-    <Compile Include="equations\Common\FunctionNames.cs" />
-    <Compile Include="equations\Common\UndoRedo\DecorationAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\EquationRowFormatAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\ModeChangeAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowContainerFormatAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\TextFormatAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\UndoEventArgs.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowContainerRemoveAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowRemoveAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowContainerAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowContainerTextAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowContainerPasteAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\EquationRowPasteAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\RowAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\TextRemoveAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\TextAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\EquationAction.cs" />
-    <Compile Include="equations\Common\UndoRedo\ISupportsUndo.cs" />
-    <Compile Include="equations\Text\CharacterDecorationInfo.cs" />
-    <Compile Include="equations\Text\TextFormat.cs" />
     <Compile Include="EquationToolBar.xaml.cs">
       <DependentUpon>EquationToolBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="equations\Decorated\Arrow.cs" />
-    <Compile Include="equations\Bracket\DoubleArrowBarBracket.cs" />
-    <Compile Include="equations\Common\DrawingContextHelper.cs" />
-    <Compile Include="equations\Common\MathEditorData.cs" />
     <Compile Include="CustomZoomWindow.xaml.cs">
       <DependentUpon>CustomZoomWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="equations\Common\FormattedTextHelper.cs" />
-    <Compile Include="equations\Composite\CompositeBase.cs" />
-    <Compile Include="equations\Composite\CompositeFactory.cs" />
-    <Compile Include="equations\Composite\BigCompositeFactory.cs" />
-    <Compile Include="equations\Composite\CompositeSub.cs" />
-    <Compile Include="equations\Composite\CompositeSubSuper.cs" />
-    <Compile Include="equations\Composite\CompositeSuper.cs" />
-    <Compile Include="equations\Decorated\Decorated.cs" />
-    <Compile Include="equations\Decorated\DecorationDrawing.cs" />
-    <Compile Include="equations\Division\DivMathWithBottom.cs" />
-    <Compile Include="equations\Division\DivisionFactory.cs" />
-    <Compile Include="equations\Division\DivMath.cs" />
-    <Compile Include="equations\Division\DivMathInverted.cs" />
-    <Compile Include="equations\Division\DivMathSign.cs" />
-    <Compile Include="equations\Division\DivMathWithOuterBase.cs" />
-    <Compile Include="equations\Division\DivMathWithTop.cs" />
-    <Compile Include="equations\Division\DivisionsMisc.cs" />
-    <Compile Include="equations\Division\DivTriangle.cs" />
-    <Compile Include="equations\Division\DivTriangleSign.cs" />
-    <Compile Include="equations\Misc\Box.cs" />
-    <Compile Include="equations\Misc\MatrixEquation.cs" />
-    <Compile Include="equations\SignComposite\SignCompositeFactory.cs" />
-    <Compile Include="equations\SignComposite\SignSubSuper.cs" />
-    <Compile Include="equations\SignComposite\SignSimple.cs" />
-    <Compile Include="equations\SignComposite\SignBottom.cs" />
-    <Compile Include="equations\SignComposite\SignBottomTop.cs" />
-    <Compile Include="equations\SignComposite\StaticSign.cs" />
-    <Compile Include="equations\SignComposite\SignSub.cs" />
-    <Compile Include="equations\HorizontalBracket\BottomBracket.cs" />
-    <Compile Include="equations\HorizontalBracket\HorizontalBracket.cs" />
-    <Compile Include="equations\HorizontalBracket\TopBracket.cs" />
-    <Compile Include="equations\HorizontalBracket\HorizontalBracketSign.cs" />
-    <Compile Include="equations\SubSuper\SubSuperBase.cs" />
-    <Compile Include="equations\SubSuper\Super.cs" />
-    <Compile Include="equations\Text\TextManager.cs" />
     <Compile Include="HistoryToolBar.xaml.cs">
       <DependentUpon>HistoryToolBar.xaml</DependentUpon>
     </Compile>
@@ -221,44 +161,9 @@
     <Compile Include="ButtonPanel.xaml.cs">
       <DependentUpon>ButtonPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="equations\Common\UndoRedo\UndoManager.cs" />
     <Compile Include="EditorControl.xaml.cs">
       <DependentUpon>EditorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="equations\Bracket\Bracket.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="equations\Bracket\BracketSign.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="equations\Bracket\LeftBracket.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="equations\Bracket\LeftRightBracket.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="equations\Bracket\RightBracket.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="equations\Common\StaticText.cs" />
-    <Compile Include="equations\Composite\CompositeBottomTop.cs" />
-    <Compile Include="equations\Composite\CompositeBottom.cs" />
-    <Compile Include="equations\Composite\CompositeTop.cs" />
-    <Compile Include="equations\Division\DivBase.cs" />
-    <Compile Include="equations\Division\DivHorizontal.cs" />
-    <Compile Include="equations\Division\DivRegular.cs" />
-    <Compile Include="equations\Division\DivSlanted.cs" />
-    <Compile Include="equations\EquationRow.cs" />
-    <Compile Include="equations\EquationBase.cs" />
-    <Compile Include="equations\EquationContainer.cs" />
-    <Compile Include="equations\EquationRoot.cs" />
-    <Compile Include="equations\Root\nRoot.cs" />
-    <Compile Include="equations\Root\RadicalSign.cs" />
-    <Compile Include="equations\Root\SquareRoot.cs" />
-    <Compile Include="equations\RowContainer.cs" />
-    <Compile Include="equations\SubSuper\SubAndSuper.cs" />
-    <Compile Include="equations\SubSuper\Sub.cs" />
-    <Compile Include="equations\TextEquation.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -755,6 +660,10 @@
     <ProjectReference Include="..\Editor.Common\Editor.Common.csproj">
       <Project>{9c3a4fd4-6043-4a64-b00c-98abfdcfdb68}</Project>
       <Name>Editor.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editor.Equations\Editor.Equations.csproj">
+      <Project>{590AE26D-3ACA-422D-B3F3-7BC11408853B}</Project>
+      <Name>Editor.Equations</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
