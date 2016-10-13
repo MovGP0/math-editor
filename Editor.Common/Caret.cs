@@ -23,11 +23,11 @@ namespace Editor
         {
             if (Visible)
             {
-                dc.DrawLine(PenManager.GetPen(Math.Max(1, EditorControl.RootFontSize * .8 / EditorControl.rootFontBaseSize)), location, OtherPoint);
+                dc.DrawLine(PenManager.GetPen(Math.Max(1, EditorControlGlobal.RootFontSize * .8 / EditorControlGlobal.RootFontBaseSize)), location, OtherPoint);
             }
             else if (isHorizontal)
             {
-                dc.DrawLine(PenManager.GetWhitePen(Math.Max(1, EditorControl.RootFontSize *.8 / EditorControl.rootFontBaseSize)), location, OtherPoint);
+                dc.DrawLine(PenManager.GetWhitePen(Math.Max(1, EditorControlGlobal.RootFontSize *.8 / EditorControlGlobal.RootFontBaseSize)), location, OtherPoint);
             }
         }
 

@@ -13,7 +13,7 @@ namespace Editor
 {
     public enum KeyName { symbols, pass, loginName, version, default_font, default_mode, s01, s02, firstTime, checkUpdates };
 
-    static class ConfigManager
+    public static class ConfigManager
     {
         static string exePath = Assembly.GetEntryAssembly().Location;
         static string appVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();

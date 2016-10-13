@@ -4,7 +4,6 @@ using System.Windows.Media;
 
 namespace Editor
 {
-
     public static class PenManager
     {
         static Dictionary<double, Pen> bevelPens = new Dictionary<double, Pen>();

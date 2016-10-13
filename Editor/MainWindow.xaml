@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Editor"
         xmlns:trace="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        xmlns:editor="clr-namespace:Editor;assembly=Editor.Common"
         x:Class="Editor.MainWindow"        
         Title="MainWindow" 
         Height="550" Width="928"  
@@ -17,8 +18,8 @@
         WindowState="Maximized"
     >
     <Window.Resources>
-        <local:EditorModeToBoolConverter x:Key="editorModeToBoolconverter" />
-        <local:EditorModeToVisibilityConverter x:Key="editorModeToVisibilityconverter" />
+        <editor:EditorModeToBoolConverter x:Key="editorModeToBoolconverter" />
+        <editor:EditorModeToVisibilityConverter x:Key="editorModeToVisibilityconverter" />
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="Close"	        Executed="CloseCommandHandler"/>
@@ -116,24 +117,24 @@
                     </Button>
                     <Separator />
                     <Button x:Name="undoButton" Command="Undo" ToolTip="Undo" IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <local:AutoGreyableImage Source="images\gui\undo.png" />
+                        <editor:AutoGreyableImage Source="images\gui\undo.png" />
                     </Button>
                     <Button x:Name="redoButton" Command="Redo" ToolTip="Redo"  IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <local:AutoGreyableImage Source="images\gui\redo.png"/>
+                        <editor:AutoGreyableImage Source="images\gui\redo.png"/>
                     </Button>
                     <Separator/>
                     <Button x:Name="zoomoutButton" Command="DecreaseZoom" ToolTip="Zoom out" ToolTipService.ShowOnDisabled="True">
-                        <local:AutoGreyableImage Source="images\gui\zoomout.png"/>
+                        <editor:AutoGreyableImage Source="images\gui\zoomout.png"/>
                     </Button>
                     <Button x:Name="zoominButton" Command="IncreaseZoom" ToolTip="Zoom in" ToolTipService.ShowOnDisabled="True">
-                        <local:AutoGreyableImage Source="images\gui\zoomin.png" />
+                        <editor:AutoGreyableImage Source="images\gui\zoomin.png" />
                     </Button>
                     <Separator />
                     <Button x:Name="cutButton" Command="Cut" ToolTip="Cut" IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <local:AutoGreyableImage Source="images\gui\cut.png" />
+                        <editor:AutoGreyableImage Source="images\gui\cut.png" />
                     </Button>
                     <Button x:Name="copyButton" Command="Copy" ToolTip="Copy" IsEnabled="False"  ToolTipService.ShowOnDisabled="True">
-                        <local:AutoGreyableImage Source="images\gui\copy.png"/>
+                        <editor:AutoGreyableImage Source="images\gui\copy.png"/>
                     </Button>
                     <Button x:Name="pasteButton" Command="Paste" ToolTip="Paste" ToolTipService.ShowOnDisabled="True">
                         <Image Source="images\gui\paste.png"/>

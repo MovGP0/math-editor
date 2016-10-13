@@ -94,13 +94,9 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="common\AutoGrayableImage.cs" />
-    <Compile Include="common\Caret.cs" />
     <Compile Include="CodepointWindow.xaml.cs">
       <DependentUpon>CodepointWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="common\EditorModeToVisibilityConverter.cs" />
-    <Compile Include="common\EditorModeToBoolConverter.cs" />
     <Compile Include="equations\Common\CopyDataObject.cs" />
     <Compile Include="equations\Common\FunctionNames.cs" />
     <Compile Include="equations\Common\UndoRedo\DecorationAction.cs" />
@@ -133,7 +129,6 @@
       <DependentUpon>CustomZoomWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="equations\Common\FormattedTextHelper.cs" />
-    <Compile Include="equations\Common\PenManager.cs" />
     <Compile Include="equations\Composite\CompositeBase.cs" />
     <Compile Include="equations\Composite\CompositeFactory.cs" />
     <Compile Include="equations\Composite\BigCompositeFactory.cs" />
@@ -226,13 +221,10 @@
     <Compile Include="ButtonPanel.xaml.cs">
       <DependentUpon>ButtonPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="common\ConfigManager.cs" />
-    <Compile Include="common\MouseWheelGesture.cs" />
     <Compile Include="equations\Common\UndoRedo\UndoManager.cs" />
     <Compile Include="EditorControl.xaml.cs">
       <DependentUpon>EditorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="common\CommandDetails.cs" />
     <Compile Include="equations\Bracket\Bracket.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -256,7 +248,6 @@
     <Compile Include="equations\Division\DivHorizontal.cs" />
     <Compile Include="equations\Division\DivRegular.cs" />
     <Compile Include="equations\Division\DivSlanted.cs" />
-    <Compile Include="common\Enums.cs" />
     <Compile Include="equations\EquationRow.cs" />
     <Compile Include="equations\EquationBase.cs" />
     <Compile Include="equations\EquationContainer.cs" />
@@ -268,7 +259,6 @@
     <Compile Include="equations\SubSuper\SubAndSuper.cs" />
     <Compile Include="equations\SubSuper\Sub.cs" />
     <Compile Include="equations\TextEquation.cs" />
-    <Compile Include="common\FontFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -761,6 +751,13 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Editor.Common\Editor.Common.csproj">
+      <Project>{9c3a4fd4-6043-4a64-b00c-98abfdcfdb68}</Project>
+      <Name>Editor.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
