@@ -6,15 +6,15 @@ namespace Editor
 {
     public class Caret : FrameworkElement
     {
-        Point location;
+        private Point _location;
         public double CaretLength { get; set; }
-        bool isHorizontal = false;
+        private readonly bool _isHorizontal;
 
         public static readonly DependencyProperty VisibleProperty = DependencyProperty.Register("Visible", typeof(bool), typeof(Caret), new FrameworkPropertyMetadata(false /* defaultValue */, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Caret(bool isHorizontal)
         {
-            this.isHorizontal = isHorizontal;
+            _isHorizontal = isHorizontal;
             CaretLength = 18;
             Visible = true;
         }
@@ -23,35 +23,24 @@ namespace Editor
         {
             if (Visible)
             {
-                dc.DrawLine(PenManager.GetPen(Math.Max(1, EditorControlGlobal.RootFontSize * .8 / EditorControlGlobal.RootFontBaseSize)), location, OtherPoint);
+                dc.DrawLine(PenManager.GetPen(Math.Max(1, EditorControlGlobal.RootFontSize * .8 / EditorControlGlobal.RootFontBaseSize)), _location, OtherPoint);
             }
-            else if (isHorizontal)
+            else if (_isHorizontal)
             {
-                dc.DrawLine(PenManager.GetWhitePen(Math.Max(1, EditorControlGlobal.RootFontSize *.8 / EditorControlGlobal.RootFontBaseSize)), location, OtherPoint);
+                dc.DrawLine(PenManager.GetWhitePen(Math.Max(1, EditorControlGlobal.RootFontSize *.8 / EditorControlGlobal.RootFontBaseSize)), _location, OtherPoint);
             }
         }
 
-        Point OtherPoint
-        {
-            get
-            {
-                if (isHorizontal)
-                {
-                    return new Point(Left + CaretLength, Top);
-                }
-                else
-                {
-                    return new Point(Left, VerticalCaretBottom);
-                }
-            }
-        }
+        private Point OtherPoint => _isHorizontal 
+            ? new Point(Left + CaretLength, Top) 
+            : new Point(Left, VerticalCaretBottom);
 
         public void ToggleVisibility()
         {
             Dispatcher.Invoke(new Action(() => { Visible = !Visible; }));
         }
 
-        bool Visible
+        private bool Visible
         {
             get
             {
@@ -65,11 +54,11 @@ namespace Editor
 
         public Point Location
         {
-            get { return location; }
+            get { return _location; }
             set
             {
-                location.X = Math.Floor(value.X) + .5;
-                location.Y = Math.Floor(value.Y) + .5;
+                _location.X = Math.Floor(value.X) + .5;
+                _location.Y = Math.Floor(value.Y) + .5;
                 if (Visible)
                 {
                     Visible = false;
@@ -79,10 +68,10 @@ namespace Editor
 
         public double Left
         {
-            get { return location.X; }
+            get { return _location.X; }
             set
             {
-                location.X = Math.Floor(value) + .5;
+                _location.X = Math.Floor(value) + .5;
                 if (Visible)
                 {
                     Visible = false;
@@ -92,10 +81,10 @@ namespace Editor
 
         public double Top
         {
-            get { return location.Y; }
+            get { return _location.Y; }
             set
             {
-                location.Y = Math.Floor(value) + .5;
+                _location.Y = Math.Floor(value) + .5;
                 if (Visible)
                 {
                     Visible = false;
@@ -103,9 +92,6 @@ namespace Editor
             }
         }
 
-        public double VerticalCaretBottom
-        {
-            get { return location.Y + CaretLength; }
-        }
+        public double VerticalCaretBottom => _location.Y + CaretLength;
     }
 }

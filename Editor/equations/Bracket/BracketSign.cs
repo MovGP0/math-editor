@@ -63,36 +63,36 @@ namespace Editor
             if (Height < FontSize * 1.2)
             {
                 string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
-                FitSignToHeight(FontType.STIXGeneral, signText);
+                FitSignToHeight(FontType.StixGeneral, signText);
             }
             if (Height < FontSize * 1.5)
             {
                 string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
-                FitSignToHeight(FontType.STIXSizeOneSym, signText);
+                FitSignToHeight(FontType.StixSizeOneSym, signText);
             }
             else if (Height < FontSize * 1.9)
             {
                 string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
-                FitSignToHeight(FontType.STIXSizeTwoSym, signText);
+                FitSignToHeight(FontType.StixSizeTwoSym, signText);
             }
             else if (Height < FontSize * 2.5)
             {
                 string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
-                FitSignToHeight(FontType.STIXSizeThreeSym, signText);
+                FitSignToHeight(FontType.StixSizeThreeSym, signText);
             }
             else if (Height < BracketBreakLimit)
             {
                 string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
-                FitSignToHeight(FontType.STIXSizeFourSym, signText);
+                FitSignToHeight(FontType.StixSizeFourSym, signText);
             }
             else
             {
                 string text1 = SignType == BracketSignType.LeftRound ? "\u239b" : "\u239e";
                 string text2 = SignType == BracketSignType.LeftRound ? "\u239d" : "\u23a0";
                 string ext = SignType == BracketSignType.LeftRound ? "\u239c" : "\u239f";
-                signText = FontFactory.GetFormattedText(text1, FontType.STIXSizeOneSym, FontSize * .5);
-                signText2 = FontFactory.GetFormattedText(text2, FontType.STIXSizeOneSym, FontSize * .5);
-                extension = FontFactory.GetFormattedText(ext, FontType.STIXSizeOneSym, FontSize * .5);
+                signText = FontFactory.GetFormattedText(text1, FontType.StixSizeOneSym, FontSize * .5);
+                signText2 = FontFactory.GetFormattedText(text2, FontType.StixSizeOneSym, FontSize * .5);
+                extension = FontFactory.GetFormattedText(ext, FontType.StixSizeOneSym, FontSize * .5);
             }
         }
 
@@ -101,32 +101,32 @@ namespace Editor
             if (Height < FontSize * 1.5)
             {
                 string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
-                FitSignToHeight(FontType.STIXSizeOneSym, signText);
+                FitSignToHeight(FontType.StixSizeOneSym, signText);
             }
             else if (Height < FontSize * 1.9)
             {
                 string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
-                FitSignToHeight(FontType.STIXSizeTwoSym, signText);
+                FitSignToHeight(FontType.StixSizeTwoSym, signText);
             }
             else if (Height < FontSize * 2.5)
             {
                 string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
-                FitSignToHeight(FontType.STIXSizeThreeSym, signText);
+                FitSignToHeight(FontType.StixSizeThreeSym, signText);
             }
             else if (Height < BracketBreakLimit)
             {
                 string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
-                FitSignToHeight(FontType.STIXSizeFourSym, signText);
+                FitSignToHeight(FontType.StixSizeFourSym, signText);
             }
             else
             {
                 string text1 = SignType == BracketSignType.LeftCurly ? "\u23a7" : "\u23ab";
                 string midtex = SignType == BracketSignType.LeftCurly ? "\u23a8" : "\u23ac";
                 string text2 = SignType == BracketSignType.LeftCurly ? "\u23a9" : "\u23ad";
-                signText = FontFactory.GetFormattedText(text1, FontType.STIXSizeOneSym, FontSize * .5);
-                midText = FontFactory.GetFormattedText(midtex, FontType.STIXSizeOneSym, FontSize * .5);
-                extension = FontFactory.GetFormattedText("\u23AA", FontType.STIXSizeOneSym, FontSize * .5);
-                signText2 = FontFactory.GetFormattedText(text2, FontType.STIXSizeOneSym, FontSize * .5);
+                signText = FontFactory.GetFormattedText(text1, FontType.StixSizeOneSym, FontSize * .5);
+                midText = FontFactory.GetFormattedText(midtex, FontType.StixSizeOneSym, FontSize * .5);
+                extension = FontFactory.GetFormattedText("\u23AA", FontType.StixSizeOneSym, FontSize * .5);
+                signText2 = FontFactory.GetFormattedText(text2, FontType.StixSizeOneSym, FontSize * .5);
             }
         }
 

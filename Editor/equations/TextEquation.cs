@@ -90,7 +90,7 @@ namespace Editor
 
         private StringBuilder textData = new StringBuilder();
         int caretIndex = 0;
-        static FontType fontType = FontType.STIXGeneral;
+        static FontType fontType = FontType.StixGeneral;
         List<CharacterDecorationInfo> decorations = new List<CharacterDecorationInfo>();
         List<int> formats = new List<int>();
         List<EditorMode> modes = new List<EditorMode>();

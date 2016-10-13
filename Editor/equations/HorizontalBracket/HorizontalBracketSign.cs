@@ -74,7 +74,7 @@ namespace Editor
             }
             else
             {
-                var line = FontFactory.GetFormattedText("\uE14B", FontType.STIXNonUnicode, FontSize * .55);
+                var line = FontFactory.GetFormattedText("\uE14B", FontType.StixNonUnicode, FontSize * .55);
                 leftCurlyPart.DrawTextTopLeftAligned(dc, Location);
                 sign.DrawTextTopLeftAligned(dc, new Point(MidX - sign.GetFullWidth() * .5, Top + leftCurlyPart.Extent - line.Extent));
                 rightCurlyPart.DrawTextTopLeftAligned(dc, new Point(Right - rightCurlyPart.GetFullWidth(), Top));
@@ -122,7 +122,7 @@ namespace Editor
             }
             else
             {
-                var extension = FontFactory.GetFormattedText("\uE14A", FontType.STIXNonUnicode, FontSize * .55);
+                var extension = FontFactory.GetFormattedText("\uE14A", FontType.StixNonUnicode, FontSize * .55);
                 //dc.DrawLine(new Pen(Brushes.Red, 1), Location, new Point(Right, Top));
                 leftCurlyPart.DrawTextTopLeftAligned(dc, new Point(Left, Top + sign.Extent - extension.Extent));
                 sign.DrawTextTopLeftAligned(dc, new Point(MidX - sign.GetFullWidth() * .5, Top));
@@ -209,17 +209,17 @@ namespace Editor
         private void CreateBrokenCurlyTop()
         {
             double fontSize = FontSize * .55;
-            leftCurlyPart = FontFactory.GetFormattedText("\uE13B", FontType.STIXNonUnicode, fontSize); //Top left of overbrace 
-            sign = FontFactory.GetFormattedText("\uE140", FontType.STIXNonUnicode, fontSize); //middle of overbrace
-            rightCurlyPart = FontFactory.GetFormattedText("\uE13C", FontType.STIXNonUnicode, fontSize); //Top right of overbrace             
+            leftCurlyPart = FontFactory.GetFormattedText("\uE13B", FontType.StixNonUnicode, fontSize); //Top left of overbrace 
+            sign = FontFactory.GetFormattedText("\uE140", FontType.StixNonUnicode, fontSize); //middle of overbrace
+            rightCurlyPart = FontFactory.GetFormattedText("\uE13C", FontType.StixNonUnicode, fontSize); //Top right of overbrace             
         }
 
         private void CreateBrokenCurlyBottom()
         {
             double fontSize = FontSize * .55;
-            leftCurlyPart = FontFactory.GetFormattedText("\uE13D", FontType.STIXNonUnicode, fontSize); //Top left of overbrace 
-            sign = FontFactory.GetFormattedText("\uE141", FontType.STIXNonUnicode, fontSize); //middle of overbrace
-            rightCurlyPart = FontFactory.GetFormattedText("\uE13E", FontType.STIXNonUnicode, fontSize); //Top right of overbrace
+            leftCurlyPart = FontFactory.GetFormattedText("\uE13D", FontType.StixNonUnicode, fontSize); //Top left of overbrace 
+            sign = FontFactory.GetFormattedText("\uE141", FontType.StixNonUnicode, fontSize); //middle of overbrace
+            rightCurlyPart = FontFactory.GetFormattedText("\uE13E", FontType.StixNonUnicode, fontSize); //Top right of overbrace
         }
 
         private void CreateSingleCharacterCurlySign()
@@ -228,23 +228,23 @@ namespace Editor
             FontType fontType;
             if (Width < FontSize)
             {
-                fontType = FontType.STIXSizeOneSym;
+                fontType = FontType.StixSizeOneSym;
             }
             else if (Width < FontSize * 2)
             {
-                fontType = FontType.STIXSizeTwoSym;
+                fontType = FontType.StixSizeTwoSym;
             }
             else if (Width < FontSize * 3)
             {
-                fontType = FontType.STIXSizeThreeSym;
+                fontType = FontType.StixSizeThreeSym;
             }
             else if (Width < FontSize * 4)
             {
-                fontType = FontType.STIXSizeFourSym;
+                fontType = FontType.StixSizeFourSym;
             }
             else
             {
-                fontType = FontType.STIXSizeFiveSym;
+                fontType = FontType.StixSizeFiveSym;
             }
             double fontSize = 4;
             do

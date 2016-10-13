@@ -27,7 +27,7 @@ namespace Editor
             this.UseUnderline = useUnderline;
             this.FontWeight = fw;
             this.TextBrush = brush;
-            this.TypeFace = new Typeface(FontFamily, fs, fw, FontStretches.Normal, FontFactory.GetFontFamily(FontType.STIXGeneral));
+            this.TypeFace = new Typeface(FontFamily, fs, fw, FontStretches.Normal, FontFactory.GetFontFamily(FontType.StixGeneral));
             BrushConverter bc = new BrushConverter();
             TextBrushString = bc.ConvertToString(brush);
         }

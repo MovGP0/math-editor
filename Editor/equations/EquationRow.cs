@@ -560,7 +560,7 @@ namespace Editor
                     case CommandType.SquareRoot:
                         newEquation = new SquareRoot(this);
                         break;
-                    case CommandType.nRoot:
+                    case CommandType.NRoot:
                         newEquation = new nRoot(this);
                         break;
                     case CommandType.LeftBracket:

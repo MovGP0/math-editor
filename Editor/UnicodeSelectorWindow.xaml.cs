@@ -24,9 +24,9 @@ namespace Editor
         {
             InitializeComponent();
             DataContext = this;
-            symbolListBox.FontFamily = FontFactory.GetFontFamily(FontType.STIXGeneral);
+            symbolListBox.FontFamily = FontFactory.GetFontFamily(FontType.StixGeneral);
             symbolListBox.FontSize = 18;
-            recentListBox.FontFamily = FontFactory.GetFontFamily(FontType.STIXGeneral);
+            recentListBox.FontFamily = FontFactory.GetFontFamily(FontType.StixGeneral);
             recentListBox.FontSize = 16;
             //List<string> names = Enum.GetNames(typeof(FontType)).ToList();
             //names.Sort();
@@ -81,10 +81,10 @@ namespace Editor
         private void SetupCategory(string categoryName, int start, int end)
         {
             ObservableCollection<UnicodeListItem> list = new ObservableCollection<UnicodeListItem>();
-            FontFamily family = FontFactory.GetFontFamily(FontType.STIXGeneral);
+            FontFamily family = FontFactory.GetFontFamily(FontType.StixGeneral);
             for (int i = start; i <= end; i++)
             {
-                if (TypefaceContainsCharacter(FontFactory.GetTypeface(FontType.STIXGeneral, FontStyles.Normal, FontWeights.Normal), Convert.ToChar(i)))
+                if (TypefaceContainsCharacter(FontFactory.GetTypeface(FontType.StixGeneral, FontStyles.Normal, FontWeights.Normal), Convert.ToChar(i)))
                 {
                     UnicodeListItem item = new UnicodeListItem { /*FontFamily = family, HexString = "0x" + i.ToString("X4"),*/ CodePoint = i, UnicodeText = string.Format("{0}", Convert.ToChar(i)) };
                     list.Add(item);

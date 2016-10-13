@@ -10,13 +10,13 @@ namespace Editor
     public class FontFactory
     {
         private FontFactory() { }
-        static Dictionary<FontType, FontFamily> fontFamilies = new Dictionary<FontType, FontFamily>();
+        private static readonly Dictionary<FontType, FontFamily> FontFamilies = new Dictionary<FontType, FontFamily>();
 
         static FontFactory()
         {
             foreach (FontType ft in Enum.GetValues(typeof(FontType)))
             {
-                fontFamilies.Add(ft, CreateFontFamily(ft));
+                FontFamilies.Add(ft, CreateFontFamily(ft));
             }
         }
         
@@ -43,15 +43,15 @@ namespace Editor
 
         public static FormattedText GetFormattedText(string textToFormat, FontType fontType, double fontSize, FontStyle fontStyle, FontWeight fontWeight, Brush brush)
         {
-            Typeface typeface = GetTypeface(fontType, fontStyle, fontWeight);
+            var typeface = GetTypeface(fontType, fontStyle, fontWeight);
             return new FormattedText(textToFormat, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, typeface, fontSize, brush);
         }
 
         public static FontFamily GetFontFamily(FontType fontType)
         {
-            if (fontFamilies.Keys.Contains(fontType))
+            if (FontFamilies.Keys.Contains(fontType))
             {
-                return fontFamilies[fontType];
+                return FontFamilies[fontType];
             }
             else
             {
@@ -59,41 +59,41 @@ namespace Editor
             }
         }
 
-        static FontFamily CreateFontFamily(FontType ft)
+        private static FontFamily CreateFontFamily(FontType ft)
         {
             switch (ft)
             {
-                case FontType.STIXGeneral:
+                case FontType.StixGeneral:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXGeneral");
-                case FontType.STIXIntegralsD:
+                case FontType.StixIntegralsD:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsD");
-                case FontType.STIXIntegralsSm:
+                case FontType.StixIntegralsSm:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsSm");
-                case FontType.STIXIntegralsUp:
+                case FontType.StixIntegralsUp:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsUp");
-                case FontType.STIXIntegralsUpD:
+                case FontType.StixIntegralsUpD:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsUpD");
-                case FontType.STIXIntegralsUpSm:
+                case FontType.StixIntegralsUpSm:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsUpSm");
-                case FontType.STIXNonUnicode:
+                case FontType.StixNonUnicode:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXNonUnicode");
-                case FontType.STIXSizeFiveSym:
+                case FontType.StixSizeFiveSym:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeFiveSym");
-                case FontType.STIXSizeFourSym:
+                case FontType.StixSizeFourSym:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeFourSym");
-                case FontType.STIXSizeOneSym:
+                case FontType.StixSizeOneSym:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeOneSym");
-                case FontType.STIXSizeThreeSym:
+                case FontType.StixSizeThreeSym:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeThreeSym");
-                case FontType.STIXSizeTwoSym:
+                case FontType.StixSizeTwoSym:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeTwoSym");
-                case FontType.STIXVariants:
+                case FontType.StixVariants:
                     return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXVariants");
                 case FontType.Arial:
                     return new FontFamily("Arial");
                 case FontType.ArialBlack:
                     return new FontFamily("Arial Black");
-                case FontType.ComicSansMS:
+                case FontType.ComicSansMs:
                     return new FontFamily("Comic Sans MS");
                 case FontType.Courier:
                     return new FontFamily("Courier");      
@@ -107,9 +107,9 @@ namespace Editor
                     return new FontFamily("Lucida Console");
                 case FontType.LucidaSansUnicode:
                     return new FontFamily("Lucida Sans Unicode");
-                case FontType.MSSerif:
+                case FontType.MsSerif:
                     return new FontFamily("MS Serif");
-                case FontType.MSSansSerif:
+                case FontType.MsSansSerif:
                     return new FontFamily("MS Sans Serif");
                 case FontType.PalatinoLinotype:
                     return new FontFamily("Palatino Linotype");
@@ -121,7 +121,7 @@ namespace Editor
                     return new FontFamily("Tahoma");
                 case FontType.TimesNewRoman:
                     return new FontFamily("Times New Roman");
-                case FontType.TrebuchetMS:
+                case FontType.TrebuchetMs:
                     return new FontFamily("Trebuchet MS");
                 case FontType.Verdana:
                     return new FontFamily("Verdana");
@@ -135,7 +135,7 @@ namespace Editor
 
         public static Typeface GetTypeface(FontType fontType, FontStyle fontStyle, FontWeight fontWeight)
         {
-            return new Typeface(GetFontFamily(fontType), fontStyle, fontWeight, FontStretches.Normal, GetFontFamily(FontType.STIXGeneral));
+            return new Typeface(GetFontFamily(fontType), fontStyle, fontWeight, FontStretches.Normal, GetFontFamily(FontType.StixGeneral));
         }        
     }
 }

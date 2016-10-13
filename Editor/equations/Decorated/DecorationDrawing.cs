@@ -25,14 +25,14 @@ namespace Editor
             switch (decorationType)
             {
                 case DecorationType.DoubleArrow:
-                    firstSign = FontFactory.GetFormattedText("\u02C2", FontType.STIXGeneral, FontSize * .7);
-                    secondSign = FontFactory.GetFormattedText("\u02C3", FontType.STIXGeneral, FontSize * .7);
+                    firstSign = FontFactory.GetFormattedText("\u02C2", FontType.StixGeneral, FontSize * .7);
+                    secondSign = FontFactory.GetFormattedText("\u02C3", FontType.StixGeneral, FontSize * .7);
                     break;
                 case DecorationType.LeftArrow:
-                    firstSign = FontFactory.GetFormattedText("\u02C2", FontType.STIXGeneral, FontSize * .7);
+                    firstSign = FontFactory.GetFormattedText("\u02C2", FontType.StixGeneral, FontSize * .7);
                     break;
                 case DecorationType.RightArrow:
-                    firstSign = FontFactory.GetFormattedText("\u02C3", FontType.STIXGeneral, FontSize * .7);
+                    firstSign = FontFactory.GetFormattedText("\u02C3", FontType.StixGeneral, FontSize * .7);
                     break;
                 //case DecorationType.RightHarpoonUpBarb:
                 //case DecorationType.LeftHarpoonUpBarb:
@@ -53,21 +53,21 @@ namespace Editor
         {
             if (Width < FontSize * .8)
             {
-                FitFirstSignToWidth(FontType.STIXGeneral, "\u23DC", FontWeights.Bold);
+                FitFirstSignToWidth(FontType.StixGeneral, "\u23DC", FontWeights.Bold);
             }
             else if (Width < FontSize * 2)
             {
-                FitFirstSignToWidth(FontType.STIXSizeOneSym, "\u23DC");
+                FitFirstSignToWidth(FontType.StixSizeOneSym, "\u23DC");
             }
             else if (Width < FontSize * 3)
             {
-                FitFirstSignToWidth(FontType.STIXSizeTwoSym, "\u23DC");
+                FitFirstSignToWidth(FontType.StixSizeTwoSym, "\u23DC");
             }
             else
             {
-                firstSign = FontFactory.GetFormattedText("\uE142", FontType.STIXNonUnicode, FontSize * .55);
-                secondSign = FontFactory.GetFormattedText("\uE143", FontType.STIXNonUnicode, FontSize * .55);
-                bar = FontFactory.GetFormattedText("\uE14A", FontType.STIXNonUnicode, FontSize * .55);
+                firstSign = FontFactory.GetFormattedText("\uE142", FontType.StixNonUnicode, FontSize * .55);
+                secondSign = FontFactory.GetFormattedText("\uE143", FontType.StixNonUnicode, FontSize * .55);
+                bar = FontFactory.GetFormattedText("\uE14A", FontType.StixNonUnicode, FontSize * .55);
             }
         }
 
@@ -93,27 +93,27 @@ namespace Editor
         {
             if (Width < FontSize / 2)
             {
-                FitFirstSignToWidth(FontType.STIXGeneral, "\u0303");
+                FitFirstSignToWidth(FontType.StixGeneral, "\u0303");
             }
             else if (Width < FontSize)
             {
-                FitFirstSignToWidth(FontType.STIXSizeOneSym, "\u0303");
+                FitFirstSignToWidth(FontType.StixSizeOneSym, "\u0303");
             }
             else if (Width < FontSize * 2)
             {
-                FitFirstSignToWidth(FontType.STIXSizeTwoSym, "\u0303");
+                FitFirstSignToWidth(FontType.StixSizeTwoSym, "\u0303");
             }
             else if (Width < FontSize * 3)
             {
-                FitFirstSignToWidth(FontType.STIXSizeThreeSym, "\u0303");
+                FitFirstSignToWidth(FontType.StixSizeThreeSym, "\u0303");
             }
             else if (Width < FontSize * 4)
             {
-                FitFirstSignToWidth(FontType.STIXSizeFourSym, "\u0303");
+                FitFirstSignToWidth(FontType.StixSizeFourSym, "\u0303");
             }
             else
             {
-                FitFirstSignToWidth(FontType.STIXSizeFiveSym, "\u0303");
+                FitFirstSignToWidth(FontType.StixSizeFiveSym, "\u0303");
             }
         }
 
@@ -305,11 +305,11 @@ namespace Editor
         {
             if (Width < FontSize * 0.8)
             {
-                FormattedText text = FontFactory.GetFormattedText("\u2194", FontType.STIXGeneral, Width * 1.5);
+                FormattedText text = FontFactory.GetFormattedText("\u2194", FontType.StixGeneral, Width * 1.5);
                 double factor = .1;
                 do
                 {
-                    text = FontFactory.GetFormattedText("\u2194", FontType.STIXGeneral, FontSize * factor);
+                    text = FontFactory.GetFormattedText("\u2194", FontType.StixGeneral, FontSize * factor);
                     factor += .1;
                 }
                 while (Width > text.GetFullWidth());                

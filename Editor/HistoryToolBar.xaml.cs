@@ -21,7 +21,7 @@ namespace Editor
             this.DataContext = this;
             InitializeComponent();
             recentListBox.ItemsSource = recentList;
-            var data = ConfigManager.GetConfigurationValue(KeyName.symbols);
+            var data = ConfigManager.GetConfigurationValue(KeyName.Symbols);
             if (data.Length > 0)
             {
                 string[] list = data.Split(',');
@@ -31,7 +31,7 @@ namespace Editor
                     usedCount.Add(s, 0);
                 }
             }
-            recentListBox.FontFamily = FontFactory.GetFontFamily(FontType.STIXGeneral);
+            recentListBox.FontFamily = FontFactory.GetFontFamily(FontType.StixGeneral);
         }
 
         public void AddItem(string symbol)
@@ -77,7 +77,7 @@ namespace Editor
                 data += s + ",";
             }
             data = data.Trim(',');
-            ConfigManager.SetConfigurationValue(KeyName.symbols, data);
+            ConfigManager.SetConfigurationValue(KeyName.Symbols, data);
         }
     }
 }

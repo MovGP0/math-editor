@@ -6,21 +6,10 @@ namespace Editor
     {
         public WheelDirection Direction { get; set; }
 
-        public static MouseWheelGesture CtrlDown
-        {
-            get
-            {
-                return new MouseWheelGesture(ModifierKeys.Control) { Direction = WheelDirection.Down };
-            }
-        }
+        public static MouseWheelGesture CtrlDown => new MouseWheelGesture(ModifierKeys.Control) { Direction = WheelDirection.Down };
 
-        public static MouseWheelGesture CtrlUp
-        {
-            get
-            {
-                return new MouseWheelGesture(ModifierKeys.Control) { Direction = WheelDirection.Up };
-            }
-        }
+        public static MouseWheelGesture CtrlUp => new MouseWheelGesture(ModifierKeys.Control) { Direction = WheelDirection.Up };
+
         public MouseWheelGesture()
             : base(MouseAction.WheelClick)
         {

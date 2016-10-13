@@ -30,7 +30,7 @@ namespace Editor
                 b.Style = (Style)FindResource("MathToolBarButtonStyle");
                 b.SetValue(Grid.ColumnProperty, i % mainGrid.Columns);
                 b.SetValue(Grid.RowProperty, i / mainGrid.Columns);
-                b.FontFamily = FontFactory.GetFontFamily(FontType.STIXGeneral);
+                b.FontFamily = FontFactory.GetFontFamily(FontType.StixGeneral);
                 //b.FontSize = 10;
                 if (commandDetails[i].Image != null)
                 {

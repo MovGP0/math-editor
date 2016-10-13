@@ -746,7 +746,7 @@ namespace Editor
                                   CreateImageUri("divAndRoots", "DivTriangleExpanding.png"),
                                };
             CommandType[] commands = { 
-                                         CommandType.SquareRoot, CommandType.nRoot, 
+                                         CommandType.SquareRoot, CommandType.NRoot, 
                                          CommandType.Division, CommandType.Division, CommandType.Division,
                                          CommandType.Division, CommandType.Division, CommandType.Division,
                                          CommandType.Division, CommandType.Division, CommandType.Division,

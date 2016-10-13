@@ -17,19 +17,18 @@ namespace Editor
         {
             var autoGreyScaleImg = source as AutoGreyableImage;
             var isEnable = Convert.ToBoolean(args.NewValue);
-            if (autoGreyScaleImg != null)
+            if (autoGreyScaleImg == null) return;
+
+            if (isEnable)
             {
-                if (isEnable)
-                {
-                    autoGreyScaleImg.Source = ((FormatConvertedBitmap)autoGreyScaleImg.Source).Source;
-                    autoGreyScaleImg.OpacityMask = null;
-                }
-                else
-                {
-                    var bitmapImage = new BitmapImage(new Uri(autoGreyScaleImg.Source.ToString()));
-                    autoGreyScaleImg.Source = new FormatConvertedBitmap(bitmapImage, PixelFormats.Gray32Float, null, 0);
-                    autoGreyScaleImg.OpacityMask = new ImageBrush(bitmapImage);
-                }
+                autoGreyScaleImg.Source = ((FormatConvertedBitmap)autoGreyScaleImg.Source).Source;
+                autoGreyScaleImg.OpacityMask = null;
+            }
+            else
+            {
+                var bitmapImage = new BitmapImage(new Uri(autoGreyScaleImg.Source.ToString()));
+                autoGreyScaleImg.Source = new FormatConvertedBitmap(bitmapImage, PixelFormats.Gray32Float, null, 0);
+                autoGreyScaleImg.OpacityMask = new ImageBrush(bitmapImage);
             }
         }
     }

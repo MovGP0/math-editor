@@ -65,8 +65,8 @@ namespace Editor
                 }
             }
             catch { }
-            var mode = ConfigManager.GetConfigurationValue(KeyName.default_mode);
-            var fontName = ConfigManager.GetConfigurationValue(KeyName.default_font);
+            var mode = ConfigManager.GetConfigurationValue(KeyName.DefaultMode);
+            var fontName = ConfigManager.GetConfigurationValue(KeyName.DefaultFont);
 
             var modes = editorModeCombo.Items;
             foreach (ComboBoxItem item in modes)
@@ -128,7 +128,7 @@ namespace Editor
 
         void CheckForUpdate()
         {
-            if (ConfigManager.GetConfigurationValue(KeyName.checkUpdates) == "false")
+            if (ConfigManager.GetConfigurationValue(KeyName.CheckUpdates) == "false")
             {
                 return;
             }

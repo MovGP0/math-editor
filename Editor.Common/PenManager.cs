@@ -6,50 +6,51 @@ namespace Editor
 {
     public static class PenManager
     {
-        static Dictionary<double, Pen> bevelPens = new Dictionary<double, Pen>();
-        static Dictionary<double, Pen> miterPens = new Dictionary<double, Pen>();
-        static Dictionary<double, Pen> roundPens = new Dictionary<double, Pen>();
-        static Dictionary<double, Pen> whitePens = new Dictionary<double, Pen>();
+        private static readonly Dictionary<double, Pen> BevelPens = new Dictionary<double, Pen>();
+        private static readonly Dictionary<double, Pen> MiterPens = new Dictionary<double, Pen>();
+        private static readonly Dictionary<double, Pen> RoundPens = new Dictionary<double, Pen>();
+        private static readonly Dictionary<double, Pen> WhitePens = new Dictionary<double, Pen>();
 
-        static object bevelLock = new object();
-        static object miterLock = new object();
-        static object roundLock = new object();
+        private static readonly object BevelLock = new object();
+        private static readonly object MiterLock = new object();
+        private static readonly object RoundLock = new object();
 
-        static object whiteLock = new object();
+        private static readonly object WhiteLock = new object();
 
         public static Pen GetWhitePen(double thickness)
         {
-            return GetPen(whiteLock, whitePens, thickness, PenLineJoin.Miter, Brushes.White);
+            return GetPen(WhiteLock, WhitePens, thickness, PenLineJoin.Miter, Brushes.White);
         }
 
         public static Pen GetPen(double thickness, PenLineJoin lineJoin = PenLineJoin.Bevel)
         {
-            if (lineJoin == PenLineJoin.Bevel)
+            switch (lineJoin)
             {
-                return GetPen(bevelLock, bevelPens, thickness, lineJoin);
-            }
-            else if (lineJoin == PenLineJoin.Miter)
-            {
-                return GetPen(miterLock, miterPens, thickness, lineJoin);
-            }
-            else
-            {
-                return GetPen(roundLock, roundPens, thickness, lineJoin);
+                case PenLineJoin.Bevel:
+                    return GetPen(BevelLock, BevelPens, thickness, lineJoin);
+                case PenLineJoin.Miter:
+                    return GetPen(MiterLock, MiterPens, thickness, lineJoin);
+                case PenLineJoin.Round:
+                    return GetPen(RoundLock, RoundPens, thickness, lineJoin);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(lineJoin), lineJoin, null);
             }
         }
 
-        static Pen GetPen(object lockObj, Dictionary<double, Pen> penDictionary, double thickness, PenLineJoin lineJoin, Brush brush=null)
+        private static Pen GetPen(object lockObj, IDictionary<double, Pen> penDictionary, double thickness, PenLineJoin lineJoin, Brush brush=null)
         {
             lock (lockObj)
             {
                 thickness = Math.Round(thickness, 1);
-                if (!penDictionary.ContainsKey(thickness))
+                if (penDictionary.ContainsKey(thickness))
+                    return penDictionary[thickness];
+
+                var pen = new Pen(brush ?? Brushes.Black, thickness)
                 {
-                    Pen pen = new Pen(brush ?? Brushes.Black, thickness);
-                    pen.LineJoin = lineJoin;
-                    pen.Freeze();
-                    penDictionary.Add(thickness, pen);
-                }
+                    LineJoin = lineJoin
+                };
+                pen.Freeze();
+                penDictionary.Add(thickness, pen);
                 return penDictionary[thickness];
             }
         }

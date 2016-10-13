@@ -58,7 +58,7 @@
 
         void DetermineFontType()
         {
-            FontType fontType = FontType.STIXSizeOneSym;
+            FontType fontType = FontType.StixSizeOneSym;
             switch (Symbol)
             {
                 case SignCompositeSymbol.Integral:
@@ -71,16 +71,16 @@
                 case SignCompositeSymbol.AntiClockContourIntegral:
                     if (UseItalicIntegralSign)
                     {
-                        fontType = FontType.STIXGeneral;
+                        fontType = FontType.StixGeneral;
                     }
                     else
                     {
-                        fontType = FontType.STIXIntegralsUp;
+                        fontType = FontType.StixIntegralsUp;
                     }
                     break;
                 case SignCompositeSymbol.Intersection:
                 case SignCompositeSymbol.Union:
-                    fontType = FontType.STIXGeneral;
+                    fontType = FontType.StixGeneral;
                     break;
             }            
             FontType = fontType;

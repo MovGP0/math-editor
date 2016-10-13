@@ -9,15 +9,10 @@ namespace Editor
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            EditorMode mode = (EditorMode)value;
-            if (mode == EditorMode.Math)
-            {
-                return Visibility.Collapsed;
-            }
-            else
-            {
-                return Visibility.Visible;
-            }
+            var mode = (EditorMode)value;
+            return mode == EditorMode.Math 
+                ? Visibility.Collapsed 
+                : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
