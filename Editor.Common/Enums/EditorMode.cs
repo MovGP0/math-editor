@@ -2,6 +2,7 @@
 {
     public enum EditorMode
     {
-        Math, Text, 
+        Math,
+        Text
     }
 }

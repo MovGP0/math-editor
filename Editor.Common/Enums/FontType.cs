@@ -7,7 +7,6 @@
         Segoe, Arial, TimesNewRoman, CourierNew, Courier, Georgia, Impact, LucidaSansUnicode, Tahoma, Verdana,
         Webdings, Wingdings, MsSerif, MsSansSerif, ComicSansMs, ArialBlack, LucidaConsole, PalatinoLinotype,
         TrebuchetMs, Symbol,
-
         STIXGeneral,        STIXGeneralBol,     STIXGeneralBolIta,  STIXGeneralItalic,
         STIXIntDBol,        STIXIntDReg,        STIXIntSmBol,       STIXIntSmReg,       STIXIntUpBol, STIXIntUpDBol,
         STIXIntUpDReg,      STIXIntUpReg,       STIXIntUpSmBol,     STIXIntUpSmReg,     STIXNonUni,

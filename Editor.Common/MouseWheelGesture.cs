@@ -37,11 +37,6 @@ namespace Editor
                     return false;
             }
         }
-        public enum WheelDirection
-        {
-            None,
-            Up,
-            Down,
-        }
+        
     }
 }

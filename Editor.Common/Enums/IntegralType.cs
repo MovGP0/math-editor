@@ -2,7 +2,9 @@
 {
     public enum IntegralType
     {
-        Integral, DoubleIntegral, TripleIntegral,
+        Integral,
+        DoubleIntegral,
+        TripleIntegral,
         ContourIntegral,
         SurfaceIntegral,
         VolumeIntegral,

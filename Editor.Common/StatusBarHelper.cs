@@ -1,11 +1,5 @@
 ﻿namespace Editor
 {
-    public interface IMainWindow
-    {
-        void SetStatusBarMessage(string message);
-        void ShowCoordinates(string message);
-    }
-
     public static class StatusBarHelper
     {
         static IMainWindow window = null;
