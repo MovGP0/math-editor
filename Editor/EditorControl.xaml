@@ -16,8 +16,7 @@
              Loaded="EditorControl_Loaded"              
              MinHeight="200"
              MinWidth="20"
-             UseLayoutRounding="True"
-             >
+             UseLayoutRounding="True">
     <UserControl.CommandBindings>
         <CommandBinding Command="DecreaseZoom"  Executed="ZoomOutHandler"/>
         <CommandBinding Command="IncreaseZoom"  Executed="ZoomInHandler"/>
@@ -26,5 +25,5 @@
         <MouseBinding Gesture="{x:Static editor:MouseWheelGesture.CtrlUp}"  Command="IncreaseZoom"/>
         <MouseBinding Gesture="{x:Static editor:MouseWheelGesture.CtrlDown}"  Command="DecreaseZoom"/>
     </UserControl.InputBindings>
-    <Grid Name="mainGrid"></Grid>
+    <Canvas Name="mainGrid"></Canvas>
 </UserControl>

@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  
+  <Storyboard x:Key="Flashing">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" RepeatBehavior="Forever" AutoReverse="True" Duration="0:0:0.5">
+            <DoubleAnimation.EasingFunction>
+                <SineEase EasingMode="EaseInOut"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+  </Storyboard>
+  
+  <Style x:Key="CaretStyle" TargetType="Control">
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="#FF222222"/>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="IsVisible" Value="True">
+        <Trigger.EnterActions>
+          <BeginStoryboard x:Name="FlashingStoryboard" Storyboard="{StaticResource Flashing}" />
+        </Trigger.EnterActions>
+        <Trigger.ExitActions>
+          <StopStoryboard BeginStoryboardName="FlashingStoryboard" />
+        </Trigger.ExitActions>
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+</ResourceDictionary>

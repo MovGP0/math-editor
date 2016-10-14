@@ -40,20 +40,29 @@ namespace Editor
         public event EventHandler ZoomChanged = (x, y) => { };
         public bool Dirty { get; set; }
         private EquationRoot _equationRoot;
-        private readonly Caret _vCaret = new Caret(false);
-        private readonly Caret _hCaret = new Caret(true);
+        private readonly Caret _vCaret;
+        private readonly Caret _hCaret;
         private readonly double _fontSize = EditorControlGlobal.RootFontBaseSize;
         
         public EditorControl()
         {
+            _vCaret = new Caret(false);
+            _hCaret = new Caret(true);
+
             InitializeComponent();
             mainGrid.Children.Add(_vCaret);
             mainGrid.Children.Add(_hCaret);
+
+            Canvas.SetTop(_vCaret, 0);
+            Canvas.SetLeft(_vCaret, 0);
+            Canvas.SetTop(_hCaret, 0);
+            Canvas.SetLeft(_hCaret, 0);
+
             _equationRoot = new EquationRoot(_vCaret, _hCaret)
             {
                 FontSize = _fontSize
             };
-            _timer = new System.Threading.Timer(BlinkCaret, null, _blinkPeriod, _blinkPeriod);
+            //_timer = new System.Threading.Timer(BlinkCaret, null, _blinkPeriod, _blinkPeriod);
         }
 
         public void SetFontSizePercentage(int percentage)
@@ -75,11 +84,11 @@ namespace Editor
             }
         }
 
-        private void BlinkCaret(object state)
-        {
-            _vCaret.ToggleVisibility();
-            _hCaret.ToggleVisibility();
-        }
+        //private void BlinkCaret(object state)
+        //{
+        //    _vCaret.ToggleVisibility();
+        //    _hCaret.ToggleVisibility();
+        //}
 
         public void HandleUserCommand(CommandDetails commandDetails)
         {

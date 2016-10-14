@@ -8,7 +8,8 @@
     		<ResourceDictionary.MergedDictionaries>                
                 <ResourceDictionary Source="MainDictionary.xaml" />
                 <ResourceDictionary Source="MainDockDictionary.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Editor.Common;component/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
-    	</ResourceDictionary>         
+    	</ResourceDictionary>
     </Application.Resources>
 </Application>

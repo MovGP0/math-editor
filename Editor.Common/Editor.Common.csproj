@@ -37,20 +37,34 @@
     <AssemblyOriginatorKeyFile>Development.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caret.xaml.cs">
+      <DependentUpon>Caret.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\ArrowType.cs" />
     <Compile Include="Enums\BoxType.cs" />
     <Compile Include="Enums\BracketSignType.cs" />
-    <Compile Include="Caret.cs" />
     <Compile Include="Enums\CharacterDecorationType.cs" />
     <Compile Include="CommandDetails.cs" />
     <Compile Include="ConfigManager.cs" />
@@ -81,13 +95,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Development.snk" />
+    <None Include="packages.config" />
     <None Include="Shaders\Build-Shader.cmd" />
     <Resource Include="Shaders\GrayscaleEffect.ps" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\GrayscaleEffect.hlsl" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Caret.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
