@@ -9,21 +9,35 @@
         </DoubleAnimation>
   </Storyboard>
   
-  <Style x:Key="CaretStyle" TargetType="Control">
+    <Style x:Key="CaretStyle" TargetType="Control">
     <Setter Property="Foreground">
-      <Setter.Value>
-        <SolidColorBrush Color="#FF222222"/>
-      </Setter.Value>
+    <Setter.Value>
+    <SolidColorBrush Color="#FF222222"/>
+    </Setter.Value>
     </Setter>
     <Style.Triggers>
-      <Trigger Property="IsVisible" Value="True">
-        <Trigger.EnterActions>
-          <BeginStoryboard x:Name="FlashingStoryboard" Storyboard="{StaticResource Flashing}" />
-        </Trigger.EnterActions>
-        <Trigger.ExitActions>
-          <StopStoryboard BeginStoryboardName="FlashingStoryboard" />
-        </Trigger.ExitActions>
-      </Trigger>
+    <Trigger Property="IsVisible" Value="True">
+    <Trigger.EnterActions>
+        <BeginStoryboard x:Name="FlashingStoryboard" Storyboard="{StaticResource Flashing}" />
+    </Trigger.EnterActions>
+    <Trigger.ExitActions>
+        <StopStoryboard BeginStoryboardName="FlashingStoryboard" />
+    </Trigger.ExitActions>
+    </Trigger>
     </Style.Triggers>
-  </Style>
+    </Style>
+
+    <FontFamily x:Key="StixGeneral">pack://application:,,,/Editor.Common;/Fonts/#StixGeneral</FontFamily>
+    <FontFamily x:Key="StixIntegralsD">pack://application:,,,/Editor.Common;/Fonts/#STIXIntegralsD</FontFamily>
+    <FontFamily x:Key="StixIntegralsSm">pack://application:,,,/Editor.Common;/Fonts/#StixIntegralsSm</FontFamily>
+    <FontFamily x:Key="StixIntegralsUp">pack://application:,,,/Editor.Common;/Fonts/#STIXIntegralsUp</FontFamily>
+    <FontFamily x:Key="StixIntegralsUpD">pack://application:,,,/Editor.Common;/Fonts/#STIXIntegralsUpD</FontFamily>
+    <FontFamily x:Key="StixIntegralsUpSm">pack://application:,,,/Editor.Common;/Fonts/#STIXIntegralsUpSm</FontFamily>
+    <FontFamily x:Key="StixNonUnicode">pack://application:,,,/Editor.Common;/Fonts/#STIXNonUnicode</FontFamily>
+    <FontFamily x:Key="StixSizeFiveSym">pack://application:,,,/Editor.Common;/Fonts/#STIXSizeFiveSym</FontFamily>
+    <FontFamily x:Key="StixSizeFourSym">pack://application:,,,/Editor.Common;/Fonts/#STIXSizeFourSym</FontFamily>
+    <FontFamily x:Key="StixSizeOneSym">pack://application:,,,/Editor.Common;/Fonts/#STIXSizeOneSym</FontFamily>
+    <FontFamily x:Key="StixSizeThreeSym">pack://application:,,,/Editor.Common;/Fonts/#STIXSizeThreeSym</FontFamily>
+    <FontFamily x:Key="StixSizeTwoSym">pack://application:,,,/Editor.Common;/Fonts/#STIXSizeTwoSym</FontFamily>
+    <FontFamily x:Key="StixVariants">pack://application:,,,/Editor.Common;/Fonts/#STIXVariants</FontFamily>
 </ResourceDictionary>

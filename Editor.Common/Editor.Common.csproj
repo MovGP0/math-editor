@@ -97,6 +97,35 @@
     <None Include="Development.snk" />
     <None Include="packages.config" />
     <None Include="Shaders\Build-Shader.cmd" />
+    <Resource Include="STIX\STIXVariants-Regular.otf" />
+    <Resource Include="STIX\STIXVariants-Bold.otf" />
+    <Resource Include="STIX\STIXSizeTwoSym-Regular.otf" />
+    <Resource Include="STIX\STIXSizeTwoSym-Bold.otf" />
+    <Resource Include="STIX\STIXSizeThreeSym-Regular.otf" />
+    <Resource Include="STIX\STIXSizeThreeSym-Bold.otf" />
+    <Resource Include="STIX\STIXSizeOneSym-Regular.otf" />
+    <Resource Include="STIX\STIXSizeOneSym-Bold.otf" />
+    <Resource Include="STIX\STIXSizeFourSym-Regular.otf" />
+    <Resource Include="STIX\STIXSizeFourSym-Bold.otf" />
+    <Resource Include="STIX\STIXSizeFiveSym-Regular.otf" />
+    <Resource Include="STIX\STIXNonUnicode-Regular.otf" />
+    <Resource Include="STIX\STIXNonUnicode-Italic.otf" />
+    <Resource Include="STIX\STIXNonUnicode-BoldItalic.otf" />
+    <Resource Include="STIX\STIXNonUnicode-Bold.otf" />
+    <Resource Include="STIX\STIXIntegralsUpSm-Regular.otf" />
+    <Resource Include="STIX\STIXIntegralsUpSm-Bold.otf" />
+    <Resource Include="STIX\STIXIntegralsUpD-Regular.otf" />
+    <Resource Include="STIX\STIXIntegralsUpD-Bold.otf" />
+    <Resource Include="STIX\STIXIntegralsUp-Regular.otf" />
+    <Resource Include="STIX\STIXIntegralsUp-Bold.otf" />
+    <Resource Include="STIX\STIXIntegralsSm-Regular.otf" />
+    <Resource Include="STIX\STIXIntegralsSm-Bold.otf" />
+    <Resource Include="STIX\STIXIntegralsD-Regular.otf" />
+    <Resource Include="STIX\STIXIntegralsD-Bold.otf" />
+    <Resource Include="STIX\STIXGeneral-Regular.otf" />
+    <Resource Include="STIX\STIXGeneral-Italic.otf" />
+    <Resource Include="STIX\STIXGeneral-BoldItalic.otf" />
+    <Resource Include="STIX\STIXGeneral-Bold.otf" />
     <Resource Include="Shaders\GrayscaleEffect.ps" />
   </ItemGroup>
   <ItemGroup>

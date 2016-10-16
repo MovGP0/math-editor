@@ -24,7 +24,7 @@
                 </Grid.ColumnDefinitions>
                 <Label>Default Font</Label>
                 <ComboBox Grid.Column="1" Name="equationFontCombo" Width="150" SelectedIndex="0">
-                    <ComboBoxItem Tag="STIXGeneral">STIX</ComboBoxItem>
+                    <ComboBoxItem Tag="StixGeneral">STIX</ComboBoxItem>
                     <ComboBoxItem Tag="Arial">Arial</ComboBoxItem>
                     <ComboBoxItem Tag="ArialBlack">Arial Black</ComboBoxItem>
                     <ComboBoxItem Tag="ComicSansMS">Comic Sans MS</ComboBoxItem>

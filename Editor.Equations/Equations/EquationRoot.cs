@@ -42,12 +42,12 @@ namespace Editor
             XElement root = new XElement(GetType().Name); //ActiveChild.Serialize();
             root.Add(new XAttribute("fileVersion", fileVersion));
             root.Add(new XAttribute("appVersion", Assembly.GetEntryAssembly().GetName().Version));
-            textManager.OptimizeForSave(this);
-            root.Add(textManager.Serialize());
+            TextManager.OptimizeForSave(this);
+            root.Add(TextManager.Serialize());
             root.Add(ActiveChild.Serialize());
             xDoc.Add(root);
             xDoc.Save(stream);
-            textManager.RestoreAfterSave(this);
+            TextManager.RestoreAfterSave(this);
         }
 
         public void LoadFile(Stream stream)
@@ -62,7 +62,7 @@ namespace Editor
             if (root.Name == GetType().Name)
             {
                 XElement formattingElement = root.Element("TextManager");
-                textManager.DeSerialize(formattingElement);
+                TextManager.DeSerialize(formattingElement);
                 fileVersionAttribute = root.Attributes("fileVersion").FirstOrDefault();
                 appVersionAttribute = root.Attributes("appVersion").FirstOrDefault();
                 root = root.Element("RowContainer");
@@ -163,7 +163,7 @@ namespace Editor
             data.SetImage(temp.Image);
             XElement rootElement = new XElement(this.GetType().Name);
             rootElement.Add(new XElement("SessionId", sessionString));
-            rootElement.Add(textManager.Serialize());
+            rootElement.Add(TextManager.Serialize());
             rootElement.Add(new XElement("payload", temp.XElement));
             MathEditorData med = new MathEditorData { XmlString = rootElement.ToString() };
             data.SetData(med);
@@ -186,7 +186,7 @@ namespace Editor
             string id = xe.Element("SessionId").Value;
             if (id != sessionString)
             {
-                textManager.ProcessPastedXML(xe);
+                TextManager.ProcessPastedXML(xe);
             }
             int undoCount = UndoManager.UndoCount + 1;
             if (IsSelecting)

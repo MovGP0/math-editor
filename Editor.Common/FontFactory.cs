@@ -7,9 +7,8 @@ using System.Globalization;
 
 namespace Editor
 { 
-    public class FontFactory
+    public static class FontFactory
     {
-        private FontFactory() { }
         private static readonly Dictionary<FontType, FontFamily> FontFamilies = new Dictionary<FontType, FontFamily>();
 
         static FontFactory()
@@ -39,8 +38,7 @@ namespace Editor
         {
             return GetFormattedText(textToFormat, fontType, fontSize, FontStyles.Normal, FontWeights.Normal, brush);
         }
-
-
+        
         public static FormattedText GetFormattedText(string textToFormat, FontType fontType, double fontSize, FontStyle fontStyle, FontWeight fontWeight, Brush brush)
         {
             var typeface = GetTypeface(fontType, fontStyle, fontWeight);
@@ -49,14 +47,15 @@ namespace Editor
 
         public static FontFamily GetFontFamily(FontType fontType)
         {
-            if (FontFamilies.Keys.Contains(fontType))
-            {
-                return FontFamilies[fontType];
-            }
-            else
-            {
-                return new FontFamily("Segoe UI");
-            }
+            return FontFamilies.Keys.Contains(fontType) 
+                ? FontFamilies[fontType] 
+                : new FontFamily("Segoe UI");
+        }
+
+        private static FontFamily GetFontFamityFromResources(FontType ft)
+        {
+            var fontFamily = Application.Current.Resources[ft.ToString()] as FontFamily;
+            return fontFamily ?? new FontFamily("Segoe UI");
         }
 
         private static FontFamily CreateFontFamily(FontType ft)
@@ -64,31 +63,19 @@ namespace Editor
             switch (ft)
             {
                 case FontType.StixGeneral:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXGeneral");
                 case FontType.StixIntegralsD:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsD");
                 case FontType.StixIntegralsSm:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsSm");
                 case FontType.StixIntegralsUp:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsUp");
                 case FontType.StixIntegralsUpD:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsUpD");
                 case FontType.StixIntegralsUpSm:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXIntegralsUpSm");
                 case FontType.StixNonUnicode:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXNonUnicode");
                 case FontType.StixSizeFiveSym:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeFiveSym");
                 case FontType.StixSizeFourSym:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeFourSym");
                 case FontType.StixSizeOneSym:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeOneSym");
                 case FontType.StixSizeThreeSym:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeThreeSym");
                 case FontType.StixSizeTwoSym:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXSizeTwoSym");
                 case FontType.StixVariants:
-                    return new FontFamily(new Uri("pack://application:,,,/STIX/"), "./#STIXVariants");
+                    return GetFontFamityFromResources(ft);
                 case FontType.Arial:
                     return new FontFamily("Arial");
                 case FontType.ArialBlack:
@@ -128,9 +115,12 @@ namespace Editor
                 case FontType.Webdings:
                     return new FontFamily("Webdings");
                 case FontType.Wingdings:
-                    return new FontFamily("Wingdings");                
+                    return new FontFamily("Wingdings");
+                case FontType.SystemDefault:
+                    return new FontFamily("Segoe UI");
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(ft), ft, null);
             }
-            return new FontFamily("Segoe UI");
         }
 
         public static Typeface GetTypeface(FontType fontType, FontStyle fontStyle, FontWeight fontWeight)

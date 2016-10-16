@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Editor.Caret"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:editor="clr-namespace:Editor"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" x:Name="This">
+    <Control.Style>
+        <Style TargetType="Control">
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="#FF222222"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Control">
+                        <Path DataContext="{Binding ElementName=This}" Data="{Binding GeometryPath}" Stroke="{Binding Foreground}" StrokeThickness="{Binding StrokeThickness}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Control.Style>
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="flashing">
+                <VisualState.StateTriggers>
+                    <StateTrigger IsActive="{Binding ElementName=This, Path=IsEnabled}" />
+                </VisualState.StateTriggers>
+                <VisualState.Storyboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" RepeatBehavior="Forever" AutoReverse="True" Duration="0:0:0.5">
+                            <DoubleAnimation.EasingFunction>
+                                <SineEase EasingMode="EaseInOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </VisualState.Storyboard>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+</UserControl>

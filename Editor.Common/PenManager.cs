@@ -14,7 +14,6 @@ namespace Editor
         private static readonly object BevelLock = new object();
         private static readonly object MiterLock = new object();
         private static readonly object RoundLock = new object();
-
         private static readonly object WhiteLock = new object();
 
         public static Pen GetWhitePen(double thickness)

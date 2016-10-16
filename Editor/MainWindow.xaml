@@ -119,7 +119,7 @@
                     <Button x:Name="pasteButton" Command="Paste" ToolTip="Paste" ToolTipService.ShowOnDisabled="True" Style="{StaticResource PasteButton}" />
                     <Separator />
                     <ComboBox Name="equationFontCombo" Width="100" DropDownClosed="EquationFontCombo_DropDownClosed" SelectedIndex="0">
-                        <ComboBoxItem Tag="STIXGeneral">STIX</ComboBoxItem>
+                        <ComboBoxItem Tag="StixGeneral">STIX</ComboBoxItem>
                         <ComboBoxItem Tag="Arial">Arial</ComboBoxItem>
                         <ComboBoxItem Tag="ArialBlack">Arial Black</ComboBoxItem>
                         <ComboBoxItem Tag="ComicSansMS">Comic Sans MS</ComboBoxItem>

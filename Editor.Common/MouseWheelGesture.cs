@@ -2,13 +2,19 @@
 
 namespace Editor
 {
-    public class MouseWheelGesture : MouseGesture
+    public sealed class MouseWheelGesture : MouseGesture
     {
         public WheelDirection Direction { get; set; }
 
-        public static MouseWheelGesture CtrlDown => new MouseWheelGesture(ModifierKeys.Control) { Direction = WheelDirection.Down };
+        public static MouseWheelGesture CtrlDown => new MouseWheelGesture(ModifierKeys.Control)
+        {
+            Direction = WheelDirection.Down
+        };
 
-        public static MouseWheelGesture CtrlUp => new MouseWheelGesture(ModifierKeys.Control) { Direction = WheelDirection.Up };
+        public static MouseWheelGesture CtrlUp => new MouseWheelGesture(ModifierKeys.Control)
+        {
+            Direction = WheelDirection.Up
+        };
 
         public MouseWheelGesture()
             : base(MouseAction.WheelClick)
@@ -23,20 +29,21 @@ namespace Editor
         public override bool Matches(object targetElement, InputEventArgs inputEventArgs)
         {
             if (!base.Matches(targetElement, inputEventArgs)) return false;
-            if (!(inputEventArgs is MouseWheelEventArgs)) return false;
-            var args = (MouseWheelEventArgs)inputEventArgs;
+
+            var mouseWheelEventArgs = inputEventArgs as MouseWheelEventArgs;
+            if (mouseWheelEventArgs == null) return false;
+
             switch (Direction)
             {
                 case WheelDirection.None:
-                    return args.Delta == 0;
+                    return mouseWheelEventArgs.Delta == 0;
                 case WheelDirection.Up:
-                    return args.Delta > 0;
+                    return mouseWheelEventArgs.Delta > 0;
                 case WheelDirection.Down:
-                    return args.Delta < 0;
+                    return mouseWheelEventArgs.Delta < 0;
                 default:
                     return false;
             }
         }
-        
     }
 }

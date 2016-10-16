@@ -10,37 +10,26 @@ namespace Editor
     public abstract class EquationBase
     {
         //do not use this.. just for debugging
-        int IndexInChildrenOfParent
-        {
-            get
-            {
-                return ParentEquation.GetIndex(this);
-            }
-        }
-        
-        protected static TextManager textManager = new TextManager();
-        static Thickness ZeroMargin = new Thickness();
-        public virtual Thickness Margin
-        {
-            get { return ZeroMargin; } 
-        }
-        
-        static protected double lineFactor = 0.06;
+        private int IndexInChildrenOfParent => ParentEquation.GetIndex(this);
+
+        protected static TextManager TextManager = new TextManager();
+        private static readonly Thickness ZeroMargin = new Thickness();
+        public virtual Thickness Margin => ZeroMargin;
+
+        protected static double LineFactor = 0.06;
         public virtual bool ApplySymbolGap { get; set; }
 
         public virtual HashSet<int> GetUsedTextFormats() { return null; }
         public virtual void ResetTextFormats(Dictionary<int, int> formatMapping) { }
 
-        protected double LineThickness { get { return fontSize * lineFactor; } }
-        protected double ThinLineThickness { get { return fontSize * lineFactor * 0.7; } }
-        protected Pen StandardPen { get { return PenManager.GetPen(LineThickness); } }
-        protected Pen ThinPen { get { return PenManager.GetPen(ThinLineThickness); } }
-
-        protected Pen StandardMiterPen { get { return PenManager.GetPen(LineThickness, PenLineJoin.Miter); } }
-        protected Pen ThinMiterPen { get { return PenManager.GetPen(ThinLineThickness, PenLineJoin.Miter); } }
-
-        protected Pen StandardRoundPen { get { return PenManager.GetPen(LineThickness, PenLineJoin.Round); } }
-        protected Pen ThinRoundPen { get { return PenManager.GetPen(ThinLineThickness, PenLineJoin.Round); } }
+        protected double LineThickness => _fontSize * LineFactor;
+        protected double ThinLineThickness => _fontSize * LineFactor * 0.7;
+        protected Pen StandardPen => PenManager.GetPen(LineThickness);
+        protected Pen ThinPen => PenManager.GetPen(ThinLineThickness);
+        protected Pen StandardMiterPen => PenManager.GetPen(LineThickness, PenLineJoin.Miter);
+        protected Pen ThinMiterPen => PenManager.GetPen(ThinLineThickness, PenLineJoin.Miter);
+        protected Pen StandardRoundPen => PenManager.GetPen(LineThickness, PenLineJoin.Round);
+        protected Pen ThinRoundPen => PenManager.GetPen(ThinLineThickness, PenLineJoin.Round);
 
         public HAlignment HAlignment { get; set; }
         public VAlignment VAlignment { get; set; }
@@ -51,19 +40,25 @@ namespace Editor
         public static event EventHandler<EventArgs> SelectionAvailable;
         public static event EventHandler<EventArgs> SelectionUnavailable;
 
-        static bool isSelecting;
+        private static bool _isSelecting;
         protected static bool IsSelecting
         {
-            get { return isSelecting; }
+            get { return _isSelecting; }
             set
             {
-                isSelecting = value;
-                if (isSelecting)
+                _isSelecting = value;
+                
+                if (_isSelecting)
                 {
+                    if (SelectionAvailable == null)
+                        throw new InvalidOperationException($"{nameof(SelectionAvailable)} was null");
+
                     SelectionAvailable(null, EventArgs.Empty); //there MUST always be one handler attached!
                 }
                 else
                 {
+                    if (SelectionUnavailable == null)
+                        throw new InvalidOperationException($"{nameof(SelectionUnavailable)} was null");
                     SelectionUnavailable(null, EventArgs.Empty); //there MUST always be one handler attached!
                 }
             }
@@ -72,36 +67,36 @@ namespace Editor
         public static bool ShowNesting { get; set; }
         public EquationContainer ParentEquation { get; set; }
         //protected static Pen BluePen = new Pen(Brushes.Blue, 1);
-        Point location = new Point();
+        private Point _location;
         //Point refPoint = new Point();
-        double width;
-        double height;
-        double fontSize = 20;
-        double fontFactor = 1;
-        Pen boxPen = new Pen(Brushes.Black, 1);
+        private double _width;
+        private double _height;
+        private double _fontSize = 20;
+        private double _fontFactor = 1;
+        private readonly Pen _boxPen = new Pen(Brushes.Black, 1);
         public int SelectionStartIndex { get; set; }
         public int SelectedItems { get; set; } //this is a directed value (as on a real line!!)
 
-        protected Brush debugBrush;
-        byte r = 80;
-        byte g = 80;
-        byte b = 80;
+        protected Brush DebugBrush;
+        private readonly byte _r = 80;
+        private readonly byte _g = 80;
+        private readonly byte _b = 80;
 
-        public EquationBase(EquationContainer parent)
+        protected EquationBase(EquationContainer parent)
         {
             this.ParentEquation = parent;
             if (parent != null)
             {
                 SubLevel = parent.SubLevel;
-                fontSize = parent.fontSize;
+                _fontSize = parent._fontSize;
                 ApplySymbolGap = parent.ApplySymbolGap;
-                r = (byte)(parent.r + 15);
-                g = (byte)(parent.r + 15);
-                b = (byte)(parent.r + 15);
+                _r = (byte)(parent._r + 15);
+                _g = (byte)(parent._r + 15);
+                _b = (byte)(parent._r + 15);
             }
-            debugBrush = new SolidColorBrush(Color.FromArgb(100, r, g, b));
-            debugBrush.Freeze();
-            boxPen.Freeze();
+            DebugBrush = new SolidColorBrush(Color.FromArgb(100, _r, _g, _b));
+            DebugBrush.Freeze();
+            _boxPen.Freeze();
         }
 
         public virtual bool ConsumeMouseClick(Point mousePoint) { return false; }
@@ -111,8 +106,8 @@ namespace Editor
         public virtual void ConsumeText(string text) { }
         public virtual void ConsumeFormattedText(string text, int[] formats, EditorMode[] modes, CharacterDecorationInfo[] decorations, bool addUndo) { }
         public virtual bool ConsumeKey(Key key) { return false; }
-        public virtual Point GetVerticalCaretLocation() { return location; }
-        public virtual double GetVerticalCaretLength() { return height; }
+        public virtual Point GetVerticalCaretLocation() { return _location; }
+        public virtual double GetVerticalCaretLength() { return _height; }
         protected virtual void CalculateWidth() { }
         protected virtual void CalculateHeight() { }
         public virtual XElement Serialize() { return null; }
@@ -139,65 +134,56 @@ namespace Editor
         {
             if (ShowNesting)
             {
-                dc.DrawRectangle(debugBrush, null, Bounds);
+                dc.DrawRectangle(DebugBrush, null, Bounds);
             }
         }
 
         public virtual double FontFactor
         {
-            get { return fontFactor; }
+            get { return _fontFactor; }
             set
             {
-                fontFactor = value;
-                FontSize = fontSize; //fontsize needs adjustement!
+                _fontFactor = value;
+                FontSize = _fontSize; //fontsize needs adjustement!
             }
         }
 
         public virtual double FontSize
         {
-            get { return fontSize; }
+            get { return _fontSize; }
             set
             {
-                fontSize = Math.Min(1000, Math.Max(value * fontFactor, 4));
+                _fontSize = Math.Min(1000, Math.Max(value * _fontFactor, 4));
             }
         }
 
-        public virtual double RefX
-        {
-            get { return width / 2; }
-        }
+        public virtual double RefX => _width / 2;
 
-        public virtual double RefY
-        {
-            get { return height / 2; }
-        }        
+        public virtual double RefY => _height / 2;
 
-        public double RefYReverse
-        {
-            get { return height - RefY; }
-        }
+        public double RefYReverse => _height - RefY;
 
         public virtual double Width
         {
-            get { return width; }
+            get { return _width; }
             set
             {
-                width = value;
+                _width = value;
             }
         }
 
         public virtual double Height
         {
-            get { return height; }
+            get { return _height; }
             set
             {
-                height = value > 0 ? value : 0;
+                _height = value > 0 ? value : 0;
             }
         }
 
         public Point Location
         {
-            get { return location; }
+            get { return _location; }
             set
             {
                 Left = value.X;
@@ -207,47 +193,42 @@ namespace Editor
 
         public virtual double Left
         {
-            get { return location.X; }
-            set { location.X = value; }
+            get { return _location.X; }
+            set { _location.X = value; }
         }
+
         public virtual double Top
         {
-            get { return location.Y; }
-            set { location.Y = value; }
+            get { return _location.Y; }
+            set { _location.Y = value; }
         }
 
         public double MidX
         {
-            get { return location.X + RefX; }
+            get { return _location.X + RefX; }
             set { Left = value - RefX; }
         }
 
         public double MidY
         {
-            get { return location.Y + RefY; }
+            get { return _location.Y + RefY; }
             set { Top = value - RefY; }
         }
 
         public virtual double Right
         {
-            get { return location.X + width; }
-            set { Left = value - width; }
+            get { return _location.X + _width; }
+            set { Left = value - _width; }
         }
 
         public virtual double Bottom
         {
-            get { return location.Y + height; }
-            set { Top = value - height; }
+            get { return _location.Y + _height; }
+            set { Top = value - _height; }
         }
 
-        public Size Size
-        {
-            get { return new Size(width, height); }
-        }
+        public Size Size => new Size(_width, _height);
 
-        public Rect Bounds
-        {
-            get { return new Rect(location, Size); }
-        }
+        public Rect Bounds => new Rect(_location, Size);
     }
 }

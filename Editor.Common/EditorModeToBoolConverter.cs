@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Editor
 {
-    public class EditorModeToBoolConverter : IValueConverter
+    public sealed class EditorModeToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

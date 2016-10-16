@@ -132,7 +132,7 @@ namespace Editor
 
         private void FitSignToHeight(FontType fontType, string unicodeCharText)
         {
-            double factor = .4;
+            var factor = .4;
             do
             {
                 signText = FontFactory.GetFormattedText(unicodeCharText, fontType, FontSize * factor);
