@@ -23,7 +23,7 @@ namespace Editor
             get { return FontSize * .1; }
         }
 
-        public DivMath(EquationContainer parent)
+        public DivMath(IEquationContainer parent)
             : base(parent)
         {
             divMathSign = new DivMathSign(this);

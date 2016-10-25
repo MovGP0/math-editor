@@ -2,7 +2,7 @@
 {
     public class RightBracket : Bracket
     {
-        public RightBracket(EquationContainer parent, BracketSignType bracketType)
+        public RightBracket(IEquationContainer parent, BracketSignType bracketType)
             : base(parent)
         {
             bracketSign = new BracketSign(this, bracketType);

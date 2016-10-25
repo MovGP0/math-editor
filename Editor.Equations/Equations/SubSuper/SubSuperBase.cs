@@ -30,7 +30,7 @@
             set { buddy = value; }
         }
 
-        protected SubSuperBase(EquationRow parent, Position position)
+        protected SubSuperBase(IEquationRow parent, Position position)
             : base(parent)
         {
             ApplySymbolGap = false;

@@ -113,7 +113,14 @@
     <Compile Include="Equations\HorizontalBracket\HorizontalBracket.cs" />
     <Compile Include="Equations\HorizontalBracket\HorizontalBracketSign.cs" />
     <Compile Include="Equations\HorizontalBracket\TopBracket.cs" />
+    <Compile Include="Equations\IColor.cs" />
     <Compile Include="Equations\IEquationBase.cs" />
+    <Compile Include="Equations\IEquationContainer.cs" />
+    <Compile Include="Equations\IEquationRow.cs" />
+    <Compile Include="Equations\IFontSize.cs" />
+    <Compile Include="Equations\IPositionContainer.cs" />
+    <Compile Include="Equations\IRowContainer.cs" />
+    <Compile Include="Equations\ISelectableContainer.cs" />
     <Compile Include="Equations\Misc\Box.cs" />
     <Compile Include="Equations\Misc\MatrixEquation.cs" />
     <Compile Include="Equations\Root\nRoot.cs" />

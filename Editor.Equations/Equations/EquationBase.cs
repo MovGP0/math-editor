@@ -83,7 +83,7 @@ namespace Editor
         }
 
         public static bool ShowNesting { get; set; }
-        public EquationContainer ParentEquation { get; set; }
+        public IEquationContainer ParentEquation { get; set; }
         private Point _location;
         private double _width;
         private double _height;
@@ -94,30 +94,30 @@ namespace Editor
         public int SelectedItems { get; set; } //this is a directed value (as on a real line!!)
 
         protected Brush DebugBrush;
-        private readonly byte _r = 80;
-        private readonly byte _g = 80;
-        private readonly byte _b = 80;
+        public byte R { get; } = 80;
+        public byte G { get; } = 80;
+        public byte B { get; } = 80;
 
-        protected EquationBase(EquationContainer parent)
+        protected EquationBase(IEquationContainer parent)
         {
             ParentEquation = parent;
             if (parent != null)
             {
                 SubLevel = parent.SubLevel;
-                _fontSize = parent._fontSize;
+                FontSize = parent.FontSize;
                 ApplySymbolGap = parent.ApplySymbolGap;
-                _r = (byte)(parent._r + 15);
-                _g = (byte)(parent._r + 15);
-                _b = (byte)(parent._r + 15);
+                R = (byte)(parent.R + 15);
+                G = (byte)(parent.R + 15);
+                B = (byte)(parent.R + 15);
             }
-            DebugBrush = new SolidColorBrush(Color.FromArgb(100, _r, _g, _b));
+            DebugBrush = new SolidColorBrush(Color.FromArgb(100, R, G, B));
             DebugBrush.Freeze();
             _boxPen.Freeze();
         }
 
         public virtual bool ConsumeMouseClick(Point mousePoint) { return false; }
         public virtual void HandleMouseDrag(Point mousePoint) { }
-        public virtual IEquationBase Split(EquationContainer newParent) { return null; }
+        public virtual IEquationBase Split(IEquationContainer newParent) { return null; }
         public virtual void ConsumeText(string text) { }
         public virtual void ConsumeFormattedText(string text, int[] formats, EditorMode[] modes, CharacterDecorationInfo[] decorations, bool addUndo) { }
         public virtual bool ConsumeKey(Key key) { return false; }

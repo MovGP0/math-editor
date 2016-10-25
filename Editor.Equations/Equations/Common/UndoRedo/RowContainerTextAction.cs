@@ -26,7 +26,7 @@ namespace Editor
         public EditorMode[] FirstModesOfInsertedText { get; set; }
         public CharacterDecorationInfo[] FirstDecorationsOfInsertedText { get; set; }
 
-        public List<EquationRow> Equations { get; set; }
+        public List<IEquationRow> Equations { get; set; }
 
         public RowContainerTextAction(ISupportsUndo executor)
             : base(executor)

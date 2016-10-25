@@ -6,12 +6,12 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    public class CompositeBottomTop : CompositeBase
+    public sealed class CompositeBottomTop : CompositeBase
     {
         RowContainer topRow;        
         RowContainer bottomRow;
 
-        public CompositeBottomTop(EquationContainer parent)
+        public CompositeBottomTop(IEquationContainer parent)
             : base(parent)
         {
             SubLevel++;

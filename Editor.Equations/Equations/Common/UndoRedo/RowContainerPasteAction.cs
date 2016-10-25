@@ -34,7 +34,7 @@ namespace Editor
         public CharacterDecorationInfo[] HeadDecorationsOfPastedRows { get; set; }
         public CharacterDecorationInfo[] TailDecorationsOfPastedRows { get; set; }
 
-        public List<EquationRow> Equations { get; set; }
+        public List<IEquationRow> Equations { get; set; }
 
         public RowContainerPasteAction(ISupportsUndo executor)
             : base(executor)

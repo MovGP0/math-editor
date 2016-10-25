@@ -24,7 +24,7 @@ namespace Editor
             get { return FontSize * .1; }
         }
 
-        public DivTriangle(EquationContainer parent, bool isFixed)
+        public DivTriangle(IEquationContainer parent, bool isFixed)
             : base(parent)
         {
             this.isFixed = isFixed;

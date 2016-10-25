@@ -1,8 +1,8 @@
 ﻿namespace Editor
 {
-    public class BottomBracket : HorizontalBracket
+    public sealed class BottomBracket : HorizontalBracket
     {
-        public BottomBracket(EquationContainer parent, HorizontalBracketSignType signType)
+        public BottomBracket(IEquationContainer parent, HorizontalBracketSignType signType)
              :base (parent, signType)
         {
             bottomEquation.FontFactor = SubFontFactor;

@@ -2,7 +2,7 @@
 {
     public class DivRegularSmall : DivRegular
     {
-        public DivRegularSmall(EquationContainer parent)
+        public DivRegularSmall(IEquationContainer parent)
             : base(parent, true)
         {            
         }
@@ -10,7 +10,7 @@
 
     public class DivDoubleBar : DivRegular
     {
-        public DivDoubleBar(EquationContainer parent)
+        public DivDoubleBar(IEquationContainer parent)
             : base(parent)
         {
             barCount = 2;
@@ -19,7 +19,7 @@
 
     public class DivTripleBar : DivRegular
     {
-        public DivTripleBar(EquationContainer parent)
+        public DivTripleBar(IEquationContainer parent)
             : base(parent)
         {
             barCount = 3;
@@ -28,7 +28,7 @@
 
     public class DivSlantedSmall : DivSlanted
     {
-        public DivSlantedSmall(EquationContainer parent)
+        public DivSlantedSmall(IEquationContainer parent)
             : base(parent, true)
         {            
         }
@@ -36,7 +36,7 @@
 
     public class DivHorizSmall : DivHorizontal
     {
-        public DivHorizSmall(EquationContainer parent)
+        public DivHorizSmall(IEquationContainer parent)
             : base(parent, true)
         {           
         }

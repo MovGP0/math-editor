@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Editor
 {
-    public class EquationRoot : EquationContainer
+    public sealed class EquationRoot : EquationContainer
     {
         Caret vCaret;
         Caret hCaret;
@@ -38,8 +38,8 @@ namespace Editor
 
         public void SaveFile(Stream stream)
         {
-            XDocument xDoc = new XDocument();
-            XElement root = new XElement(GetType().Name); //ActiveChild.Serialize();
+            var xDoc = new XDocument();
+            var root = new XElement(GetType().Name); //ActiveChild.Serialize();
             root.Add(new XAttribute("fileVersion", fileVersion));
             root.Add(new XAttribute("appVersion", Assembly.GetEntryAssembly().GetName().Version));
             TextManager.OptimizeForSave(this);
@@ -54,14 +54,14 @@ namespace Editor
         {
             UndoManager.ClearAll();
             DeSelect();
-            XDocument xDoc = XDocument.Load(stream, LoadOptions.PreserveWhitespace);
-            XElement root = xDoc.Root;
+            var xDoc = XDocument.Load(stream, LoadOptions.PreserveWhitespace);
+            var root = xDoc.Root;
             XAttribute fileVersionAttribute;
             XAttribute appVersionAttribute;
 
             if (root.Name == GetType().Name)
             {
-                XElement formattingElement = root.Element("TextManager");
+                var formattingElement = root.Element("TextManager");
                 TextManager.DeSerialize(formattingElement);
                 fileVersionAttribute = root.Attributes("fileVersion").FirstOrDefault();
                 appVersionAttribute = root.Attributes("appVersion").FirstOrDefault();
@@ -72,7 +72,7 @@ namespace Editor
                 fileVersionAttribute = root.Attributes("fileVersion").FirstOrDefault();
                 appVersionAttribute = root.Attributes("appVersion").FirstOrDefault();
             }            
-            string appVersion = appVersionAttribute != null ? appVersionAttribute.Value : "Unknown";
+            var appVersion = appVersionAttribute != null ? appVersionAttribute.Value : "Unknown";
             if (fileVersionAttribute == null || fileVersionAttribute.Value != fileVersion)
             {
                 MessageBox.Show("The file was created by a different version (v." + appVersion + ") of Math Editor and uses a different format." + Environment.NewLine + Environment.NewLine +
@@ -131,12 +131,12 @@ namespace Editor
             }
             else
             {
-                int undoCount = UndoManager.UndoCount + 1;
+                var undoCount = UndoManager.UndoCount + 1;
                 if (IsSelecting)
                 {
                     ActiveChild.RemoveSelection(true);
                 }
-                ((EquationContainer)ActiveChild).ExecuteCommand(commandDetails.CommandType, commandDetails.CommandParam);
+                ((IEquationContainer)ActiveChild).ExecuteCommand(commandDetails.CommandType, commandDetails.CommandParam);
                 if (IsSelecting && undoCount < UndoManager.UndoCount)
                 {
                     UndoManager.ChangeUndoCountOfLastAction(1);
@@ -151,23 +151,22 @@ namespace Editor
         {
             vCaret.Location = ActiveChild.GetVerticalCaretLocation();
             vCaret.CaretLength = ActiveChild.GetVerticalCaretLength();
-            EquationContainer innerMost = ((RowContainer)ActiveChild).GetInnerMostEquationContainer();
+            var innerMost = ((IRowContainer)ActiveChild).GetInnerMostEquationContainer();
             hCaret.Location = innerMost.GetHorizontalCaretLocation();
             hCaret.CaretLength = innerMost.GetHorizontalCaretLength();
         }
 
         public override CopyDataObject Copy(bool removeSelection)
         {
-            CopyDataObject temp = base.Copy(removeSelection);
-            DataObject data = new DataObject();
+            var temp = base.Copy(removeSelection);
+            var data = new DataObject();
             data.SetImage(temp.Image);
-            XElement rootElement = new XElement(this.GetType().Name);
+            var rootElement = new XElement(this.GetType().Name);
             rootElement.Add(new XElement("SessionId", sessionString));
             rootElement.Add(TextManager.Serialize());
             rootElement.Add(new XElement("payload", temp.XElement));
-            MathEditorData med = new MathEditorData { XmlString = rootElement.ToString() };
+            var med = new MathEditorData { XmlString = rootElement.ToString() };
             data.SetData(med);
-            //data.SetText(GetSelectedText());
             if (temp.Text != null)
             {
                 data.SetText(temp.Text);
@@ -183,12 +182,12 @@ namespace Editor
 
         public override void Paste(XElement xe)
         {
-            string id = xe.Element("SessionId").Value;
+            var id = xe.Element("SessionId").Value;
             if (id != sessionString)
             {
                 TextManager.ProcessPastedXML(xe);
             }
-            int undoCount = UndoManager.UndoCount + 1;
+            var undoCount = UndoManager.UndoCount + 1;
             if (IsSelecting)
             {
                 ActiveChild.RemoveSelection(true);
@@ -205,10 +204,10 @@ namespace Editor
 
         public bool PasteFromClipBoard()
         {
-            bool success = false;
+            var success = false;
             MathEditorData data = null;
-            string text = "";
-            for (int i = 0; i < 3; i++)
+            var text = "";
+            for (var i = 0; i < 3; i++)
             {
                 try
                 {
@@ -217,7 +216,7 @@ namespace Editor
                         data = Clipboard.GetData(typeof(MathEditorData).FullName) as MathEditorData;                        
                         break;
                     }
-                    else if (Clipboard.ContainsText())
+                    if (Clipboard.ContainsText())
                     {
                         text = Clipboard.GetText();
                         break;
@@ -232,7 +231,7 @@ namespace Editor
             {
                 if (data != null)
                 {
-                    XElement element = XElement.Parse(data.XmlString, LoadOptions.PreserveWhitespace);
+                    var element = XElement.Parse(data.XmlString, LoadOptions.PreserveWhitespace);
                     Paste(element);
                     success = true;
                 }
@@ -251,7 +250,7 @@ namespace Editor
 
         public override void ConsumeText(string text)
         {
-            int undoCount = UndoManager.UndoCount + 1;
+            var undoCount = UndoManager.UndoCount + 1;
             if (IsSelecting)
             {
                 ActiveChild.RemoveSelection(true);
@@ -282,9 +281,9 @@ namespace Editor
 
         public void SaveImageToFile(string path)
         {
-            string extension = Path.GetExtension(path).ToLower();
-            DrawingVisual dv = new DrawingVisual();
-            using (DrawingContext dc = dv.RenderOpen())
+            var extension = Path.GetExtension(path).ToLower();
+            var dv = new DrawingVisual();
+            using (var dc = dv.RenderOpen())
             {
                 if (extension == ".bmp" || extension == "jpg")
                 {
@@ -292,7 +291,7 @@ namespace Editor
                 }
                 ActiveChild.DrawEquation(dc);                
             }
-            RenderTargetBitmap bitmap = new RenderTargetBitmap((int)(Math.Ceiling(Width + Location.X * 2)), (int)(Math.Ceiling(Height + Location.Y * 2)), 96, 96, PixelFormats.Default);
+            var bitmap = new RenderTargetBitmap((int)(Math.Ceiling(Width + Location.X * 2)), (int)(Math.Ceiling(Height + Location.Y * 2)), 96, 96, PixelFormats.Default);
             bitmap.Render(dv);
             BitmapEncoder encoder = null;
             switch (extension)
@@ -344,7 +343,7 @@ namespace Editor
                 return true;
             }
             Key[] handledKeys = { Key.Left, Key.Right, Key.Delete, Key.Up, Key.Down, Key.Enter, Key.Escape, Key.Back, Key.Home, Key.End };
-            bool result = false;
+            var result = false;
             if (handledKeys.Contains(key))
             {
                 result = true;

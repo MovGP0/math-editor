@@ -6,7 +6,7 @@ namespace Editor
     {
         RowContainer rowContainer;
 
-        public Sub(EquationRow parent, Position position)
+        public Sub(IEquationRow parent, Position position)
             : base(parent, position)
         {   
             ActiveChild = rowContainer = new RowContainer(this);

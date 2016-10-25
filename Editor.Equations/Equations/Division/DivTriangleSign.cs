@@ -5,7 +5,7 @@ namespace Editor
 {
     public class DivTriangleSign : EquationBase
     {
-        public DivTriangleSign(EquationContainer parent)
+        public DivTriangleSign(IEquationContainer parent)
             : base(parent)
         {
             IsStatic = true;

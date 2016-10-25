@@ -2,7 +2,7 @@
 {
     public class TopBracket : HorizontalBracket
     {
-        public TopBracket(EquationContainer parent, HorizontalBracketSignType signType)
+        public TopBracket(IEquationContainer parent, HorizontalBracketSignType signType)
              :base (parent, signType)
         {
             topEquation.FontFactor = SubFontFactor;

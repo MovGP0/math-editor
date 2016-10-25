@@ -8,7 +8,7 @@ namespace Editor
     {
         protected RowContainer outerEquation;
 
-        public DivMathWithOuterBase(EquationContainer parent)
+        protected DivMathWithOuterBase(IEquationContainer parent)
             : base(parent)
         {            
             outerEquation = new RowContainer(this);

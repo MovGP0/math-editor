@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Editor
 {
-    public class Box : EquationContainer
+    public sealed class Box : EquationContainer
     {
         BoxType boxType;
         RowContainer insideEq = null;
@@ -72,7 +72,7 @@ namespace Editor
         Point LeftBottom { get { return new Point(Left + LeftPadding / 2, Bottom - BottomPadding / 2); } }
         Point RightBottom { get { return new Point(Right - RightPadding / 2, Bottom - BottomPadding / 2); } }
 
-        public Box(EquationContainer parent, BoxType boxType)
+        public Box(IEquationContainer parent, BoxType boxType)
             :base (parent)
         {
             this.boxType = boxType;

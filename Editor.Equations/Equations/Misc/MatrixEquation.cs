@@ -17,7 +17,7 @@ namespace Editor
             get { return new Thickness(FontSize * .15, 0, FontSize * .15, 0); }
         }
 
-        public MatrixEquation(EquationContainer parent, int rows, int columns)
+        public MatrixEquation(IEquationContainer parent, int rows, int columns)
             : base(parent)
         {
             this.rows = rows;

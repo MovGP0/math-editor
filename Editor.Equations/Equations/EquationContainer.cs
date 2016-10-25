@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Editor
 {
-    public abstract class EquationContainer : EquationBase
+    public abstract class EquationContainer : EquationBase, IEquationContainer
     {
         public int GetIndex(IEquationBase child)
         {
@@ -24,7 +24,7 @@ namespace Editor
             }
         }
 
-        protected List<IEquationBase> ChildEquations = new List<IEquationBase>();
+        public List<IEquationBase> ChildEquations { get; } = new List<IEquationBase>();
         IEquationBase active;
         public IEquationBase ActiveChild
         {
@@ -35,19 +35,16 @@ namespace Editor
                 {
                     active = value;
                 }
-                else
-                {
-                }
             }
         }
 
-        public EquationContainer(EquationContainer parent) : base(parent) { }
+        protected EquationContainer(IEquationContainer parent) : base(parent) { }
 
         public virtual void ExecuteCommand(CommandType commandType, object data)
         {
-            if (ActiveChild is EquationContainer)
+            if (ActiveChild is IEquationContainer)
             {
-                ((EquationContainer)ActiveChild).ExecuteCommand(commandType, data);
+                ((IEquationContainer)ActiveChild).ExecuteCommand(commandType, data);
             }
             CalculateSize();
         }
@@ -158,43 +155,25 @@ namespace Editor
             return ActiveChild.GetVerticalCaretLength();
         }
 
-        public virtual EquationContainer GetInnerMostEquationContainer()
+        public virtual IEquationContainer GetInnerMostEquationContainer()
         {
-            if (ActiveChild is EquationContainer)
-            {
-                return ((EquationContainer)ActiveChild).GetInnerMostEquationContainer();
-            }
-            else
-            {
-                return this;
-            }
+            var child = ActiveChild as IEquationContainer;
+            return child != null ? child.GetInnerMostEquationContainer() : this;
         }
 
         public Point GetHorizontalCaretLocation()
         {
-            if (ActiveChild is EquationContainer)
-            {
-                return ((EquationContainer)ActiveChild).GetHorizontalCaretLocation();
-            }
-            else
-            {
-                return new Point(this.Left, this.Bottom);
-            }
+            var child = ActiveChild as EquationContainer;
+            return child?.GetHorizontalCaretLocation() ?? new Point(Left, Bottom);
         }
 
         public double GetHorizontalCaretLength()
         {
-            if (ActiveChild is EquationContainer)
-            {
-                return ((EquationContainer)ActiveChild).GetHorizontalCaretLength();
-            }
-            else
-            {
-                return Width;
-            }
+            var child = ActiveChild as EquationContainer;
+            return child?.GetHorizontalCaretLength() ?? Width;
         }
 
-        public override IEquationBase Split(EquationContainer newParent)
+        public override IEquationBase Split(IEquationContainer newParent)
         {
             var result = ActiveChild.Split(this);
             CalculateSize();
@@ -221,7 +200,7 @@ namespace Editor
                 for (int i = ChildEquations.Count - 1; i >= 0; i--)
                 {
                     Type type = ChildEquations[i].GetType();
-                    if (type == typeof(RowContainer) || type == typeof(EquationRow))
+                    if (type == typeof(IRowContainer) || type == typeof(IEquationRow))
                     {
                         ChildEquations[i].SetCursorOnKeyUpDown(key, point);
                         ActiveChild = ChildEquations[i];
@@ -234,7 +213,7 @@ namespace Editor
                 for (int i = 0; i < ChildEquations.Count; i++)
                 {
                     Type type = ChildEquations[i].GetType();
-                    if (type == typeof(RowContainer) || type == typeof(EquationRow))
+                    if (type == typeof(IRowContainer) || type == typeof(IEquationRow))
                     {
                         ChildEquations[i].SetCursorOnKeyUpDown(key, point);
                         ActiveChild = ChildEquations[i];
@@ -310,6 +289,7 @@ namespace Editor
                 eb.ResetTextFormats(formatMapping);
             }
         }
+        
         public override bool ApplySymbolGap
         {
             get

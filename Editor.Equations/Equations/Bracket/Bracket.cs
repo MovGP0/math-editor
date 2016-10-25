@@ -5,24 +5,17 @@ namespace Editor
 {
     public abstract class Bracket : EquationContainer
     {
-        protected RowContainer insideEq = null;
+        protected RowContainer insideEq;
         protected BracketSign bracketSign;
         protected double ExtraHeight { get; set; }
 
-        public Bracket(EquationContainer parent)
+        protected Bracket(IEquationContainer parent)
             : base(parent)
         {
             ExtraHeight = FontSize * 0.2;
             ActiveChild = insideEq = new RowContainer(this);
         }
-
-        //public override void DrawEquation(DrawingContext dc)
-        //{
-        //    base.DrawEquation(dc);
-        //    dc.DrawLine(new Pen(Brushes.Red, 1), new Point(Left, insideEq.MidY), new Point(Right, insideEq.MidY));
-        //    dc.DrawLine(new Pen(Brushes.Blue, 1), new Point(Left, bracketSign.MidY), new Point(Right, bracketSign.MidY));
-        //}
-
+        
         public override XElement Serialize()
         {
             XElement thisElement = new XElement(GetType().Name);
@@ -69,13 +62,5 @@ namespace Editor
             Height = Math.Max(upperMax, lowerMax) * 2 + ExtraHeight;
             bracketSign.Height = Height;
         }
-
-        //public override double RefY
-        //{
-        //    get
-        //    {
-        //        return insideEq.RefY + ExtraHeight / 2;
-        //    }
-        //}
     }
 }

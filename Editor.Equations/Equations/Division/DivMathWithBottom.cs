@@ -2,7 +2,7 @@
 {
     public class DivMathWithBottom : DivMathWithOuterBase
     {
-        public DivMathWithBottom(EquationContainer parent)
+        public DivMathWithBottom(IEquationContainer parent)
             : base(parent)
         {
             divMathSign.IsInverted = true; 

@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    public class Arrow : EquationContainer
+    public sealed class Arrow : EquationContainer
     {
         RowContainer rowContainer1;
         RowContainer rowContainer2;
@@ -31,7 +31,7 @@ namespace Editor
             }
         }
 
-        public Arrow(EquationContainer parent, ArrowType arrowType, Position equationPosition)
+        public Arrow(IEquationContainer parent, ArrowType arrowType, Position equationPosition)
             : base(parent)
         {
             this.arrowType = arrowType;

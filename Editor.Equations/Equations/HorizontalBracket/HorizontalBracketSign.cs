@@ -10,7 +10,7 @@ namespace Editor
         FormattedText leftCurlyPart;
         FormattedText rightCurlyPart;
 
-        public HorizontalBracketSign(EquationContainer parent, HorizontalBracketSignType signType)
+        public HorizontalBracketSign(IEquationContainer parent, HorizontalBracketSignType signType)
             : base(parent)
         {
             this.SignType = signType;

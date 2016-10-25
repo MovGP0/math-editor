@@ -2,7 +2,7 @@
 {
     public static class CompositeFactory
     {
-        public static IEquationBase CreateEquation(EquationContainer equationParent, Position position)
+        public static IEquationBase CreateEquation(IEquationContainer equationParent, Position position)
         {
             switch (position)
             {                

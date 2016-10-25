@@ -9,9 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace Editor
 {
-    public class EquationRow : EquationContainer, ISupportsUndo
+    public sealed class EquationRow : EquationContainer, IEquationRow
     {
-        protected EquationContainer deleteable = null;
+        private IEquationContainer _deleteable;
         static Pen boxPen = new Pen(Brushes.Blue, 1.1) { StartLineCap = PenLineCap.Flat, EndLineCap = PenLineCap.Flat };
 
         static EquationRow()
@@ -20,7 +20,7 @@ namespace Editor
             boxPen.Freeze();
         }
 
-        public EquationRow(EquationContainer parent)
+        public EquationRow(IEquationContainer parent)
             : base(parent)
         {
             var textEq = new TextEquation(this);
@@ -360,7 +360,7 @@ namespace Editor
         public override void DeSelect()
         {
             base.DeSelect();
-            deleteable = null;
+            _deleteable = null;
         }
 
         public override CopyDataObject Copy(bool removeSelection)
@@ -453,11 +453,11 @@ namespace Editor
         public override void DrawEquation(DrawingContext dc)
         {
             base.DrawEquation(dc);
-            if (deleteable != null)
+            if (_deleteable != null)
             {
                 Brush brush = new SolidColorBrush(Colors.Gray);
                 brush.Opacity = 0.5;
-                dc.DrawRectangle(brush, null, new Rect(deleteable.Location, deleteable.Size));
+                dc.DrawRectangle(brush, null, new Rect(_deleteable.Location, _deleteable.Size));
             }
             if (ChildEquations.Count == 1)
             {
@@ -544,7 +544,7 @@ namespace Editor
 
         public override void ExecuteCommand(CommandType commandType, object data)
         {
-            deleteable = null;
+            _deleteable = null;
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
                 IEquationBase newEquation = null;
@@ -636,7 +636,7 @@ namespace Editor
             }
         }
 
-        private void AddChild(IEquationBase newChild)
+        public void AddChild(IEquationBase newChild)
         {
             var index = 0;
             if (ChildEquations.Count > 0)
@@ -648,7 +648,7 @@ namespace Editor
             ActiveChild = newChild;
         }
 
-        private void RemoveChild(IEquationBase child)
+        public void RemoveChild(IEquationBase child)
         {
             ChildEquations.Remove(child);
             CalculateSize();
@@ -756,7 +756,7 @@ namespace Editor
 
         public override bool ConsumeMouseClick(Point mousePoint)
         {
-            deleteable = null;
+            _deleteable = null;
             ActiveChild = null;
             foreach (EquationBase eb in ChildEquations)
             {
@@ -828,25 +828,25 @@ namespace Editor
             }
             if (ActiveChild.ConsumeKey(key))
             {
-                deleteable = null;
+                _deleteable = null;
                 result = true;
             }
             else if (key == Key.Delete)
             {
                 if (ActiveChild.GetType() == typeof(TextEquation) && ActiveChild != ChildEquations.Last())
                 {
-                    if (ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1] == deleteable)
+                    if (ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1] == _deleteable)
                     {
-                        UndoManager.AddUndoAction(new RowAction(this, deleteable, (TextEquation)ChildEquations[ChildEquations.IndexOf(deleteable) + 1], 
-                                                                ChildEquations.IndexOf(deleteable), TextLength) { UndoFlag = false});
-                        ChildEquations.Remove(deleteable);
-                        deleteable = null;
+                        UndoManager.AddUndoAction(new RowAction(this, _deleteable, (TextEquation)ChildEquations[ChildEquations.IndexOf(_deleteable) + 1], 
+                                                                ChildEquations.IndexOf(_deleteable), TextLength) { UndoFlag = false});
+                        ChildEquations.Remove(_deleteable);
+                        _deleteable = null;
                         ((TextEquation)ActiveChild).Merge((TextEquation)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1]);
                         ChildEquations.Remove(ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1]);
                     }
                     else
                     {
-                        deleteable = (EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
+                        _deleteable = (EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
                     }
                     result = true;
                 }
@@ -857,45 +857,45 @@ namespace Editor
                 {
                     if (ActiveChild != ChildEquations.First())
                     {
-                        if ((EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1] == deleteable)
+                        if ((EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1] == _deleteable)
                         {
                             var equationAfter = (TextEquation)ActiveChild;
                             ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 2];
-                            UndoManager.AddUndoAction(new RowAction(this, deleteable, equationAfter, ChildEquations.IndexOf(deleteable), TextLength) { UndoFlag = false });
-                            ChildEquations.Remove(deleteable);
+                            UndoManager.AddUndoAction(new RowAction(this, _deleteable, equationAfter, ChildEquations.IndexOf(_deleteable), TextLength) { UndoFlag = false });
+                            ChildEquations.Remove(_deleteable);
                             ((TextEquation)ActiveChild).Merge(equationAfter);
                             ChildEquations.Remove(equationAfter);
-                            deleteable = null;
+                            _deleteable = null;
                         }
                         else
                         {
-                            deleteable = (EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
+                            _deleteable = (EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
                         }
                         result = true;
                     }
                 }
                 else
                 {
-                    if (deleteable == ActiveChild)
+                    if (_deleteable == ActiveChild)
                     {
                         var equationAfter = (TextEquation)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
                         ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
-                        UndoManager.AddUndoAction(new RowAction(this, deleteable, equationAfter, ChildEquations.IndexOf(deleteable), TextLength) { UndoFlag = false });
-                        ChildEquations.Remove(deleteable);
+                        UndoManager.AddUndoAction(new RowAction(this, _deleteable, equationAfter, ChildEquations.IndexOf(_deleteable), TextLength) { UndoFlag = false });
+                        ChildEquations.Remove(_deleteable);
                         ((TextEquation)ActiveChild).Merge(equationAfter);
                         ChildEquations.Remove(equationAfter);
-                        deleteable = null;
+                        _deleteable = null;
                     }
                     else
                     {
-                        deleteable = (EquationContainer)ActiveChild;
+                        _deleteable = (EquationContainer)ActiveChild;
                     }
                     result = true;
                 }
             }
             if (!result)
             {
-                deleteable = null;
+                _deleteable = null;
                 if (key == Key.Right)
                 {
                     if (ActiveChild != ChildEquations.Last())
@@ -917,7 +917,7 @@ namespace Editor
             return result;
         }
 
-        public void Merge(EquationRow secondLine)
+        public void Merge(IEquationRow secondLine)
         {
             ((TextEquation)ChildEquations.Last()).Merge((TextEquation)secondLine.ChildEquations.First()); //first and last are always of tyep TextEquation
             for (var i = 1; i < secondLine.ChildEquations.Count; i++)
@@ -927,7 +927,7 @@ namespace Editor
             CalculateSize();
         }
 
-        void SplitRow(EquationRow newRow)
+        void SplitRow(IEquationRow newRow)
         {
             var index = ChildEquations.IndexOf(ActiveChild) + 1;
             var newChild = ActiveChild.Split(newRow);
@@ -948,10 +948,10 @@ namespace Editor
             }
         }
 
-        public override IEquationBase Split(EquationContainer newParent)
+        public override IEquationBase Split(IEquationContainer newParent)
         {
-            deleteable = null;
-            EquationRow newRow = null;
+            _deleteable = null;
+            IEquationRow newRow = null;
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
                 newRow = new EquationRow(newParent);
@@ -970,7 +970,7 @@ namespace Editor
         {
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
-                deleteable = null;
+                _deleteable = null;
                 ((TextEquation)ActiveChild).Truncate();
                 var index = ChildEquations.IndexOf(ActiveChild) + 1;
                 var i = index;
@@ -1086,7 +1086,7 @@ namespace Editor
 
         public void ProcessUndo(EquationAction action)
         {
-            deleteable = null;
+            _deleteable = null;
             if (action.GetType() == typeof(RowAction))
             {
                 ProcessRowAction(action);
@@ -1134,7 +1134,7 @@ namespace Editor
             ActiveChild = ChildEquations[activeChildIndex];
         }
 
-        public void ResetRowEquation(EquationBase activeChild, int selectionStartIndex, int selectedItems)
+        public void ResetRowEquation(IEquationBase activeChild, int selectionStartIndex, int selectedItems)
         {
             SelectionStartIndex = selectionStartIndex;
             SelectedItems = selectedItems;
@@ -1355,7 +1355,7 @@ namespace Editor
             }
         }
 
-        public IEquationBase NextNonEmptyChild(EquationContainer equation)
+        public IEquationBase NextNonEmptyChild(IEquationContainer equation)
         {
             var index = ChildEquations.IndexOf(equation) + 1;
             if (index >= ChildEquations.Count) return null;

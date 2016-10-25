@@ -17,7 +17,7 @@ namespace Editor
             get { return FontSize * .1; }
         }
 
-        public SquareRoot(EquationContainer parent)
+        public SquareRoot(IEquationContainer parent)
             : base(parent)
         {            
             radicalSign = new RadicalSign(this);

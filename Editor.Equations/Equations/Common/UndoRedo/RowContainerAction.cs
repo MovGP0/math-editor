@@ -5,9 +5,9 @@
         public int Index { get; set; }
         public int ChildIndexInRow { get; set; }
         public int CaretIndex { get; set; }
-        public EquationRow Equation { get; set; }
+        public IEquationRow Equation { get; set; }
 
-        public RowContainerAction(ISupportsUndo executor, int index, int childIndexInRow, int caretIndex, EquationRow equation)
+        public RowContainerAction(ISupportsUndo executor, int index, int childIndexInRow, int caretIndex, IEquationRow equation)
             : base(executor)
         {
             Index = index;

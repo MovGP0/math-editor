@@ -6,14 +6,14 @@ using System.Windows;
 
 namespace Editor
 {
-    public class CompositeBottom : CompositeBase
+    public sealed class CompositeBottom : CompositeBase
     {        
         RowContainer bottomRowContainer;
 
-        public CompositeBottom(EquationContainer parent)
+        public CompositeBottom(IEquationContainer parent)
             : base(parent)
         {
-            this.SubLevel++;
+            SubLevel++;
             bottomRowContainer = new RowContainer(this);
             bottomRowContainer.FontFactor = SubFontFactor;
             bottomRowContainer.ApplySymbolGap = false;            

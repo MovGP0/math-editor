@@ -15,7 +15,7 @@ namespace Editor
         double HGap { get { return FontSize * .5; } }
         double LeftPadding { get { return FontSize * .1; } }       
 
-        public nRoot(EquationContainer parent)
+        public nRoot(IEquationContainer parent)
             : base(parent)
         {
             radicalSign = new RadicalSign(this);

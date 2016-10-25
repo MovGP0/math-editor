@@ -11,7 +11,7 @@ namespace Editor
         FormattedText secondSign; //only used by certain decorations
         FormattedText bar;
 
-        public DecorationDrawing(EquationContainer parent, DecorationType decorationType)
+        public DecorationDrawing(IEquationContainer parent, DecorationType decorationType)
             : base(parent)
         {
             this.decorationType = decorationType;

@@ -23,7 +23,7 @@ namespace Editor
         double LeftPadding { get { return FontSize * leftPaddingFactor; } }
         double RightPadding { get { return FontSize * rightPaddingFactor; } }
 
-        public BracketSign(EquationContainer parent, BracketSignType entityType)
+        public BracketSign(IEquationContainer parent, BracketSignType entityType)
             : base(parent)
         {
             this.SignType = entityType;

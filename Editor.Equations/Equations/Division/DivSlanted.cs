@@ -13,12 +13,12 @@ namespace Editor
         double slantXTop;
         double slantXBottom;
 
-        public DivSlanted(EquationContainer parent)
+        public DivSlanted(IEquationContainer parent)
             : base(parent, false)
         {
         }
 
-        public DivSlanted(EquationContainer parent, bool isSmall)
+        public DivSlanted(IEquationContainer parent, bool isSmall)
             : base(parent, isSmall)
         {
         }

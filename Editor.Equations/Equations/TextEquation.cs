@@ -98,7 +98,7 @@ namespace Editor
         private readonly List<int> _formats = new List<int>();
         private readonly List<EditorMode> _modes = new List<EditorMode>();
 
-        public TextEquation(EquationContainer parent)
+        public TextEquation(IEquationContainer parent)
             : base(parent)
         {
             CalculateSize();
@@ -526,7 +526,7 @@ namespace Editor
             }
         }
 
-        public override IEquationBase Split(EquationContainer newParent)
+        public override IEquationBase Split(IEquationContainer newParent)
         {
             TextEquation newText = new TextEquation(newParent);
             int itemCount = _textData.Length - _caretIndex;
@@ -1302,11 +1302,13 @@ namespace Editor
             }
             else if (!char.IsWhiteSpace(_textData[_caretIndex - 1]))
             {
-                CharacterDecorationInfo cdi = new CharacterDecorationInfo();
-                cdi.DecorationType = cdt;
-                cdi.Position = position;
-                cdi.UnicodeString = sign;
-                cdi.Index = _caretIndex - 1;
+                var cdi = new CharacterDecorationInfo
+                {
+                    DecorationType = cdt,
+                    Position = position,
+                    UnicodeString = sign,
+                    Index = _caretIndex - 1
+                };
                 _decorations.Add(cdi);
                 UndoManager.AddUndoAction(new DecorationAction(this, new[] { cdi }));
             }

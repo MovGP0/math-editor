@@ -5,11 +5,11 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    public class CompositeSuper : CompositeBase
+    public sealed class CompositeSuper : CompositeBase
     {        
         RowContainer topRowContainer;       
 
-        public CompositeSuper(EquationContainer parent)
+        public CompositeSuper(IEquationContainer parent)
             : base(parent)
         {
             SubLevel++;

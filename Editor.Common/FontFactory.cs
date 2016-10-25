@@ -42,7 +42,7 @@ namespace Editor
         public static FormattedText GetFormattedText(string textToFormat, FontType fontType, double fontSize, FontStyle fontStyle, FontWeight fontWeight, Brush brush)
         {
             var typeface = GetTypeface(fontType, fontStyle, fontWeight);
-            return new FormattedText(textToFormat, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, typeface, fontSize, brush);
+            return new FormattedText(textToFormat ?? string.Empty, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, typeface, fontSize, brush);
         }
 
         public static FontFamily GetFontFamily(FontType fontType)

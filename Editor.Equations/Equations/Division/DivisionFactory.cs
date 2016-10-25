@@ -2,7 +2,7 @@
 {
     public static class DivisionFactory
     {
-        public static IEquationBase CreateEquation(EquationContainer equationParent, DivisionType divType)
+        public static IEquationBase CreateEquation(IEquationContainer equationParent, DivisionType divType)
         {
             switch (divType)
             {

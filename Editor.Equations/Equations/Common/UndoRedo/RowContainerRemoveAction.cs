@@ -4,8 +4,8 @@ namespace Editor
 {   
     public class RowContainerRemoveAction : RowRemoveAction
     {
-        public EquationRow HeadEquationRow { get; set; }
-        public EquationRow TailEquationRow { get; set; }
+        public IEquationRow HeadEquationRow { get; set; }
+        public IEquationRow TailEquationRow { get; set; }
         public int FirstRowActiveIndex { get; set; }
         public int LastRowActiveIndex { get; set; }
         public int FirstRowSelectionIndex { get; set; }

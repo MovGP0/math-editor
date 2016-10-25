@@ -15,7 +15,7 @@ namespace Editor
         double ExtraHeight { get; set; }
         double MidSpace { get; set; }
 
-        public DoubleArrowBarBracket(EquationContainer parent)
+        public DoubleArrowBarBracket(IEquationContainer parent)
             : base(parent)
         {
             ExtraHeight = FontSize * 0.2;

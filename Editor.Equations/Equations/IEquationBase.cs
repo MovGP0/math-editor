@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Editor
 {
-    public interface IEquationBase
+    public interface IEquationBase : IPositionContainer, ISelectableContainer, IFontSize
     {
         Thickness Margin { get; }
         bool ApplySymbolGap { get; set; }
@@ -14,7 +14,7 @@ namespace Editor
         void ResetTextFormats(Dictionary<int, int> formatMapping);
         bool ConsumeMouseClick(Point mousePoint);
         void HandleMouseDrag(Point mousePoint);
-        IEquationBase Split(EquationContainer newParent);
+        IEquationBase Split(IEquationContainer newParent);
         void ConsumeText(string text);
         void ConsumeFormattedText(string text, int[] formats, EditorMode[] modes, CharacterDecorationInfo[] decorations, bool addUndo);
         bool ConsumeKey(Key key);
@@ -38,22 +38,10 @@ namespace Editor
         string GetSelectedText();
         void DrawEquation(DrawingContext dc);
         double FontFactor { get; set; }
-        double FontSize { get; set; }
-        double RefX { get; }
-        double RefY { get; }
-        double Width { get; set; }
-        double Height { get; set; }
-        double Left { get; set; }
-        double Top { get; set; }
-        double Right { get; set; }
-        double Bottom { get; set; }
-        EquationContainer ParentEquation { get; set; }
+        IEquationContainer ParentEquation { get; set; }
         bool IsStatic { get; set; }
         Rect Bounds { get; }
-        double MidX { get; set; }
-        double MidY { get; set; }
-        int SelectionStartIndex { get; set; }
-        int SelectedItems { get; set; }
-        Point Location { get; set; }
+        double RefX { get; }
+        double RefY { get; }
     }
 }

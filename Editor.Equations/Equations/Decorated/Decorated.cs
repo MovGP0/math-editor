@@ -10,7 +10,7 @@ namespace Editor
         DecorationType decorationType;
         Position decorationPosition;   
 
-        public Decorated(EquationContainer parent, DecorationType decorationType, Position decorationPosition)
+        public Decorated(IEquationContainer parent, DecorationType decorationType, Position decorationPosition)
             : base(parent)
         {            
             ActiveChild = rowContainer = new RowContainer(this);

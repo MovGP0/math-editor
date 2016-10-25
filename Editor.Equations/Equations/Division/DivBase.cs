@@ -10,7 +10,7 @@ namespace Editor
         protected RowContainer topEquation;
         protected RowContainer bottomEquation;
 
-        protected DivBase(EquationContainer parent, bool isSmall = false)
+        protected DivBase(IEquationContainer parent, bool isSmall = false)
             : base(parent)
         {
             if (isSmall) 

@@ -15,7 +15,7 @@ namespace Editor
 
         FormattedText formattedText;
 
-        public StaticText(EquationContainer parent)
+        public StaticText(IEquationContainer parent)
             :base(parent)
         {
             IsStatic = true;

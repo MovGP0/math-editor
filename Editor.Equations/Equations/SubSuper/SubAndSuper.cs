@@ -10,7 +10,7 @@ namespace Editor
         RowContainer superEquation;
         RowContainer subEquation;
 
-        public SubAndSuper(EquationRow parent, Position position)
+        public SubAndSuper(IEquationRow parent, Position position)
             : base(parent, position)
         {
             ActiveChild = superEquation = new RowContainer(this);

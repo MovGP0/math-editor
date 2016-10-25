@@ -6,7 +6,7 @@ namespace Editor
     {
         BracketSign bracketSign2;
 
-        public LeftRightBracket(EquationContainer parent, BracketSignType leftBracketType, BracketSignType rightBracketType)
+        public LeftRightBracket(IEquationContainer parent, BracketSignType leftBracketType, BracketSignType rightBracketType)
             : base(parent)
         {
             bracketSign = new BracketSign(this, leftBracketType);

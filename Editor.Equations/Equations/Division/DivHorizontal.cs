@@ -7,14 +7,14 @@ namespace Editor
 {
     public class DivHorizontal : DivBase
     {
-        double ExtraWidth { get { return FontSize * .3; } }
+        double ExtraWidth => FontSize * .3;
 
-        public DivHorizontal(EquationContainer parent)
+        public DivHorizontal(IEquationContainer parent)
             : base(parent, false)
         {
         }
 
-        public DivHorizontal(EquationContainer parent, bool isSmall)
+        public DivHorizontal(IEquationContainer parent, bool isSmall)
             : base (parent, isSmall)
         {  
         }

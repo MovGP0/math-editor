@@ -10,7 +10,7 @@ namespace Editor
         protected HorizontalBracketSign bracketSign;
         protected RowContainer bottomEquation;
 
-        public HorizontalBracket(EquationContainer parent, HorizontalBracketSignType signType)
+        protected HorizontalBracket(IEquationContainer parent, HorizontalBracketSignType signType)
             : base(parent)
         {
             topEquation = new RowContainer(this);

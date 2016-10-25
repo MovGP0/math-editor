@@ -2,7 +2,7 @@
 {
     public class DivMathWithTop : DivMathWithOuterBase
     {
-        public DivMathWithTop(EquationContainer parent)
+        public DivMathWithTop(IEquationContainer parent)
             : base(parent)
         {             
         }       
