@@ -606,12 +606,12 @@ namespace Editor
 
         private void integralItalicCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            EquationRow.UseItalicIntergalOnNew = true;
+            EquationRowShared.UseItalicIntergalOnNew = true;
         }
 
         private void integralItalicCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            EquationRow.UseItalicIntergalOnNew = false;
+            EquationRowShared.UseItalicIntergalOnNew = false;
         }
 
         private void scrollViwer_ScrollChanged(object sender, ScrollChangedEventArgs e)

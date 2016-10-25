@@ -17,7 +17,7 @@ namespace Editor
         double LeftMinus { get; set; }
         double MainLeft { get { return Left + LeftMinus; } }
 
-        public SignSub(EquationContainer parent, SignCompositeSymbol symbol, bool useUpright)
+        public SignSub(IEquationContainer parent, SignCompositeSymbol symbol, bool useUpright)
             : base(parent)
         {   
             ActiveChild = mainEquation = new RowContainer(this);

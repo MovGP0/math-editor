@@ -2,7 +2,7 @@
 {
     public static class SignCompositeFactory
     {
-        public static IEquationBase CreateEquation(EquationContainer equationParent, Position position, SignCompositeSymbol symbol, bool useUpright)
+        public static IEquationBase CreateEquation(IEquationContainer equationParent, Position position, SignCompositeSymbol symbol, bool useUpright)
         {
             switch (position)
             {

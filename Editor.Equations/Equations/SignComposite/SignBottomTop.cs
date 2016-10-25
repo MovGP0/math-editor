@@ -14,7 +14,7 @@ namespace Editor
         double HGap { get { return FontSize * .02; } }
         double VGap { get { return FontSize * .05; } }
 
-        public SignBottomTop(EquationContainer parent, SignCompositeSymbol symbol, bool useUpright)
+        public SignBottomTop(IEquationContainer parent, SignCompositeSymbol symbol, bool useUpright)
             : base(parent)
         {
             ActiveChild = mainEquation = new RowContainer(this);

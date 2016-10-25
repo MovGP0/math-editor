@@ -54,6 +54,7 @@
     <Compile Include="Equations\Bracket\LeftBracket.cs" />
     <Compile Include="Equations\Bracket\LeftRightBracket.cs" />
     <Compile Include="Equations\Bracket\RightBracket.cs" />
+    <Compile Include="Equations\CommandToEquationMapper.cs" />
     <Compile Include="Equations\Common\CopyDataObject.cs" />
     <Compile Include="Equations\Common\DrawingContextHelper.cs" />
     <Compile Include="Equations\Common\FormattedTextHelper.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Equations\EquationContainer.cs" />
     <Compile Include="Equations\EquationRoot.cs" />
     <Compile Include="Equations\EquationRow.cs" />
+    <Compile Include="Equations\EquationRowShared.cs" />
     <Compile Include="Equations\HeightMetrics.cs" />
     <Compile Include="Equations\HorizontalBracket\BottomBracket.cs" />
     <Compile Include="Equations\HorizontalBracket\HorizontalBracket.cs" />

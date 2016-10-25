@@ -12,14 +12,7 @@ namespace Editor
     public sealed class EquationRow : EquationContainer, IEquationRow
     {
         private IEquationContainer _deleteable;
-        static Pen boxPen = new Pen(Brushes.Blue, 1.1) { StartLineCap = PenLineCap.Flat, EndLineCap = PenLineCap.Flat };
-
-        static EquationRow()
-        {
-            boxPen.DashStyle = DashStyles.Dash;
-            boxPen.Freeze();
-        }
-
+        
         public EquationRow(IEquationContainer parent)
             : base(parent)
         {
@@ -28,12 +21,7 @@ namespace Editor
             AddChild(textEq);
             CalculateSize();
         }
-
-        public sealed override void CalculateSize()
-        {
-            base.CalculateSize();
-        }
-
+        
         public TextEquation GetFirstSelectionText()
         {
             return (TextEquation)ChildEquations[SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems];
@@ -468,7 +456,7 @@ namespace Editor
                     {
                         //dc.DrawRectangle(Brushes.LightGray, null, new Rect(new Point(Left - 1, Top), new Size(FontSize / 2.5, Height)));
                     }
-                    dc.DrawRectangle(null, boxPen, new Rect(Left, Top, Width, Height + ThinLineThickness));//new Rect(new Point(Left - 1, Top), new Size(FontSize / 2.5, Height)));
+                    dc.DrawRectangle(null, EquationRowShared.BoxPen, new Rect(Left, Top, Width, Height + ThinLineThickness));//new Rect(new Point(Left - 1, Top), new Size(FontSize / 2.5, Height)));
                 }
             }
         }
@@ -540,83 +528,26 @@ namespace Editor
             return child;
         }
 
-        public static bool UseItalicIntergalOnNew { get; set; }
-
         public override void ExecuteCommand(CommandType commandType, object data)
         {
             _deleteable = null;
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
                 IEquationBase newEquation = null;
-                switch (commandType)
+
+                if (commandType == CommandType.DecoratedCharacter)
                 {
-                    case CommandType.Composite:
-                        newEquation = CompositeFactory.CreateEquation(this, (Position)data);
-                        break;
-                    case CommandType.CompositeBig:
-                        newEquation = BigCompositeFactory.CreateEquation(this, (Position)data);
-                        break;
-                    case CommandType.Division:
-                        newEquation = DivisionFactory.CreateEquation(this, (DivisionType)data);
-                        break;
-                    case CommandType.SquareRoot:
-                        newEquation = new SquareRoot(this);
-                        break;
-                    case CommandType.NRoot:
-                        newEquation = new nRoot(this);
-                        break;
-                    case CommandType.LeftBracket:
-                        newEquation = new LeftBracket(this, (BracketSignType)data);
-                        break;
-                    case CommandType.RightBracket:
-                        newEquation = new RightBracket(this, (BracketSignType)data);
-                        break;
-                    case CommandType.LeftRightBracket:
-                        newEquation = new LeftRightBracket(this, ((BracketSignType[])data)[0], ((BracketSignType[])data)[1]);
-                        break;
-                    case CommandType.Sub:
-                        newEquation = new Sub(this, (Position)data);
-                        break;
-                    case CommandType.Super:
-                        newEquation = new Super(this, (Position)data);
-                        break;
-                    case CommandType.SubAndSuper:
-                        newEquation = new SubAndSuper(this, (Position)data);
-                        break;
-                    case CommandType.TopBracket:
-                        newEquation = new TopBracket(this, (HorizontalBracketSignType)data);
-                        break;
-                    case CommandType.BottomBracket:
-                        newEquation = new BottomBracket(this, (HorizontalBracketSignType)data);
-                        break;
-                    case CommandType.DoubleArrowBarBracket:
-                        newEquation = new DoubleArrowBarBracket(this);
-                        break;
-                    case CommandType.SignComposite:
-                        newEquation = SignCompositeFactory.CreateEquation(this, (Position)(((object[])data)[0]), (SignCompositeSymbol)(((object[])data)[1]), UseItalicIntergalOnNew);
-                        break;
-                    case CommandType.Decorated:
-                        newEquation = new Decorated(this, (DecorationType)(((object[])data)[0]), (Position)(((object[])data)[1]));
-                        break;
-                    case CommandType.Arrow:
-                        newEquation = new Arrow(this, (ArrowType)(((object[])data)[0]), (Position)(((object[])data)[1]));
-                        break;
-                    case CommandType.Box:
-                        newEquation = new Box(this, (BoxType)data);
-                        break;
-                    case CommandType.Matrix:
-                        newEquation = new MatrixEquation(this, ((int[])data)[0], ((int[])data)[1]);
-                        break;
-                    case CommandType.DecoratedCharacter:
-                        if (((TextEquation)ActiveChild).CaretIndex > 0)
+                    if (((TextEquation)ActiveChild).CaretIndex > 0)
                         {
                             ((TextEquation)ActiveChild).AddDecoration((CharacterDecorationType)((object[])data)[0],
                                                                       (Position)((object[])data)[1],
                                                                       (string)((object[])data)[2]);
                             CalculateSize();
                         }
-                        break;
                 }
+                else
+                    newEquation = CommandToEquationMapper.Execute(this, commandType, data);
+
                 if (newEquation != null)
                 {
                     var newText = ActiveChild.Split(this);
@@ -635,6 +566,8 @@ namespace Editor
                 CalculateSize();
             }
         }
+
+        
 
         public void AddChild(IEquationBase newChild)
         {
@@ -1003,13 +936,11 @@ namespace Editor
             double maxBottomHalf = 0;
             foreach (var eb in ChildEquations)
             {
-                if (eb.GetType() == typeof(Super) || eb.GetType() == typeof(Sub) || eb.GetType() == typeof(SubAndSuper))
-                {
-                    var subSuperBase = (SubSuperBase)eb;
-                    subSuperBase.SetBuddy(subSuperBase.Position == Position.Right
-                        ? PreviousNonEmptyChild(subSuperBase)
-                        : NextNonEmptyChild(subSuperBase));
-                }
+                var subSuperBase = eb as SubSuperBase;
+                subSuperBase?.SetBuddy(subSuperBase.Position == Position.Right
+                    ? PreviousNonEmptyChild(subSuperBase)
+                    : NextNonEmptyChild(subSuperBase));
+
                 var childRefY = eb.RefY;
                 var childHeight = eb.Height;
                 if (childRefY > maxUpperHalf)
@@ -1154,7 +1085,7 @@ namespace Editor
             {
                 ChildEquations.InsertRange(ChildEquations.IndexOf(rowAction.HeadTextEquation) + 1, rowAction.Equations);
                 ActiveChild = rowAction.ActiveEquation;
-                foreach (EquationBase eb in rowAction.Equations)
+                foreach (var eb in rowAction.Equations)
                 {
                     eb.FontSize = FontSize;
                 }

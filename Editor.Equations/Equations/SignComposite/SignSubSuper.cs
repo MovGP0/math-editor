@@ -15,7 +15,7 @@ namespace Editor
         double SubMinus = 0;
         double SuperMinus = 0;
 
-        public SignSubSuper(EquationContainer parent, SignCompositeSymbol symbol, bool useUpright)
+        public SignSubSuper(IEquationContainer parent, SignCompositeSymbol symbol, bool useUpright)
             : base(parent)
         {
             ActiveChild = mainEquation = new RowContainer(this);

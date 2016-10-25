@@ -6,64 +6,64 @@ using System.Windows.Input;
 namespace Editor
 {
     public class SubAndSuper : SubSuperBase
-    {   
-        RowContainer superEquation;
-        RowContainer subEquation;
+    {
+        readonly IRowContainer _superEquation;
+        readonly IRowContainer _subEquation;
 
         public SubAndSuper(IEquationRow parent, Position position)
             : base(parent, position)
         {
-            ActiveChild = superEquation = new RowContainer(this);
-            subEquation = new RowContainer(this);
-            ChildEquations.Add(superEquation);
-            ChildEquations.Add(subEquation);
+            ActiveChild = _superEquation = new RowContainer(this);
+            _subEquation = new RowContainer(this);
+            ChildEquations.Add(_superEquation);
+            ChildEquations.Add(_subEquation);
             if (SubLevel == 1)
             {
-                superEquation.FontFactor = SubFontFactor;
-                subEquation.FontFactor = SubFontFactor;
+                _superEquation.FontFactor = SubFontFactor;
+                _subEquation.FontFactor = SubFontFactor;
             }
             else if (SubLevel >= 2)
             {
-                superEquation.FontFactor = SubSubFontFactor;
-                subEquation.FontFactor = SubSubFontFactor;
+                _superEquation.FontFactor = SubSubFontFactor;
+                _subEquation.FontFactor = SubSubFontFactor;
             }
         }
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(Position.GetType().Name, Position));
             thisElement.Add(parameters);
-            thisElement.Add(superEquation.Serialize());
-            thisElement.Add(subEquation.Serialize());
+            thisElement.Add(_superEquation.Serialize());
+            thisElement.Add(_subEquation.Serialize());
             return thisElement;
         }
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
-            superEquation.DeSerialize(elements[0]);
-            subEquation.DeSerialize(elements[1]);
+            var elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
+            _superEquation.DeSerialize(elements[0]);
+            _subEquation.DeSerialize(elements[1]);
             CalculateSize();
         }
 
         public override void CalculateWidth()
         {
-            Width = Math.Max(subEquation.Width, superEquation.Width) + Padding * 2;
+            Width = Math.Max(_subEquation.Width, _superEquation.Width) + Padding * 2;
         }
 
         public override void CalculateHeight()
         {
             if (Buddy.GetType() == typeof(TextEquation))
             {
-                double superHeight = superEquation.Height + Buddy.RefY - SuperOverlap; ;
-                double subHeight = subEquation.Height - SubOverlap;
+                double superHeight = _superEquation.Height + Buddy.RefY - SuperOverlap; ;
+                double subHeight = _subEquation.Height - SubOverlap;
                 Height = subHeight + superHeight;
             }
             else
             {
-                Height = Buddy.Height - SuperOverlap - SubOverlap * 2 + subEquation.Height + superEquation.Height;
+                Height = Buddy.Height - SuperOverlap - SubOverlap * 2 + _subEquation.Height + _superEquation.Height;
             }
         }
 
@@ -73,18 +73,12 @@ namespace Editor
             set
             {
                 base.Top = value;
-                superEquation.Top = value;
-                subEquation.Bottom = this.Bottom;
+                _superEquation.Top = value;
+                _subEquation.Bottom = Bottom;
             }
         }
 
-        public override double RefY
-        {
-            get
-            {
-                return superEquation.Height + Buddy.RefY - SuperOverlap;
-            }
-        }
+        public override double RefY => _superEquation.Height + Buddy.RefY - SuperOverlap;
 
         public override bool ConsumeKey(Key key)
         {
@@ -93,21 +87,24 @@ namespace Editor
                 CalculateSize();
                 return true;
             }
-            if (key == Key.Down)
+
+            switch (key)
             {
-                if (ActiveChild == superEquation)
-                {
-                    ActiveChild = subEquation;
-                    return true;
-                }
-            }
-            else if (key == Key.Up)
-            {
-                if (ActiveChild == subEquation)
-                {
-                    ActiveChild = superEquation;
-                    return true;
-                }
+                case Key.Down:
+                    if (ActiveChild == _superEquation)
+                    {
+                        ActiveChild = _subEquation;
+                        return true;
+                    }
+                    break;
+
+                case Key.Up:
+                    if (ActiveChild == _subEquation)
+                    {
+                        ActiveChild = _superEquation;
+                        return true;
+                    }
+                    break;
             }
             return false;
         }
@@ -118,15 +115,15 @@ namespace Editor
             set
             {
                 base.Left = value;
-                if (Position == Editor.Position.Right)
+                if (Position == Position.Right)
                 {
-                    subEquation.Left = this.Left + Padding;
-                    superEquation.Left = this.Left + Padding;
+                    _subEquation.Left = Left + Padding;
+                    _superEquation.Left = Left + Padding;
                 }
                 else
                 {
-                    subEquation.Right = this.Right - Padding;
-                    superEquation.Right = this.Right - Padding;
+                    _subEquation.Right = Right - Padding;
+                    _superEquation.Right = Right - Padding;
                 }
             }
         }
