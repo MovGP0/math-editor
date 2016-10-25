@@ -10,7 +10,7 @@ namespace Editor
             : base(parent, position)
         {
             ActiveChild = rowContainer = new RowContainer(this);
-            childEquations.Add(rowContainer);
+            ChildEquations.Add(rowContainer);
             if (SubLevel == 1)
             {
                 rowContainer.FontFactor = SubFontFactor;
@@ -37,7 +37,7 @@ namespace Editor
             CalculateSize();
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
            Height = rowContainer.Height + Buddy.RefY - SuperOverlap;
         }
@@ -52,7 +52,7 @@ namespace Editor
             }
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = rowContainer.Width + Padding * 2;
         }

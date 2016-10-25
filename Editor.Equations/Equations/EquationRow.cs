@@ -23,7 +23,7 @@ namespace Editor
         public EquationRow(EquationContainer parent)
             : base(parent)
         {
-            TextEquation textEq = new TextEquation(this);
+            var textEq = new TextEquation(this);
             ActiveChild = textEq;
             AddChild(textEq);
             CalculateSize();
@@ -36,84 +36,84 @@ namespace Editor
 
         public TextEquation GetFirstSelectionText()
         {
-            return (TextEquation)childEquations[SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems];
+            return (TextEquation)ChildEquations[SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems];
         }
 
         public TextEquation GetLastSelectionText()
         {
-            int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-            int otherOffset = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex);
-            return (TextEquation)childEquations[otherOffset];
+            var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+            var otherOffset = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex);
+            return (TextEquation)ChildEquations[otherOffset];
         }
 
-        public void AddChildren(List<EquationBase> equations, bool insertAtStart)
+        public void AddChildren(List<IEquationBase> equations, bool insertAtStart)
         {
             if (insertAtStart)
             {
-                childEquations.InsertRange(0, equations);
+                ChildEquations.InsertRange(0, equations);
             }
             else
             {
-                childEquations.AddRange(equations);
+                ChildEquations.AddRange(equations);
             }
             CalculateSize();
         }
 
         public TextEquation GetFirstTextEquation()
         {
-            return childEquations.First() as TextEquation;
+            return ChildEquations.First() as TextEquation;
         }
 
         public TextEquation GetLastTextEquation()
         {
-            return childEquations.Last() as TextEquation;
+            return ChildEquations.Last() as TextEquation;
         }
 
-        public List<EquationBase> GetSelectedEquations()
+        public List<IEquationBase> GetSelectedEquations()
         {
-            List<EquationBase> list = new List<EquationBase>();
-            int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-            int endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
-            for (int i = startIndex; i <= endIndex; i++)
+            var list = new List<IEquationBase>();
+            var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+            var endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
+            for (var i = startIndex; i <= endIndex; i++)
             {
-                list.Add(childEquations[i]);
+                list.Add(ChildEquations[i]);
             }
             return list;
         }
 
-        public List<EquationBase> DeleteTail()
+        public List<IEquationBase> DeleteTail()
         {
-            List<EquationBase> removedList = new List<EquationBase>();
-            int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+            var removedList = new List<IEquationBase>();
+            var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
             if (SelectedItems != 0)
             {
-                int endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
-                for (int i = endIndex; i > startIndex; i--)
+                var endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
+                for (var i = endIndex; i > startIndex; i--)
                 {
-                    removedList.Add(childEquations[i]);
-                    childEquations.RemoveAt(i);
+                    removedList.Add(ChildEquations[i]);
+                    ChildEquations.RemoveAt(i);
                 }
                 removedList.Reverse();
             }
-            ActiveChild = childEquations[startIndex];
+            ActiveChild = ChildEquations[startIndex];
             return removedList;
         }
 
-        public List<EquationBase> DeleteHead()
+        public List<IEquationBase> DeleteHead()
         {
-            List<EquationBase> removedList = new List<EquationBase>();
-            int startIndex = (SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems);
+            var removedList = new List<IEquationBase>();
+            var startIndex = (SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems);
             if (SelectedItems != 0)
             {
-                int endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
-                for (int i = endIndex - 1; i >= startIndex; i--)
+                var endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
+                for (var i = endIndex - 1; i >= startIndex; i--)
                 {
-                    removedList.Add(childEquations[i]);
-                    childEquations.RemoveAt(i);
+                    removedList.Add(ChildEquations[i]);
+                    ChildEquations.RemoveAt(i);
                 }
                 removedList.Reverse();
             }
-            ActiveChild = childEquations[startIndex];
+            ActiveChild = ChildEquations[startIndex];
             return removedList;
         }
 
@@ -121,12 +121,12 @@ namespace Editor
         {
             if (SelectedItems != 0)
             {
-                int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-                int otherIndex = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex);
-                TextEquation firstEquation = (TextEquation)childEquations[startIndex];
-                TextEquation lastEquation = (TextEquation)childEquations[otherIndex];
-                List<EquationBase> equations = new List<EquationBase>();
-                RowRemoveAction action = new RowRemoveAction(this)
+                var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+                var otherIndex = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex);
+                var firstEquation = (TextEquation)ChildEquations[startIndex];
+                var lastEquation = (TextEquation)ChildEquations[otherIndex];
+                var equations = new List<IEquationBase>();
+                var action = new RowRemoveAction(this)
                                          {
                                              ActiveEquation = ActiveChild,
                                              HeadTextEquation = firstEquation,
@@ -152,10 +152,10 @@ namespace Editor
                 firstEquation.RemoveSelection(false);
                 lastEquation.RemoveSelection(false);
                 firstEquation.Merge(lastEquation);
-                for (int i = otherIndex; i > startIndex; i--)
+                for (var i = otherIndex; i > startIndex; i--)
                 {
-                    equations.Add(childEquations[i]);
-                    childEquations.RemoveAt(i);
+                    equations.Add(ChildEquations[i]);
+                    ChildEquations.RemoveAt(i);
                 }
                 SelectedItems = 0;
                 equations.Reverse();
@@ -192,15 +192,15 @@ namespace Editor
                 {
                     return true;
                 }
-                else if (ActiveChild == childEquations.Last())
+                else if (ActiveChild == ChildEquations.Last())
                 {
                     return false;
                 }
                 else
                 {
                     SelectedItems += 2;
-                    ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) + 2];
-                    childEquations[childEquations.IndexOf(ActiveChild) - 1].DeSelect();
+                    ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) + 2];
+                    ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1].DeSelect();
                     if (SelectedItems > 0)
                     {
                         ((TextEquation)ActiveChild).MoveToStart();
@@ -213,8 +213,8 @@ namespace Editor
             {
                 if (!ActiveChild.Select(key))
                 {
-                    TextEquation previsouText = (TextEquation)childEquations[SelectionStartIndex - 1];
-                    TextEquation nextText = (TextEquation)childEquations[SelectionStartIndex + 1];
+                    var previsouText = (TextEquation)ChildEquations[SelectionStartIndex - 1];
+                    var nextText = (TextEquation)ChildEquations[SelectionStartIndex + 1];
                     previsouText.MoveToEnd();
                     previsouText.StartSelection();
                     nextText.MoveToStart();
@@ -234,15 +234,15 @@ namespace Editor
                 {
                     return true;
                 }
-                else if (ActiveChild == childEquations.First())
+                else if (ActiveChild == ChildEquations.First())
                 {
                     return false;
                 }
                 else
                 {
                     SelectedItems -= 2;
-                    ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) - 2];
-                    childEquations[childEquations.IndexOf(ActiveChild) + 1].DeSelect();
+                    ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 2];
+                    ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1].DeSelect();
                     if (SelectedItems < 0)
                     {
                         ((TextEquation)ActiveChild).MoveToEnd();
@@ -255,8 +255,8 @@ namespace Editor
             {
                 if (!ActiveChild.Select(key))
                 {
-                    TextEquation previsouText = (TextEquation)childEquations[SelectionStartIndex - 1];
-                    TextEquation nextText = (TextEquation)childEquations[SelectionStartIndex + 1];
+                    var previsouText = (TextEquation)ChildEquations[SelectionStartIndex - 1];
+                    var nextText = (TextEquation)ChildEquations[SelectionStartIndex + 1];
                     previsouText.MoveToEnd();
                     previsouText.StartSelection();
                     nextText.MoveToStart();
@@ -275,23 +275,23 @@ namespace Editor
             {
                 if (IsSelecting)
                 {
-                    int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-                    int count = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex) - startIndex;
-                    Rect firstRect = childEquations[startIndex].GetSelectionBounds();
+                    var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+                    var count = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex) - startIndex;
+                    var firstRect = ChildEquations[startIndex].GetSelectionBounds();
                     if (firstRect == Rect.Empty)
                     {
-                        firstRect = new Rect(childEquations[startIndex].Right, childEquations[startIndex].Top, 0, 0);
+                        firstRect = new Rect(ChildEquations[startIndex].Right, ChildEquations[startIndex].Top, 0, 0);
                     }
                     if (count > 0)
                     {
-                        Rect lastRect = childEquations[count + startIndex].GetSelectionBounds();
+                        var lastRect = ChildEquations[count + startIndex].GetSelectionBounds();
                         if (lastRect == Rect.Empty)
                         {
-                            lastRect = new Rect(childEquations[count + startIndex].Left, childEquations[count + startIndex].Top, 0, childEquations[count + startIndex].Height);
+                            lastRect = new Rect(ChildEquations[count + startIndex].Left, ChildEquations[count + startIndex].Top, 0, ChildEquations[count + startIndex].Height);
                         }
-                        for (int i = startIndex + 1; i < startIndex + count; i++)
+                        for (var i = startIndex + 1; i < startIndex + count; i++)
                         {
-                            EquationBase equation = childEquations[i];
+                            var equation = ChildEquations[i];
                             lastRect.Union(equation.Bounds);
                         }
                         firstRect.Union(lastRect);
@@ -310,15 +310,15 @@ namespace Editor
         {
             if (ActiveChild.GetType() == typeof(TextEquation) && xe.Name.LocalName == GetType().Name)
             {
-                XElement children = xe.Element("ChildEquations");
-                List<EquationBase> newChildren = new List<EquationBase>();
-                foreach (XElement xElement in children.Elements())
+                var children = xe.Element("ChildEquations");
+                var newChildren = new List<IEquationBase>();
+                foreach (var xElement in children.Elements())
                 {
                     newChildren.Add(CreateChild(xElement));
                 }
                 if (newChildren.Count > 0)
                 {
-                    EquationRowPasteAction action = new EquationRowPasteAction(this)
+                    var action = new EquationRowPasteAction(this)
                     {
                         ActiveTextEquation = (TextEquation)ActiveChild,
                         ActiveChildCaretIndex = ((TextEquation)ActiveChild).CaretIndex,
@@ -340,10 +340,10 @@ namespace Editor
                         LastNewDecorations = ((TextEquation)newChildren.Last()).GetDecorations(),
                         Equations = newChildren
                     };
-                    EquationBase newChild = ActiveChild.Split(this);
-                    int index = childEquations.IndexOf(ActiveChild) + 1;
+                    var newChild = ActiveChild.Split(this);
+                    var index = ChildEquations.IndexOf(ActiveChild) + 1;
                     newChildren.RemoveAt(0);
-                    childEquations.InsertRange(index, newChildren);
+                    ChildEquations.InsertRange(index, newChildren);
                     ((TextEquation)ActiveChild).ConsumeFormattedText(action.FirstNewText, action.FirstNewFormats, action.FirstNewModes, action.FirstNewDecorations, false);
                     ((TextEquation)newChildren.Last()).Merge((TextEquation)newChild);
                     ActiveChild = newChildren.Last();
@@ -367,70 +367,72 @@ namespace Editor
         {
             if (SelectedItems != 0)
             {
-                int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-                int count = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex) - startIndex;
-                string firstText = ((TextEquation)childEquations[startIndex]).GetSelectedText();
-                string lastText = ((TextEquation)childEquations[startIndex + count]).GetSelectedText();
-                int[] firstFormats = ((TextEquation)childEquations[startIndex]).GetSelectedFormats();
-                EditorMode[] firstModes = ((TextEquation)childEquations[startIndex]).GetSelectedModes();
-                CharacterDecorationInfo[] firstDecorations = ((TextEquation)childEquations[startIndex]).GetSelectedDecorations();
-                int[] lastFormats = ((TextEquation)childEquations[startIndex + count]).GetSelectedFormats();
-                EditorMode[] lastModes = ((TextEquation)childEquations[startIndex + count]).GetSelectedModes();
-                CharacterDecorationInfo[] lastDecorations = ((TextEquation)childEquations[startIndex + count]).GetSelectedDecorations();
-                TextEquation firstEquation = new TextEquation(this);
-                TextEquation lastEquation = new TextEquation(this);
+                var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+                var count = (SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex) - startIndex;
+                var firstText = ((TextEquation)ChildEquations[startIndex]).GetSelectedText();
+                var lastText = ((TextEquation)ChildEquations[startIndex + count]).GetSelectedText();
+                var firstFormats = ((TextEquation)ChildEquations[startIndex]).GetSelectedFormats();
+                var firstModes = ((TextEquation)ChildEquations[startIndex]).GetSelectedModes();
+                var firstDecorations = ((TextEquation)ChildEquations[startIndex]).GetSelectedDecorations();
+                var lastFormats = ((TextEquation)ChildEquations[startIndex + count]).GetSelectedFormats();
+                var lastModes = ((TextEquation)ChildEquations[startIndex + count]).GetSelectedModes();
+                var lastDecorations = ((TextEquation)ChildEquations[startIndex + count]).GetSelectedDecorations();
+                var firstEquation = new TextEquation(this);
+                var lastEquation = new TextEquation(this);
                 firstEquation.ConsumeFormattedText(firstText, firstFormats, firstModes, firstDecorations, false);
                 lastEquation.ConsumeFormattedText(lastText, lastFormats, lastModes, lastDecorations, false);
-                List<EquationBase> equations = new List<EquationBase>();
+
+                var equations = new List<IEquationBase>();
                 equations.Add(firstEquation);
-                for (int i = startIndex + 1; i < startIndex + count; i++)
+                for (var i = startIndex + 1; i < startIndex + count; i++)
                 {
-                    equations.Add(childEquations[i]);
+                    equations.Add(ChildEquations[i]);
                 }
                 equations.Add(lastEquation);
+
                 double left = 0;
-                foreach (EquationBase eb in equations)
+                foreach (var eb in equations)
                 {
                     eb.Left = 1 + left;
                     left += eb.Width;
                 }
                 double maxUpperHalf = 0;
                 double maxBottomHalf = 0;
-                foreach (EquationBase eb in childEquations)
+                foreach (EquationBase eb in ChildEquations)
                 {
                     if (eb.RefY > maxUpperHalf) { maxUpperHalf = eb.RefY; }
                     if (eb.Height - eb.RefY > maxBottomHalf) { maxBottomHalf = eb.Height - eb.RefY; }
                 }
                 double width = 0;
-                foreach (EquationBase eb in equations)
+                foreach (var eb in equations)
                 {
                     eb.Top = 1 + maxUpperHalf - eb.RefY;
                     width += eb.Width;
                 }
-                Rect rect = GetSelectionBounds();
-                RenderTargetBitmap bitmap = new RenderTargetBitmap((int)(Math.Ceiling(width + 2)), (int)(Math.Ceiling(maxUpperHalf + maxBottomHalf + 2)), 96, 96, PixelFormats.Default);
-                DrawingVisual dv = new DrawingVisual();
+                var rect = GetSelectionBounds();
+                var bitmap = new RenderTargetBitmap((int)(Math.Ceiling(width + 2)), (int)(Math.Ceiling(maxUpperHalf + maxBottomHalf + 2)), 96, 96, PixelFormats.Default);
+                var dv = new DrawingVisual();
                 IsSelecting = false;
-                using (DrawingContext dc = dv.RenderOpen())
+                using (var dc = dv.RenderOpen())
                 {
                     dc.DrawRectangle(Brushes.White, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
-                    foreach (EquationBase eb in equations)
+                    foreach (var eb in equations)
                     {
                         eb.DrawEquation(dc);
                     }
                 }
                 IsSelecting = true;
                 bitmap.Render(dv);
-                XElement thisElement = new XElement(GetType().Name);
-                XElement children = new XElement("ChildEquations");
-                foreach (EquationBase eb in equations)
+                var thisElement = new XElement(GetType().Name);
+                var children = new XElement("ChildEquations");
+                foreach (var eb in equations)
                 {
                     eb.SelectAll();
                     children.Add(eb.Serialize());
                 }
                 thisElement.Add(children);
                 //data.SetText(GetSelectedText());
-                foreach (EquationBase eb in equations)
+                foreach (var eb in equations)
                 {
                     eb.DeSelect();
                 }
@@ -457,9 +459,9 @@ namespace Editor
                 brush.Opacity = 0.5;
                 dc.DrawRectangle(brush, null, new Rect(deleteable.Location, deleteable.Size));
             }
-            if (childEquations.Count == 1)
+            if (ChildEquations.Count == 1)
             {
-                TextEquation firstEquation = (TextEquation)childEquations.First();
+                var firstEquation = (TextEquation)ChildEquations.First();
                 if (firstEquation.TextLength == 0)
                 {
                     if (IsSelecting)
@@ -473,9 +475,9 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement children = new XElement("ChildEquations");
-            foreach (EquationBase childEquation in childEquations)
+            var thisElement = new XElement(GetType().Name);
+            var children = new XElement("ChildEquations");
+            foreach (EquationBase childEquation in ChildEquations)
             {
                 children.Add(childEquation.Serialize());
             }
@@ -485,31 +487,31 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement children = xElement.Element("ChildEquations");
-            childEquations.Clear();
-            foreach (XElement xe in children.Elements())
+            var children = xElement.Element("ChildEquations");
+            ChildEquations.Clear();
+            foreach (var xe in children.Elements())
             {
-                childEquations.Add(CreateChild(xe));
+                ChildEquations.Add(CreateChild(xe));
             }
-            if (childEquations.Count == 0)
+            if (ChildEquations.Count == 0)
             {
-                childEquations.Add(new TextEquation(this));
+                ChildEquations.Add(new TextEquation(this));
             }
-            ActiveChild = childEquations.First();
+            ActiveChild = ChildEquations.First();
             CalculateSize();
         }
 
         EquationBase CreateChild(XElement xElement)
         {
-            Type type = Type.GetType(GetType().Namespace + "." + xElement.Name);
-            List<object> paramz = new List<object>();
+            var type = Type.GetType(GetType().Namespace + "." + xElement.Name);
+            var paramz = new List<object>();
             paramz.Add(this);
-            XElement parameters = xElement.Element("parameters");
+            var parameters = xElement.Element("parameters");
             if (parameters != null)
             {
-                foreach (XElement xe in parameters.Elements())
+                foreach (var xe in parameters.Elements())
                 {
-                    Type paramType = Type.GetType(GetType().Namespace + "." + xe.Name);
+                    var paramType = Type.GetType(GetType().Namespace + "." + xe.Name);
                     if (paramType == null)
                     {
                         paramType = Type.GetType(xe.Name.ToString());
@@ -532,7 +534,7 @@ namespace Editor
                     }
                 }
             }
-            EquationBase child = (EquationBase)Activator.CreateInstance(type, paramz.ToArray());
+            var child = (EquationBase)Activator.CreateInstance(type, paramz.ToArray());
             child.DeSerialize(xElement);
             child.FontSize = FontSize;
             return child;
@@ -545,7 +547,7 @@ namespace Editor
             deleteable = null;
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
-                EquationBase newEquation = null;
+                IEquationBase newEquation = null;
                 switch (commandType)
                 {
                     case CommandType.Composite:
@@ -608,11 +610,6 @@ namespace Editor
                     case CommandType.DecoratedCharacter:
                         if (((TextEquation)ActiveChild).CaretIndex > 0)
                         {
-                            //newEquation = new DecoratedCharacter(this,
-                            //                                     (TextEquation)ActiveChild,
-                            //                                     (CharacterDecorationType)((object[])data)[0],
-                            //                                     (Position)((object[])data)[1],
-                            //                                     (string)((object[])data)[2]);
                             ((TextEquation)ActiveChild).AddDecoration((CharacterDecorationType)((object[])data)[0],
                                                                       (Position)((object[])data)[1],
                                                                       (string)((object[])data)[2]);
@@ -622,14 +619,14 @@ namespace Editor
                 }
                 if (newEquation != null)
                 {
-                    EquationBase newText = ActiveChild.Split(this);
-                    int caretIndex = ((TextEquation)ActiveChild).TextLength;
+                    var newText = ActiveChild.Split(this);
+                    var caretIndex = ((TextEquation)ActiveChild).TextLength;
                     AddChild(newEquation);
                     AddChild(newText);                    
                     newEquation.CalculateSize();
                     ActiveChild = newEquation;
                     CalculateSize();                    
-                    UndoManager.AddUndoAction(new RowAction(this, ActiveChild, (TextEquation)newText, childEquations.IndexOf(ActiveChild), caretIndex));
+                    UndoManager.AddUndoAction(new RowAction(this, ActiveChild, (TextEquation)newText, ChildEquations.IndexOf(ActiveChild), caretIndex));
                 }
             }
             else if (ActiveChild != null)
@@ -639,21 +636,21 @@ namespace Editor
             }
         }
 
-        void AddChild(EquationBase newChild)
+        private void AddChild(IEquationBase newChild)
         {
-            int index = 0;
-            if (childEquations.Count > 0)
+            var index = 0;
+            if (ChildEquations.Count > 0)
             {
-                index = childEquations.IndexOf(ActiveChild) + 1;
+                index = ChildEquations.IndexOf(ActiveChild) + 1;
             }
-            childEquations.Insert(index, newChild);
+            ChildEquations.Insert(index, newChild);
             newChild.ParentEquation = this;
             ActiveChild = newChild;
         }
 
-        void RemoveChild(EquationBase child)
+        private void RemoveChild(IEquationBase child)
         {
-            childEquations.Remove(child);
+            ChildEquations.Remove(child);
             CalculateSize();
         }
 
@@ -671,7 +668,7 @@ namespace Editor
             {
                 ActiveChild.HandleMouseDrag(mousePoint);
             }
-            SelectedItems = childEquations.IndexOf(ActiveChild) - SelectionStartIndex;
+            SelectedItems = ChildEquations.IndexOf(ActiveChild) - SelectionStartIndex;
         }
 
         private void HandleRightDrag(Point mousePoint)
@@ -679,14 +676,14 @@ namespace Editor
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
                 ((TextEquation)ActiveChild).SelectToEnd();
-                if (ActiveChild != childEquations.Last())
+                if (ActiveChild != ChildEquations.Last())
                 {
-                    if (mousePoint.X > childEquations[childEquations.IndexOf(ActiveChild) + 1].MidX)
+                    if (mousePoint.X > ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1].MidX)
                     {
-                        childEquations[childEquations.IndexOf(ActiveChild) + 1].SelectAll();
-                        ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) + 2];
+                        ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1].SelectAll();
+                        ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) + 2];
                         //childEquations[childEquations.IndexOf(ActiveChild) - 1].DeSelect();
-                        if (childEquations.IndexOf(ActiveChild) > SelectionStartIndex) // old-> (SelectedItems > 0)
+                        if (ChildEquations.IndexOf(ActiveChild) > SelectionStartIndex) // old-> (SelectedItems > 0)
                         {
                             ((TextEquation)ActiveChild).MoveToStart();
                             ActiveChild.StartSelection();
@@ -697,8 +694,8 @@ namespace Editor
             }
             else
             {
-                TextEquation previsouText = (TextEquation)childEquations[SelectionStartIndex - 1];
-                TextEquation nextText = (TextEquation)childEquations[SelectionStartIndex + 1];
+                var previsouText = (TextEquation)ChildEquations[SelectionStartIndex - 1];
+                var nextText = (TextEquation)ChildEquations[SelectionStartIndex + 1];
                 previsouText.MoveToEnd();
                 previsouText.StartSelection();
                 nextText.MoveToStart();
@@ -714,14 +711,14 @@ namespace Editor
             if (ActiveChild.GetType() == typeof(TextEquation))
             {
                 ((TextEquation)ActiveChild).SelectToStart();
-                if (ActiveChild != childEquations.First())
+                if (ActiveChild != ChildEquations.First())
                 {
-                    if (mousePoint.X < childEquations[childEquations.IndexOf(ActiveChild) - 1].MidX)
+                    if (mousePoint.X < ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1].MidX)
                     {
-                        childEquations[childEquations.IndexOf(ActiveChild) - 1].SelectAll();
-                        ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) - 2];
+                        ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1].SelectAll();
+                        ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 2];
                         //childEquations[childEquations.IndexOf(ActiveChild) + 1].DeSelect();
-                        if (childEquations.IndexOf(ActiveChild) < SelectionStartIndex)      // old -> (SelectedItems < 0)
+                        if (ChildEquations.IndexOf(ActiveChild) < SelectionStartIndex)      // old -> (SelectedItems < 0)
                         {
                             ((TextEquation)ActiveChild).MoveToEnd();
                             ActiveChild.StartSelection();
@@ -732,8 +729,8 @@ namespace Editor
             }
             else
             {
-                TextEquation previsouText = (TextEquation)childEquations[SelectionStartIndex - 1];
-                TextEquation nextText = (TextEquation)childEquations[SelectionStartIndex + 1];
+                var previsouText = (TextEquation)ChildEquations[SelectionStartIndex - 1];
+                var nextText = (TextEquation)ChildEquations[SelectionStartIndex + 1];
                 previsouText.MoveToEnd();
                 previsouText.StartSelection();
                 nextText.MoveToStart();
@@ -746,7 +743,7 @@ namespace Editor
 
         public override void SetCursorOnKeyUpDown(Key key, Point point)
         {
-            foreach (EquationBase eb in childEquations)
+            foreach (EquationBase eb in ChildEquations)
             {
                 if (eb.Right >= point.X)
                 {
@@ -761,7 +758,7 @@ namespace Editor
         {
             deleteable = null;
             ActiveChild = null;
-            foreach (EquationBase eb in childEquations)
+            foreach (EquationBase eb in ChildEquations)
             {
                 if (eb.Right >= mousePoint.X && eb.Left <= mousePoint.X)
                 {
@@ -772,14 +769,14 @@ namespace Editor
             if (ActiveChild == null)
             {
                 if (mousePoint.X <= MidX)
-                    ActiveChild = childEquations.First();
+                    ActiveChild = ChildEquations.First();
                 else
-                    ActiveChild = childEquations.Last();
+                    ActiveChild = ChildEquations.Last();
             }
             if (!ActiveChild.ConsumeMouseClick(mousePoint))
             {
-                bool moveToStart = true;
-                if (childEquations.Count == 1)
+                var moveToStart = true;
+                if (ChildEquations.Count == 1)
                 {
                     if (ActiveChild.MidX < mousePoint.X)
                     {
@@ -788,21 +785,21 @@ namespace Editor
                 }
                 else if (mousePoint.X < ActiveChild.MidX)
                 {
-                    if (ActiveChild != childEquations.First())
+                    if (ActiveChild != ChildEquations.First())
                     {
-                        ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) - 1];
+                        ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
                         moveToStart = false;
                     }
                 }
-                else if (ActiveChild != childEquations.Last())
+                else if (ActiveChild != ChildEquations.Last())
                 {
-                    ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) + 1];
+                    ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
                 }
                 else
                 {
                     moveToStart = false;
                 }
-                TextEquation equation = ActiveChild as TextEquation;
+                var equation = ActiveChild as TextEquation;
                 if (equation != null)
                 {
                     if (moveToStart)
@@ -820,14 +817,14 @@ namespace Editor
 
         public override bool ConsumeKey(Key key)
         {
-            bool result = false;
+            var result = false;
             if (key == Key.Home)
             {
-                ActiveChild = childEquations.First();
+                ActiveChild = ChildEquations.First();
             }
             else if (key == Key.End)
             {
-                ActiveChild = childEquations.Last();
+                ActiveChild = ChildEquations.Last();
             }
             if (ActiveChild.ConsumeKey(key))
             {
@@ -836,20 +833,20 @@ namespace Editor
             }
             else if (key == Key.Delete)
             {
-                if (ActiveChild.GetType() == typeof(TextEquation) && ActiveChild != childEquations.Last())
+                if (ActiveChild.GetType() == typeof(TextEquation) && ActiveChild != ChildEquations.Last())
                 {
-                    if (childEquations[childEquations.IndexOf(ActiveChild) + 1] == deleteable)
+                    if (ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1] == deleteable)
                     {
-                        UndoManager.AddUndoAction(new RowAction(this, deleteable, (TextEquation)childEquations[childEquations.IndexOf(deleteable) + 1], 
-                                                                childEquations.IndexOf(deleteable), TextLength) { UndoFlag = false});
-                        childEquations.Remove(deleteable);
+                        UndoManager.AddUndoAction(new RowAction(this, deleteable, (TextEquation)ChildEquations[ChildEquations.IndexOf(deleteable) + 1], 
+                                                                ChildEquations.IndexOf(deleteable), TextLength) { UndoFlag = false});
+                        ChildEquations.Remove(deleteable);
                         deleteable = null;
-                        ((TextEquation)ActiveChild).Merge((TextEquation)childEquations[childEquations.IndexOf(ActiveChild) + 1]);
-                        childEquations.Remove(childEquations[childEquations.IndexOf(ActiveChild) + 1]);
+                        ((TextEquation)ActiveChild).Merge((TextEquation)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1]);
+                        ChildEquations.Remove(ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1]);
                     }
                     else
                     {
-                        deleteable = (EquationContainer)childEquations[childEquations.IndexOf(ActiveChild) + 1];
+                        deleteable = (EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
                     }
                     result = true;
                 }
@@ -858,21 +855,21 @@ namespace Editor
             {
                 if (ActiveChild.GetType() == typeof(TextEquation))
                 {
-                    if (ActiveChild != childEquations.First())
+                    if (ActiveChild != ChildEquations.First())
                     {
-                        if ((EquationContainer)childEquations[childEquations.IndexOf(ActiveChild) - 1] == deleteable)
+                        if ((EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1] == deleteable)
                         {
-                            TextEquation equationAfter = (TextEquation)ActiveChild;
-                            ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) - 2];
-                            UndoManager.AddUndoAction(new RowAction(this, deleteable, equationAfter, childEquations.IndexOf(deleteable), TextLength) { UndoFlag = false });
-                            childEquations.Remove(deleteable);
+                            var equationAfter = (TextEquation)ActiveChild;
+                            ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 2];
+                            UndoManager.AddUndoAction(new RowAction(this, deleteable, equationAfter, ChildEquations.IndexOf(deleteable), TextLength) { UndoFlag = false });
+                            ChildEquations.Remove(deleteable);
                             ((TextEquation)ActiveChild).Merge(equationAfter);
-                            childEquations.Remove(equationAfter);
+                            ChildEquations.Remove(equationAfter);
                             deleteable = null;
                         }
                         else
                         {
-                            deleteable = (EquationContainer)childEquations[childEquations.IndexOf(ActiveChild) - 1];
+                            deleteable = (EquationContainer)ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
                         }
                         result = true;
                     }
@@ -881,12 +878,12 @@ namespace Editor
                 {
                     if (deleteable == ActiveChild)
                     {
-                        TextEquation equationAfter = (TextEquation)childEquations[childEquations.IndexOf(ActiveChild) + 1];
-                        ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) - 1];
-                        UndoManager.AddUndoAction(new RowAction(this, deleteable, equationAfter, childEquations.IndexOf(deleteable), TextLength) { UndoFlag = false });
-                        childEquations.Remove(deleteable);
+                        var equationAfter = (TextEquation)ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
+                        ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
+                        UndoManager.AddUndoAction(new RowAction(this, deleteable, equationAfter, ChildEquations.IndexOf(deleteable), TextLength) { UndoFlag = false });
+                        ChildEquations.Remove(deleteable);
                         ((TextEquation)ActiveChild).Merge(equationAfter);
-                        childEquations.Remove(equationAfter);
+                        ChildEquations.Remove(equationAfter);
                         deleteable = null;
                     }
                     else
@@ -901,17 +898,17 @@ namespace Editor
                 deleteable = null;
                 if (key == Key.Right)
                 {
-                    if (ActiveChild != childEquations.Last())
+                    if (ActiveChild != ChildEquations.Last())
                     {
-                        ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) + 1];
+                        ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) + 1];
                         result = true;
                     }
                 }
                 else if (key == Key.Left)
                 {
-                    if (ActiveChild != childEquations.First())
+                    if (ActiveChild != ChildEquations.First())
                     {
-                        ActiveChild = childEquations[childEquations.IndexOf(ActiveChild) - 1];
+                        ActiveChild = ChildEquations[ChildEquations.IndexOf(ActiveChild) - 1];
                         result = true;
                     }
                 }
@@ -922,36 +919,36 @@ namespace Editor
 
         public void Merge(EquationRow secondLine)
         {
-            ((TextEquation)childEquations.Last()).Merge((TextEquation)secondLine.childEquations.First()); //first and last are always of tyep TextEquation
-            for (int i = 1; i < secondLine.childEquations.Count; i++)
+            ((TextEquation)ChildEquations.Last()).Merge((TextEquation)secondLine.ChildEquations.First()); //first and last are always of tyep TextEquation
+            for (var i = 1; i < secondLine.ChildEquations.Count; i++)
             {
-                AddChild(secondLine.childEquations[i]);
+                AddChild(secondLine.ChildEquations[i]);
             }
             CalculateSize();
         }
 
         void SplitRow(EquationRow newRow)
         {
-            int index = childEquations.IndexOf(ActiveChild) + 1;
-            EquationBase newChild = ActiveChild.Split(newRow);
+            var index = ChildEquations.IndexOf(ActiveChild) + 1;
+            var newChild = ActiveChild.Split(newRow);
 
             if (newChild != null)
             {
                 newRow.RemoveChild(newRow.ActiveChild);
                 newRow.AddChild(newChild);
-                int i = index;
-                for (; i < childEquations.Count; i++)
+                var i = index;
+                for (; i < ChildEquations.Count; i++)
                 {
-                    newRow.AddChild(childEquations[i]);
+                    newRow.AddChild(ChildEquations[i]);
                 }
-                for (i = childEquations.Count - 1; i >= index; i--)
+                for (i = ChildEquations.Count - 1; i >= index; i--)
                 {
-                    RemoveChild(childEquations[i]);
+                    RemoveChild(ChildEquations[i]);
                 }
             }
         }
 
-        public override EquationBase Split(EquationContainer newParent)
+        public override IEquationBase Split(EquationContainer newParent)
         {
             deleteable = null;
             EquationRow newRow = null;
@@ -975,52 +972,46 @@ namespace Editor
             {
                 deleteable = null;
                 ((TextEquation)ActiveChild).Truncate();
-                int index = childEquations.IndexOf(ActiveChild) + 1;
-                int i = index;
-                for (i = childEquations.Count - 1; i >= index; i--)
+                var index = ChildEquations.IndexOf(ActiveChild) + 1;
+                var i = index;
+                for (i = ChildEquations.Count - 1; i >= index; i--)
                 {
-                    RemoveChild(childEquations[i]);
+                    RemoveChild(ChildEquations[i]);
                 }
             }
             CalculateSize();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             double width = 0;
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
-                //eb.Left = Left + left;
                 width += eb.Width + eb.Margin.Left + eb.Margin.Right;
             }
-            if (childEquations.Count > 1)
+            if (ChildEquations.Count > 1)
             {
-                width -= childEquations.Last().Width == 0 ? childEquations[childEquations.Count - 2].Margin.Right : 0;
-                width -= childEquations.First().Width == 0 ? childEquations[1].Margin.Left : 0;
+                width -= ChildEquations.Last().Width == 0 ? ChildEquations[ChildEquations.Count - 2].Margin.Right : 0;
+                width -= ChildEquations.First().Width == 0 ? ChildEquations[1].Margin.Left : 0;
             }
             Width = width;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             double maxUpperHalf = 0;
             double maxBottomHalf = 0;
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 if (eb.GetType() == typeof(Super) || eb.GetType() == typeof(Sub) || eb.GetType() == typeof(SubAndSuper))
                 {
-                    SubSuperBase subSuperBase = (SubSuperBase)eb;
-                    if (subSuperBase.Position == Position.Right)
-                    {
-                        subSuperBase.SetBuddy(PreviousNonEmptyChild(subSuperBase));
-                    }
-                    else
-                    {
-                        subSuperBase.SetBuddy(NextNonEmptyChild(subSuperBase));
-                    }
+                    var subSuperBase = (SubSuperBase)eb;
+                    subSuperBase.SetBuddy(subSuperBase.Position == Position.Right
+                        ? PreviousNonEmptyChild(subSuperBase)
+                        : NextNonEmptyChild(subSuperBase));
                 }
-                double childRefY = eb.RefY;
-                double childHeight = eb.Height;
+                var childRefY = eb.RefY;
+                var childHeight = eb.Height;
                 if (childRefY > maxUpperHalf)
                 {
                     maxUpperHalf = childRefY;
@@ -1040,21 +1031,15 @@ namespace Editor
             {
                 base.Left = value;
                 double left = 0;
-                for (int i = 0; i < childEquations.Count; i++)
+                for (var i = 0; i < ChildEquations.Count; i++)
                 {
-                    childEquations[i].Left = left + value + (left == 0 && i == 1 ? 0 : childEquations[i].Margin.Left);
-                    left += childEquations[i].Width + childEquations[i].Margin.Right + (left == 0 && i == 1 ? 0 : childEquations[i].Margin.Left);
+                    ChildEquations[i].Left = left + value + (left == 0 && i == 1 ? 0 : ChildEquations[i].Margin.Left);
+                    left += ChildEquations[i].Width + ChildEquations[i].Margin.Right + (left == 0 && i == 1 ? 0 : ChildEquations[i].Margin.Left);
                 }
             }
         }
 
-        public override double RefY
-        {
-            get
-            {
-                return childEquations.First().MidY - Top;
-            }
-        }
+        public override double RefY => ChildEquations.First().MidY - Top;
 
         public override double Top
         {
@@ -1063,20 +1048,21 @@ namespace Editor
             {
                 base.Top = value;
                 double maxUpperHalf = 0;
-                foreach (EquationBase eb in childEquations)
+                foreach (var equationBase in ChildEquations)
                 {
+                    var eb = (EquationBase) equationBase;
                     maxUpperHalf = Math.Max(maxUpperHalf, eb.RefY);
                 }
-                foreach (EquationBase eb in childEquations)
+                foreach (var eb in ChildEquations)
                 {
                     eb.Top = (Top + maxUpperHalf) - eb.RefY;
                 }
             }
         }
 
-        void AdjustChildrenVertical(double maxUpperHalf)
+        private void AdjustChildrenVertical(double maxUpperHalf)
         {
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 eb.Top = (Top + maxUpperHalf) - eb.RefY;
             }
@@ -1125,39 +1111,39 @@ namespace Editor
             }
         }
 
-        public void ResetRowEquation(int activeChildIndex, int selectionStartIndex, int selectedItems, List<EquationBase> items, bool appendAtEnd)
+        public void ResetRowEquation(int activeChildIndex, int selectionStartIndex, int selectedItems, List<IEquationBase> items, bool appendAtEnd)
         {
-            this.SelectionStartIndex = selectionStartIndex;
-            this.SelectedItems = selectedItems;
-            int index = 0;
+            SelectionStartIndex = selectionStartIndex;
+            SelectedItems = selectedItems;
+            var index = 0;
             if (appendAtEnd)
             {
-                index = childEquations.Count;
+                index = ChildEquations.Count;
             }
-            for (int i = 0; i < items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
-                childEquations.Insert(i + index, items[i]);
+                ChildEquations.Insert(i + index, items[i]);
             }
-            this.ActiveChild = childEquations[activeChildIndex];
+            ActiveChild = ChildEquations[activeChildIndex];
         }
 
         public void ResetRowEquation(int activeChildIndex, int selectionStartIndex, int selectedItems)
         {
-            this.SelectionStartIndex = selectionStartIndex;
-            this.SelectedItems = selectedItems;
-            this.ActiveChild = childEquations[activeChildIndex];
+            SelectionStartIndex = selectionStartIndex;
+            SelectedItems = selectedItems;
+            ActiveChild = ChildEquations[activeChildIndex];
         }
 
         public void ResetRowEquation(EquationBase activeChild, int selectionStartIndex, int selectedItems)
         {
-            this.SelectionStartIndex = selectionStartIndex;
-            this.SelectedItems = selectedItems;
-            this.ActiveChild = activeChild;
+            SelectionStartIndex = selectionStartIndex;
+            SelectedItems = selectedItems;
+            ActiveChild = activeChild;
         }
 
         private void ProcessRowRemoveAction(EquationAction action)
         {
-            RowRemoveAction rowAction = action as RowRemoveAction;
+            var rowAction = action as RowRemoveAction;
             rowAction.HeadTextEquation.ResetTextEquation(rowAction.FirstTextCaretIndex, rowAction.FirstTextSelectionIndex,
                                                          rowAction.FirstTextSelectedItems, rowAction.FirstText, rowAction.FirstFormats, 
                                                          rowAction.FirstModes, rowAction.FirstDecorations);
@@ -1166,7 +1152,7 @@ namespace Editor
                                                          rowAction.LastFormats, rowAction.LastModes, rowAction.LastDecorations);
             if (rowAction.UndoFlag)
             {
-                childEquations.InsertRange(childEquations.IndexOf(rowAction.HeadTextEquation) + 1, rowAction.Equations);
+                ChildEquations.InsertRange(ChildEquations.IndexOf(rowAction.HeadTextEquation) + 1, rowAction.Equations);
                 ActiveChild = rowAction.ActiveEquation;
                 foreach (EquationBase eb in rowAction.Equations)
                 {
@@ -1181,21 +1167,21 @@ namespace Editor
                 rowAction.HeadTextEquation.RemoveSelection(false); //.DeleteSelectedText();
                 rowAction.TailTextEquation.RemoveSelection(false); //.DeleteSelectedText();
                 rowAction.HeadTextEquation.Merge(rowAction.TailTextEquation);
-                int index = childEquations.IndexOf(rowAction.HeadTextEquation);
-                for (int i = index + rowAction.Equations.Count; i > index; i--)
+                var index = ChildEquations.IndexOf(rowAction.HeadTextEquation);
+                for (var i = index + rowAction.Equations.Count; i > index; i--)
                 {
-                    childEquations.RemoveAt(i);
+                    ChildEquations.RemoveAt(i);
                 }
                 ActiveChild = rowAction.HeadTextEquation;
-                this.SelectedItems = 0;
+                SelectedItems = 0;
                 IsSelecting = false; 
             }
         }
 
         private void ProcessRowPasteAction(EquationAction action)
         {
-            EquationRowPasteAction pasteAction = action as EquationRowPasteAction;
-            TextEquation activeText = pasteAction.ActiveTextEquation;
+            var pasteAction = action as EquationRowPasteAction;
+            var activeText = pasteAction.ActiveTextEquation;
             activeText.ResetTextEquation(pasteAction.ActiveChildCaretIndex, pasteAction.ActiveChildSelectionStartIndex, pasteAction.ActiveChildSelectedItems,
                                          pasteAction.ActiveChildText, pasteAction.ActiveChildFormats, pasteAction.ActiveChildModes, pasteAction.ActiveChildDecorations);
             ActiveChild = activeText;
@@ -1203,21 +1189,21 @@ namespace Editor
             {
                 SelectedItems = pasteAction.SelectedItems;
                 SelectionStartIndex = pasteAction.SelectionStartIndex;
-                foreach (EquationBase eb in pasteAction.Equations)
+                foreach (var eb in pasteAction.Equations)
                 {
-                    childEquations.Remove(eb);
+                    ChildEquations.Remove(eb);
                 }
             }
             else
             {
                 ((TextEquation)pasteAction.Equations.Last()).ResetTextEquation(0, 0, 0, pasteAction.LastNewText, pasteAction.LastNewFormats, pasteAction.LastNewModes, pasteAction.LastNewDecorations);
-                EquationBase newChild = ActiveChild.Split(this);
-                int index = childEquations.IndexOf(ActiveChild) + 1;
-                childEquations.InsertRange(index, pasteAction.Equations);
+                var newChild = ActiveChild.Split(this);
+                var index = ChildEquations.IndexOf(ActiveChild) + 1;
+                ChildEquations.InsertRange(index, pasteAction.Equations);
                 ((TextEquation)ActiveChild).ConsumeFormattedText(pasteAction.FirstNewText, pasteAction.FirstNewFormats, pasteAction.FirstNewModes, pasteAction.FirstNewDecorations, false);
                 ((TextEquation)pasteAction.Equations.Last()).Merge((TextEquation)newChild);
-                ActiveChild = childEquations[index + pasteAction.Equations.Count - 1];
-                foreach (EquationBase eb in pasteAction.Equations)
+                ActiveChild = ChildEquations[index + pasteAction.Equations.Count - 1];
+                foreach (var eb in pasteAction.Equations)
                 {
                     eb.FontSize = FontSize;
                 }
@@ -1227,47 +1213,47 @@ namespace Editor
 
         private void ProcessRowAction(EquationAction action)
         {
-            RowAction rowAction = action as RowAction;
+            var rowAction = action as RowAction;
             if (rowAction.UndoFlag)
             {
-                childEquations.Remove(rowAction.Equation);
-                ActiveChild = childEquations.ElementAt(rowAction.Index - 1);
+                ChildEquations.Remove(rowAction.Equation);
+                ActiveChild = ChildEquations.ElementAt(rowAction.Index - 1);
                 ((TextEquation)ActiveChild).Merge(rowAction.EquationAfter);
-                childEquations.RemoveAt(rowAction.Index);
+                ChildEquations.RemoveAt(rowAction.Index);
             }
             else
             {
-                ActiveChild = childEquations[rowAction.Index - 1];
+                ActiveChild = ChildEquations[rowAction.Index - 1];
                 ((TextEquation)ActiveChild).Truncate(rowAction.CaretIndex);
-                childEquations.Insert(rowAction.Index, rowAction.Equation);
-                childEquations.Insert(rowAction.Index + 1, rowAction.EquationAfter);
+                ChildEquations.Insert(rowAction.Index, rowAction.Equation);
+                ChildEquations.Insert(rowAction.Index + 1, rowAction.EquationAfter);
                 ActiveChild = rowAction.Equation;
-                rowAction.Equation.FontSize = this.FontSize;
-                rowAction.EquationAfter.FontSize = this.FontSize;
+                rowAction.Equation.FontSize = FontSize;
+                rowAction.EquationAfter.FontSize = FontSize;
             }
         }
 
         private void ProcessEquationRowFormatAction(EquationAction action)
         {
-            EquationRowFormatAction ecfa = action as EquationRowFormatAction;
+            var ecfa = action as EquationRowFormatAction;
             if (ecfa != null)
             {
                 IsSelecting = true;
-                this.SelectedItems = ecfa.SelectedItems;
-                this.SelectionStartIndex = ecfa.SelectionStartIndex;
-                int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-                int endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
-                childEquations[startIndex].SelectionStartIndex = ecfa.FirstChildSelectionStartIndex;
-                childEquations[startIndex].SelectedItems = ecfa.FirstChildSelectedItems;
-                childEquations[endIndex].SelectionStartIndex = ecfa.LastChildSelectionStartIndex;
-                childEquations[endIndex].SelectedItems = ecfa.LastChildSelectedItems;
-                for (int i = startIndex; i <= endIndex; i++)
+                SelectedItems = ecfa.SelectedItems;
+                SelectionStartIndex = ecfa.SelectionStartIndex;
+                var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+                var endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
+                ChildEquations[startIndex].SelectionStartIndex = ecfa.FirstChildSelectionStartIndex;
+                ChildEquations[startIndex].SelectedItems = ecfa.FirstChildSelectedItems;
+                ChildEquations[endIndex].SelectionStartIndex = ecfa.LastChildSelectionStartIndex;
+                ChildEquations[endIndex].SelectedItems = ecfa.LastChildSelectedItems;
+                for (var i = startIndex; i <= endIndex; i++)
                 {
                     if (i > startIndex && i < endIndex)
                     {
-                        childEquations[i].SelectAll();
+                        ChildEquations[i].SelectAll();
                     }
-                    childEquations[i].ModifySelection(ecfa.Operation, ecfa.Argument, ecfa.UndoFlag ? !ecfa.Applied : ecfa.Applied, false);
+                    ChildEquations[i].ModifySelection(ecfa.Operation, ecfa.Argument, ecfa.UndoFlag ? !ecfa.Applied : ecfa.Applied, false);
                 }
                 CalculateSize();
                 ParentEquation.ChildCompletedUndo(this);
@@ -1276,109 +1262,92 @@ namespace Editor
 
         public void Truncate(int indexFrom, int keepCount)
         {
-            childEquations.RemoveRange(indexFrom, childEquations.Count - indexFrom);
-            ((TextEquation)childEquations[indexFrom - 1]).Truncate(keepCount);
+            ChildEquations.RemoveRange(indexFrom, ChildEquations.Count - indexFrom);
+            ((TextEquation)ChildEquations[indexFrom - 1]).Truncate(keepCount);
             CalculateSize();
         }
 
         public void SetCurrentChild(int childIndex, int caretIndex)
         {
-            TextEquation textEquation = childEquations[childIndex] as TextEquation;
+            var textEquation = ChildEquations[childIndex] as TextEquation;
             textEquation.CaretIndex = caretIndex;
             ActiveChild = textEquation;
         }
 
-        public bool IsEmpty
-        {
-            get
-            {
-                if (childEquations.Count == 1)
-                {
-                    if (string.IsNullOrEmpty(((TextEquation)ActiveChild).Text))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }
+        public bool IsEmpty => 
+            ChildEquations.Count == 1 
+            && string.IsNullOrEmpty(((TextEquation)ActiveChild).Text);
 
         public int ActiveChildIndex
         {
             get
             {
-                return childEquations.IndexOf(ActiveChild);
+                return ChildEquations.IndexOf(ActiveChild);
             }
             set
             {
-                ActiveChild = childEquations[value];
+                ActiveChild = ChildEquations[value];
             }
         }
 
-        public int TextLength
-        {
-            get
-            {
-                return ((TextEquation)ActiveChild).TextLength;
-            }
-        }
+        public int TextLength => ((TextEquation)ActiveChild).TextLength;
 
         public void SelectToStart()
         {
-            if (childEquations[SelectionStartIndex].GetType() == typeof(TextEquation))
+            if (ChildEquations[SelectionStartIndex].GetType() == typeof(TextEquation))
             {
-                ((TextEquation)childEquations[SelectionStartIndex]).SelectToStart();
+                ((TextEquation)ChildEquations[SelectionStartIndex]).SelectToStart();
             }
             else
             {
                 SelectionStartIndex++;
-                ((TextEquation)childEquations[SelectionStartIndex]).MoveToStart();
-                childEquations[SelectionStartIndex].StartSelection();
+                ((TextEquation)ChildEquations[SelectionStartIndex]).MoveToStart();
+                ChildEquations[SelectionStartIndex].StartSelection();
             }
-            for (int i = SelectionStartIndex - 2; i >= 0; i -= 2)
+            for (var i = SelectionStartIndex - 2; i >= 0; i -= 2)
             {
-                ((TextEquation)childEquations[i]).MoveToEnd();
-                childEquations[i].StartSelection();
-                ((TextEquation)childEquations[i]).SelectToStart();
-                childEquations[i + 1].SelectAll();
+                ((TextEquation)ChildEquations[i]).MoveToEnd();
+                ChildEquations[i].StartSelection();
+                ((TextEquation)ChildEquations[i]).SelectToStart();
+                ChildEquations[i + 1].SelectAll();
             }
             SelectedItems = -SelectionStartIndex;
-            ActiveChild = childEquations[0];
+            ActiveChild = ChildEquations[0];
         }
 
         public void SelectToEnd()
         {
-            if (childEquations[SelectionStartIndex].GetType() == typeof(TextEquation))
+            if (ChildEquations[SelectionStartIndex].GetType() == typeof(TextEquation))
             {
-                ((TextEquation)childEquations[SelectionStartIndex]).SelectToEnd();
+                ((TextEquation)ChildEquations[SelectionStartIndex]).SelectToEnd();
             }
             else
             {
                 SelectionStartIndex--;
-                ((TextEquation)childEquations[SelectionStartIndex]).MoveToEnd();
-                childEquations[SelectionStartIndex].StartSelection();
+                ((TextEquation)ChildEquations[SelectionStartIndex]).MoveToEnd();
+                ChildEquations[SelectionStartIndex].StartSelection();
             }
-            for (int i = SelectionStartIndex + 2; i < childEquations.Count; i += 2)
+            for (var i = SelectionStartIndex + 2; i < ChildEquations.Count; i += 2)
             {
-                ((TextEquation)childEquations[i]).MoveToStart();
-                childEquations[i].StartSelection();
-                ((TextEquation)childEquations[i]).SelectToEnd();
-                childEquations[i - 1].SelectAll();
+                ((TextEquation)ChildEquations[i]).MoveToStart();
+                ChildEquations[i].StartSelection();
+                ((TextEquation)ChildEquations[i]).SelectToEnd();
+                ChildEquations[i - 1].SelectAll();
             }
-            SelectedItems = childEquations.Count - SelectionStartIndex - 1;
-            ActiveChild = childEquations.Last();
+            SelectedItems = ChildEquations.Count - SelectionStartIndex - 1;
+            ActiveChild = ChildEquations.Last();
         }
 
-        public EquationBase PreviousNonEmptyChild(EquationContainer equation)
+        public IEquationBase PreviousNonEmptyChild(EquationContainer equation)
         {
-            int index = childEquations.IndexOf(equation) - 1;
+            var index = ChildEquations.IndexOf(equation) - 1;
             if (index >= 0)
             {
-                if (index >= 1 && ((TextEquation)childEquations[index]).TextLength == 0)
+                if (index >= 1 && ((TextEquation)ChildEquations[index]).TextLength == 0)
                 {
                     index--;
                 }
-                return childEquations[index];
+                return ChildEquations[index];
             }
             else
             {
@@ -1386,90 +1355,76 @@ namespace Editor
             }
         }
 
-        public EquationBase NextNonEmptyChild(EquationContainer equation)
+        public IEquationBase NextNonEmptyChild(EquationContainer equation)
         {
-            int index = childEquations.IndexOf(equation) + 1;
-            if (index < childEquations.Count)
+            var index = ChildEquations.IndexOf(equation) + 1;
+            if (index >= ChildEquations.Count) return null;
+
+            if (index < ChildEquations.Count - 1 && ((TextEquation)ChildEquations[index]).TextLength == 0)
             {
-                if (index < childEquations.Count - 1 && ((TextEquation)childEquations[index]).TextLength == 0)
-                {
-                    index++;
-                }
-                return childEquations[index];
+                index++;
             }
-            else
-            {
-                return null;
-            }
+
+            return ChildEquations[index];
         }
 
         public override void SelectAll()
         {
             base.SelectAll();
-            ((TextEquation)childEquations.Last()).MoveToEnd();
+            ((TextEquation)ChildEquations.Last()).MoveToEnd();
         }
 
         public void MoveToStart()
         {
-            ActiveChild = childEquations[0];
+            ActiveChild = ChildEquations[0];
             ((TextEquation)ActiveChild).MoveToStart();
         }
 
         public void MoveToEnd()
         {
-            ActiveChild = childEquations.Last();
+            ActiveChild = ChildEquations.Last();
             ((TextEquation)ActiveChild).MoveToEnd();
         }
 
         public override double GetVerticalCaretLength()
         {
-            if (ActiveChild.GetType() == typeof(TextEquation))
-            {
-                return Height;
-            }
-            else
-            {
-                return ActiveChild.GetVerticalCaretLength();
-            }
+            return ActiveChild.GetType() == typeof(TextEquation) 
+                ? Height 
+                : ActiveChild.GetVerticalCaretLength();
         }
 
         public override Point GetVerticalCaretLocation()
         {
-            if (ActiveChild.GetType() == typeof(TextEquation))
-            {
-                return new Point(ActiveChild.GetVerticalCaretLocation().X, Top);
-            }
-            else
-            {
-                return ActiveChild.GetVerticalCaretLocation();
-            }
+            return ActiveChild.GetType() == typeof(TextEquation) 
+                ? new Point(ActiveChild.GetVerticalCaretLocation().X, Top) 
+                : ActiveChild.GetVerticalCaretLocation();
         }
 
         public override void ModifySelection(string operation, string argument, bool applied, bool addUndo)
         {
             if (IsSelecting)
             {
-                int startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
-                int endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
+                var startIndex = SelectedItems > 0 ? SelectionStartIndex : SelectionStartIndex + SelectedItems;
+                var endIndex = SelectedItems > 0 ? SelectionStartIndex + SelectedItems : SelectionStartIndex;
                 if (endIndex - startIndex > 0)
                 {
-                    for (int i = startIndex; i <= endIndex; i++)
+                    for (var i = startIndex; i <= endIndex; i++)
                     {
-                        childEquations[i].ModifySelection(operation, argument, applied, false);
+                        ChildEquations[i].ModifySelection(operation, argument, applied, false);
                     }
                     if (addUndo)
                     {
-                        EquationRowFormatAction ecfa = new EquationRowFormatAction(this)
+                        var ecfa = new EquationRowFormatAction(this)
                         {
                             Operation = operation,
                             Argument = argument,
                             Applied = applied,
                             SelectionStartIndex = SelectionStartIndex,
                             SelectedItems = SelectedItems,
-                            FirstChildSelectionStartIndex = childEquations[startIndex].SelectionStartIndex,
-                            FirstChildSelectedItems = childEquations[startIndex].SelectedItems,
-                            LastChildSelectionStartIndex = childEquations[endIndex].SelectionStartIndex,
-                            LastChildSelectedItems = childEquations[endIndex].SelectedItems,
+                            FirstChildSelectionStartIndex = ChildEquations[startIndex].SelectionStartIndex,
+                            FirstChildSelectedItems = ChildEquations[startIndex].SelectedItems,
+                            LastChildSelectionStartIndex = ChildEquations[endIndex].SelectionStartIndex,
+                            LastChildSelectedItems = ChildEquations[endIndex].SelectedItems,
                         };
                         UndoManager.AddUndoAction(ecfa);
                     }

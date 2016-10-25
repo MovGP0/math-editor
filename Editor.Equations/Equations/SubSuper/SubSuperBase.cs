@@ -3,43 +3,34 @@
     public abstract class SubSuperBase : EquationContainer
     {
         public Position Position { get; set; }                
-        protected double Padding 
-        { 
-            get 
-            {
-                if (buddy != null && buddy.GetType() == typeof(TextEquation))
-                {
-                    return FontSize * .01;
-                }
-                else
-                {
-                    return FontSize * .05;
-                }
-            } 
-        }
-        protected double SuperOverlap { get { return FontSize * 0.35; } }
+        protected double Padding => buddy != null && buddy.GetType() == typeof(TextEquation) 
+            ? FontSize*.01 
+            : FontSize*.05;
+
+        protected double SuperOverlap => FontSize * 0.35;
+
         protected double SubOverlap 
         { 
             get 
             {
-                TextEquation te = buddy as TextEquation;
+                var te = buddy as TextEquation;
                 double oha = 0;
                 if (te != null)
                 {
-                    oha = te.GetCornerDescent(this.Position);
+                    oha = te.GetCornerDescent(Position);
                 }
                 return FontSize * .1 - oha; 
             } 
         }
         
-        EquationBase buddy = null;
-        protected EquationBase Buddy
+        IEquationBase buddy;
+        protected IEquationBase Buddy
         {
             get { return buddy ?? ParentEquation.ActiveChild; }
             set { buddy = value; }
         }
-        
-        public SubSuperBase(EquationRow parent, Position position)
+
+        protected SubSuperBase(EquationRow parent, Position position)
             : base(parent)
         {
             ApplySymbolGap = false;
@@ -47,9 +38,9 @@
             Position = position;            
         }
 
-        public void SetBuddy(EquationBase buddy)
+        public void SetBuddy(IEquationBase buddy)
         {
-            this.Buddy = buddy;
+            Buddy = buddy;
             CalculateHeight();
         }
     }

@@ -30,8 +30,8 @@ namespace Editor
             this.isFixed = isFixed;
             divTriangleSign = new DivTriangleSign(this);
             ActiveChild = insideEquation = new RowContainer(this);
-            childEquations.Add(insideEquation);
-            childEquations.Add(divTriangleSign);
+            ChildEquations.Add(insideEquation);
+            ChildEquations.Add(divTriangleSign);
         }
 
         public override XElement Serialize()
@@ -69,12 +69,12 @@ namespace Editor
             CalculateWidth();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = insideEquation.Width + divTriangleSign.Width + LeftGap * 2;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {            
             if (isFixed)
             {

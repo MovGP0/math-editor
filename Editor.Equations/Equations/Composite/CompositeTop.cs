@@ -17,7 +17,7 @@ namespace Editor
             topRowContainer = new RowContainer(this);
             topRowContainer.FontFactor = SubFontFactor;
             topRowContainer.ApplySymbolGap = false;
-            childEquations.AddRange(new EquationBase[] { mainRowContainer, topRowContainer });
+            ChildEquations.AddRange(new IEquationBase[] { mainRowContainer, topRowContainer });
         }
 
         public override XElement Serialize()
@@ -46,12 +46,12 @@ namespace Editor
             }
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = Math.Max(mainRowContainer.Width, topRowContainer.Width);
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = mainRowContainer.Height + topRowContainer.Height;            
         }

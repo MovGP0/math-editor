@@ -23,7 +23,7 @@ namespace Editor
             nthRootEquation = new RowContainer(this);
             nthRootEquation.ApplySymbolGap = false;
             nthRootEquation.FontFactor = SubFontFactor;
-            childEquations.AddRange(new EquationBase[] { insideEquation, radicalSign, nthRootEquation });
+            ChildEquations.AddRange(new EquationBase[] { insideEquation, radicalSign, nthRootEquation });
         }
 
         public override XElement Serialize()
@@ -71,12 +71,12 @@ namespace Editor
             nthRootEquation.Bottom = radicalSign.MidY - FontSize * .05;
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = Math.Max(nthRootEquation.Width + HGap, radicalSign.Width) + insideEquation.Width + LeftPadding;            
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = insideEquation.Height + Math.Max(0, nthRootEquation.Height - insideEquation.Height / 2 + FontSize * .05) + ExtraHeight;
         }

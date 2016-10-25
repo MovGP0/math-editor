@@ -26,7 +26,7 @@ namespace Editor
         public EditorMode[] LastNewModes { get; set; }        
         public CharacterDecorationInfo[] LastNewDecorations { get; set; }
         
-        public List<EquationBase> Equations { get; set; }
+        public List<IEquationBase> Equations { get; set; }
 
         public EquationRowPasteAction(ISupportsUndo executor)
             : base(executor)

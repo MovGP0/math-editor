@@ -22,8 +22,8 @@ namespace Editor
         {            
             radicalSign = new RadicalSign(this);
             ActiveChild = insideEquation = new RowContainer(this);
-            childEquations.Add(insideEquation);
-            childEquations.Add(radicalSign);
+            ChildEquations.Add(insideEquation);
+            ChildEquations.Add(radicalSign);
         }
 
         public override XElement Serialize()
@@ -55,12 +55,12 @@ namespace Editor
             radicalSign.Top = Top;
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = insideEquation.Width + radicalSign.Width + LeftGap;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = insideEquation.Height + ExtraHeight;
             radicalSign.Height = Height;

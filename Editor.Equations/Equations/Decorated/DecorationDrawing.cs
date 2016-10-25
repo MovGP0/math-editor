@@ -133,7 +133,7 @@ namespace Editor
             while (Width > firstSign.Width - firstSign.OverhangLeading - firstSign.OverhangTrailing);
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             DetermineHeight();
         }

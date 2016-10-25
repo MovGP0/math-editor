@@ -17,8 +17,8 @@ namespace Editor
             this.decorationType = decorationType;
             this.decorationPosition = decorationPosition;
             decoration = new DecorationDrawing(this, decorationType);
-            this.childEquations.Add(rowContainer);
-            this.childEquations.Add(decoration);
+            this.ChildEquations.Add(rowContainer);
+            this.ChildEquations.Add(decoration);
         }
 
         public override void DrawEquation(DrawingContext dc)
@@ -94,7 +94,7 @@ namespace Editor
             }
         }
         
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             if (decorationPosition == Position.Bottom)
             {
@@ -107,7 +107,7 @@ namespace Editor
             AdjustVertical();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = rowContainer.Width;
             decoration.Width = Width;

@@ -2,28 +2,23 @@
 {
     public static class SignCompositeFactory
     {
-        public static EquationBase CreateEquation(EquationContainer equationParent, Position position, SignCompositeSymbol symbol, bool useUpright)
+        public static IEquationBase CreateEquation(EquationContainer equationParent, Position position, SignCompositeSymbol symbol, bool useUpright)
         {
-            EquationBase equation = null;
             switch (position)
             {
                 case Position.None:
-                    equation = new SignSimple(equationParent, symbol, useUpright);
-                    break;
+                    return new SignSimple(equationParent, symbol, useUpright);
                 case Position.Bottom:
-                    equation = new SignBottom(equationParent, symbol, useUpright);
-                    break;
+                    return new SignBottom(equationParent, symbol, useUpright);
                 case Position.BottomAndTop:
-                    equation = new SignBottomTop(equationParent, symbol, useUpright);
-                    break;
+                    return new SignBottomTop(equationParent, symbol, useUpright);
                 case Position.Sub:
-                    equation = new SignSub(equationParent, symbol, useUpright);
-                    break;
+                    return new SignSub(equationParent, symbol, useUpright);
                 case Position.SubAndSuper:
-                    equation = new SignSubSuper(equationParent, symbol, useUpright);
-                    break;
+                    return new SignSubSuper(equationParent, symbol, useUpright);
+                default:
+                    return null;
             }
-            return equation;
         }
     }
 }

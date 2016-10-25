@@ -56,12 +56,12 @@ namespace Editor
             CalculateWidth();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = insideEq.Width + bracketSign.Width;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             ExtraHeight = FontSize * 0.2;
             double upperMax = insideEq.RefY;

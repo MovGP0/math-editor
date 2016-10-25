@@ -64,12 +64,12 @@ namespace Editor
             }
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = Math.Max(topEquation.Width, bottomEquation.Width) + ExtraWidth;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             double height = topEquation.Height + bottomEquation.Height + ExtraHeight * 1.6;
             height += (barCount - 1) * ExtraHeight;             

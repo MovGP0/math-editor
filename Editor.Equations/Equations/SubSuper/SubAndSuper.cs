@@ -15,8 +15,8 @@ namespace Editor
         {
             ActiveChild = superEquation = new RowContainer(this);
             subEquation = new RowContainer(this);
-            childEquations.Add(superEquation);
-            childEquations.Add(subEquation);
+            ChildEquations.Add(superEquation);
+            ChildEquations.Add(subEquation);
             if (SubLevel == 1)
             {
                 superEquation.FontFactor = SubFontFactor;
@@ -48,12 +48,12 @@ namespace Editor
             CalculateSize();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = Math.Max(subEquation.Width, superEquation.Width) + Padding * 2;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             if (Buddy.GetType() == typeof(TextEquation))
             {

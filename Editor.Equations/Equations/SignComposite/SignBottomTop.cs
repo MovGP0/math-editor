@@ -26,7 +26,7 @@ namespace Editor
             sign = new StaticSign(this, symbol, useUpright);
             topEquation.FontFactor = SubFontFactor;
             bottomEquation.FontFactor = SubFontFactor;
-            childEquations.AddRange(new EquationBase[] { mainEquation, topEquation, bottomEquation, sign });
+            ChildEquations.AddRange(new IEquationBase[] { mainEquation, topEquation, bottomEquation, sign });
         }
 
         public override XElement Serialize()
@@ -51,7 +51,7 @@ namespace Editor
             CalculateSize();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             double maxLeft = Math.Max(sign.Width, Math.Max(bottomEquation.Width, topEquation.Width));
             Width = maxLeft + mainEquation.Width + HGap;
@@ -61,7 +61,7 @@ namespace Editor
             mainEquation.Left = Math.Max(Math.Max(topEquation.Right, bottomEquation.Right), sign.Right) + HGap;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             double upperHalf = Math.Max(sign.RefY + VGap + topEquation.Height, mainEquation.RefY);
             double lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);

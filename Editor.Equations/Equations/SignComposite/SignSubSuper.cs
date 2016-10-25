@@ -27,7 +27,7 @@ namespace Editor
             sign = new StaticSign(this, symbol, useUpright);
             subEquation.FontFactor = SubFontFactor;
             superEquation.FontFactor = SubFontFactor;
-            childEquations.AddRange(new EquationBase[] { mainEquation, sign, superEquation, subEquation });
+            ChildEquations.AddRange(new IEquationBase[] { mainEquation, sign, superEquation, subEquation });
         }
 
         public override XElement Serialize()
@@ -52,7 +52,7 @@ namespace Editor
             CalculateSize();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {            
             if (sign.Symbol.ToString().ToLower().Contains("integral"))
             {
@@ -62,7 +62,7 @@ namespace Editor
             Width = sign.Width + Math.Max(subEquation.Width + SubMinus, superEquation.Width + SuperMinus) + mainEquation.Width + HGap;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = Math.Max(sign.Height * .5 + subEquation.Height + superEquation.Height, mainEquation.Height);
         }

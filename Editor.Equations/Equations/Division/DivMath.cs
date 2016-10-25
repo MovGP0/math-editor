@@ -28,8 +28,8 @@ namespace Editor
         {
             divMathSign = new DivMathSign(this);
             ActiveChild = insideEquation = new RowContainer(this);            
-            childEquations.Add(insideEquation);
-            childEquations.Add(divMathSign);
+            ChildEquations.Add(insideEquation);
+            ChildEquations.Add(divMathSign);
         }
 
         public override XElement Serialize()
@@ -67,12 +67,12 @@ namespace Editor
             CalculateWidth();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = insideEquation.Width + divMathSign.Width + LeftGap;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             divMathSign.Height = insideEquation.FirstRow.Height + ExtraHeight;
             Height = Math.Max(insideEquation.Height + ExtraHeight, divMathSign.Height);            

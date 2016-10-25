@@ -77,7 +77,7 @@ namespace Editor
         {
             this.boxType = boxType;
             ActiveChild = insideEq = new RowContainer(this);
-            childEquations.Add(insideEq);
+            ChildEquations.Add(insideEq);
         }
 
         public override XElement Serialize()
@@ -139,12 +139,12 @@ namespace Editor
             }
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = insideEq.Width + LeftPadding + RightPadding; 
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = insideEq.Height + TopPadding + BottomPadding;            
         }

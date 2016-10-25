@@ -13,9 +13,8 @@ namespace Editor
         public int FirstRowSelectedItems { get; set; }
         public int LastRowSelectedItems { get; set; }
         public int FirstRowActiveIndexAfterRemoval { get; set; }
-
-        public List<EquationBase> FirstRowDeletedContent { get; set; }
-        public List<EquationBase> LastRowDeletedContent { get; set; }
+        public List<IEquationBase> FirstRowDeletedContent { get; set; }
+        public List<IEquationBase> LastRowDeletedContent { get; set; }
 
         public RowContainerRemoveAction(ISupportsUndo executor)
             : base(executor)

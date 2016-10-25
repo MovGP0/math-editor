@@ -24,7 +24,7 @@ namespace Editor
             rightArrowSign = new BracketSign(this, BracketSignType.RightAngle);
             ActiveChild = leftEquation = new RowContainer(this);
             rightEquation = new RowContainer(this);
-            childEquations.AddRange(new EquationBase[] { leftEquation, leftArrowSign, rightArrowSign, rightEquation });
+            ChildEquations.AddRange(new IEquationBase[] { leftEquation, leftArrowSign, rightArrowSign, rightEquation });
         }
 
         public override void DrawEquation(DrawingContext dc)
@@ -98,12 +98,12 @@ namespace Editor
             CalculateWidth();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = leftEquation.Width + leftArrowSign.Width + rightArrowSign.Width + rightEquation.Width + MidSpace;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = Math.Max(leftEquation.Height, rightEquation.Height) + ExtraHeight;
             leftArrowSign.Height = Height - ExtraHeight * 0.5;

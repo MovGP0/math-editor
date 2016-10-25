@@ -11,7 +11,7 @@ namespace Editor
         {
             bracketSign = new BracketSign(this, leftBracketType);
             bracketSign2 = new BracketSign(this, rightBracketType);
-            childEquations.AddRange(new EquationBase[] { insideEq, bracketSign, bracketSign2 });
+            ChildEquations.AddRange(new EquationBase[] { insideEq, bracketSign, bracketSign2 });
         }     
 
         public override XElement Serialize()
@@ -32,12 +32,12 @@ namespace Editor
         }
 
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = insideEq.Width + bracketSign.Width + bracketSign2.Width;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             base.CalculateHeight();
             bracketSign2.Height = bracketSign.Height;

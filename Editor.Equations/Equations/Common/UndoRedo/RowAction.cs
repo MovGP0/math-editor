@@ -4,10 +4,10 @@
     {
         public int Index { get; set; }
         public int CaretIndex { get; set; }
-        public EquationBase Equation { get; set; }
+        public IEquationBase Equation { get; set; }
         public TextEquation EquationAfter { get; set; }
 
-        public RowAction(ISupportsUndo executor, EquationBase equation, TextEquation equationAfter, int index, int caretIndex)
+        public RowAction(ISupportsUndo executor, IEquationBase equation, TextEquation equationAfter, int index, int caretIndex)
             : base(executor)
         {
             Index = index;

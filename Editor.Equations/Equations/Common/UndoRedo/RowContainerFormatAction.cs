@@ -2,7 +2,7 @@
 {
     public class RowContainerFormatAction : EquationAction
     {
-        public EquationBase ActiveChild { get; set; }
+        public IEquationBase ActiveChild { get; set; }
         public int SelectionStartIndex { get; set; }
         public int SelectedItems { get; set; }
         

@@ -11,22 +11,22 @@ namespace Editor
 {
     public abstract class EquationContainer : EquationBase
     {
-        public int GetIndex(EquationBase child)
+        public int GetIndex(IEquationBase child)
         {
-            return childEquations.IndexOf(child);
+            return ChildEquations.IndexOf(child);
         }
 
-        public void ReleaseChild(EquationBase child)
+        public void ReleaseChild(IEquationBase child)
         {
-            if (childEquations.Contains(child))
+            if (ChildEquations.Contains(child))
             {
-                childEquations.Remove(child);
+                ChildEquations.Remove(child);
             }
         }
 
-        protected List<EquationBase> childEquations = new List<EquationBase>();
-        EquationBase active;
-        public EquationBase ActiveChild
+        protected List<IEquationBase> ChildEquations = new List<IEquationBase>();
+        IEquationBase active;
+        public IEquationBase ActiveChild
         {
             get { return active; }
             set
@@ -55,7 +55,7 @@ namespace Editor
         public override string GetSelectedText()
         {
             StringBuilder stringBulider = new StringBuilder("");
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 stringBulider.Append(eb.GetSelectedText());
             }
@@ -65,7 +65,7 @@ namespace Editor
         public override void StartSelection()
         {
             SelectedItems = 0; //=base.StartSelection();
-            SelectionStartIndex = childEquations.IndexOf(ActiveChild);
+            SelectionStartIndex = ChildEquations.IndexOf(ActiveChild);
             ActiveChild.StartSelection();
         }
 
@@ -77,7 +77,7 @@ namespace Editor
         public override void DrawEquation(DrawingContext dc)
         {
             base.DrawEquation(dc);
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 eb.DrawEquation(dc);
             }
@@ -113,13 +113,13 @@ namespace Editor
         public override void DeSelect()
         {
             SelectedItems = 0; //base.Deselect()
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 eb.DeSelect();
             }
         }
 
-        public virtual void ChildCompletedUndo(EquationBase child)
+        public virtual void ChildCompletedUndo(IEquationBase child)
         {
             ActiveChild = child;
             CalculateSize();
@@ -194,16 +194,16 @@ namespace Editor
             }
         }
 
-        public override EquationBase Split(EquationContainer newParent)
+        public override IEquationBase Split(EquationContainer newParent)
         {
-            EquationBase result = ActiveChild.Split(this);
+            var result = ActiveChild.Split(this);
             CalculateSize();
             return result;
         }
 
         public override bool ConsumeMouseClick(Point mousePoint)
         {
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 if (!eb.IsStatic && eb.Bounds.Contains(mousePoint))
                 {
@@ -218,26 +218,26 @@ namespace Editor
         {
             if (key == Key.Up)
             {
-                for (int i = childEquations.Count - 1; i >= 0; i--)
+                for (int i = ChildEquations.Count - 1; i >= 0; i--)
                 {
-                    Type type = childEquations[i].GetType();
+                    Type type = ChildEquations[i].GetType();
                     if (type == typeof(RowContainer) || type == typeof(EquationRow))
                     {
-                        childEquations[i].SetCursorOnKeyUpDown(key, point);
-                        ActiveChild = childEquations[i];
+                        ChildEquations[i].SetCursorOnKeyUpDown(key, point);
+                        ActiveChild = ChildEquations[i];
                         break;
                     }
                 }
             }
             else
             {
-                for (int i = 0; i < childEquations.Count; i++)
+                for (int i = 0; i < ChildEquations.Count; i++)
                 {
-                    Type type = childEquations[i].GetType();
+                    Type type = ChildEquations[i].GetType();
                     if (type == typeof(RowContainer) || type == typeof(EquationRow))
                     {
-                        childEquations[i].SetCursorOnKeyUpDown(key, point);
-                        ActiveChild = childEquations[i];
+                        ChildEquations[i].SetCursorOnKeyUpDown(key, point);
+                        ActiveChild = ChildEquations[i];
                         break;
                     }
                 }
@@ -255,7 +255,7 @@ namespace Editor
             set
             {
                 base.FontSize = value;
-                foreach (EquationBase eb in childEquations)
+                foreach (var eb in ChildEquations)
                 {
                     eb.FontSize = FontSize;
                 }
@@ -266,9 +266,9 @@ namespace Editor
         public override void SelectAll()
         {
             SelectionStartIndex = 0;
-            SelectedItems = childEquations.Count - 1;
-            ActiveChild = childEquations.Last();
-            foreach (var child in childEquations)
+            SelectedItems = ChildEquations.Count - 1;
+            ActiveChild = ChildEquations.Last();
+            foreach (var child in ChildEquations)
             {
                 child.SelectAll();
             }
@@ -276,7 +276,7 @@ namespace Editor
 
         public override void ModifySelection(string operation, string argument, bool applied, bool addUndo)
         {
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 eb.ModifySelection(operation, argument, applied, addUndo);
             }
@@ -286,7 +286,7 @@ namespace Editor
         public override HashSet<int> GetUsedTextFormats()
         {
             HashSet<int> list = new HashSet<int>();
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 var listFormats = eb.GetUsedTextFormats();
                 if (listFormats != null) //This check is necessary as the base returns 'null'
@@ -305,7 +305,7 @@ namespace Editor
 
         public override void ResetTextFormats(Dictionary<int, int> formatMapping)
         {
-            foreach (EquationBase eb in childEquations)
+            foreach (var eb in ChildEquations)
             {
                 eb.ResetTextFormats(formatMapping);
             }
@@ -319,7 +319,7 @@ namespace Editor
             set
             {
                 base.ApplySymbolGap = value;
-                foreach (EquationBase eb in childEquations)
+                foreach (var eb in ChildEquations)
                 {
                     eb.ApplySymbolGap = value;
                 }

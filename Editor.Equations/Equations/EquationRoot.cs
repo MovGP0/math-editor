@@ -25,12 +25,12 @@ namespace Editor
             this.vCaret = vCaret;
             this.hCaret = hCaret;
             ActiveChild = new RowContainer(this, 0.3);
-            childEquations.Add(ActiveChild);            
+            ChildEquations.Add(ActiveChild);            
             ActiveChild.Location = Location = new Point(15, 15);
             AdjustCarets();
         }
 
-        public override void ChildCompletedUndo(EquationBase child)
+        public override void ChildCompletedUndo(IEquationBase child)
         {
             CalculateSize();
             AdjustCarets();
@@ -374,12 +374,12 @@ namespace Editor
             }            
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = ActiveChild.Width;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = ActiveChild.Height;
         }

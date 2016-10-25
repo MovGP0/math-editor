@@ -24,9 +24,9 @@ namespace Editor
             this.columns = columns;
             for (int i = 0; i < columns * rows; i++)
             {
-                childEquations.Add(new RowContainer(this));
+                ChildEquations.Add(new RowContainer(this));
             }
-            ActiveChild = childEquations.First();
+            ActiveChild = ChildEquations.First();
         }
 
         public override XElement Serialize()
@@ -36,7 +36,7 @@ namespace Editor
             parameters.Add(new XElement(typeof(int).FullName, rows));
             parameters.Add(new XElement(typeof(int).FullName, columns));
             thisElement.Add(parameters);
-            foreach (EquationBase eb in childEquations)
+            foreach (EquationBase eb in ChildEquations)
             {
                 thisElement.Add(eb.Serialize());
             }
@@ -46,9 +46,9 @@ namespace Editor
         public override void DeSerialize(XElement xElement)
         {
             XElement[] elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
-            for (int i = 0; i < childEquations.Count; i++)
+            for (int i = 0; i < ChildEquations.Count; i++)
             {
-                childEquations[i].DeSerialize(elements[i]);
+                ChildEquations[i].DeSerialize(elements[i]);
             }
             CalculateSize();
         }
@@ -64,15 +64,15 @@ namespace Editor
 
                 for (int i = 0; i < rows; i++)
                 {
-                    rowRefYs[i] = childEquations.Skip(i * columns).Take(columns).Max(x => x.RefY);
-                    topOffsets[i + 1] = childEquations.Skip(i * columns).Take(columns).Max(x => x.Height) + topOffsets[i];
+                    rowRefYs[i] = ChildEquations.Skip(i * columns).Take(columns).Max(x => x.RefY);
+                    topOffsets[i + 1] = ChildEquations.Skip(i * columns).Take(columns).Max(x => x.Height) + topOffsets[i];
                 }
 
                 for (int i = 0; i < rows; i++)
                 {
                     for (int j = 0; j < columns; j++)
                     {
-                        childEquations[i * columns + j].MidY = Top + rowRefYs[i] + topOffsets[i] + CellSpace * i;
+                        ChildEquations[i * columns + j].MidY = Top + rowRefYs[i] + topOffsets[i] + CellSpace * i;
                     }
                 }
             }
@@ -90,8 +90,8 @@ namespace Editor
                 {
                     for (int j = 0; j < rows; j++)
                     {
-                        columnRefXs[i] = Math.Max(childEquations[j * columns + i].RefX, columnRefXs[i]);
-                        leftOffsets[i + 1] = Math.Max(childEquations[j * columns + i].Width, leftOffsets[i + 1]);
+                        columnRefXs[i] = Math.Max(ChildEquations[j * columns + i].RefX, columnRefXs[i]);
+                        leftOffsets[i + 1] = Math.Max(ChildEquations[j * columns + i].Width, leftOffsets[i + 1]);
                     }
                     leftOffsets[i + 1] += leftOffsets[i];
                 }
@@ -99,31 +99,31 @@ namespace Editor
                 {
                     for (int j = 0; j < rows; j++)
                     {
-                        childEquations[j * columns + i].MidX = value + columnRefXs[i] + leftOffsets[i] + CellSpace * i;
+                        ChildEquations[j * columns + i].MidX = value + columnRefXs[i] + leftOffsets[i] + CellSpace * i;
                     }
                 }
             }
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             double[] columnWidths = new double[columns];
             for (int i = 0; i < columns; i++)
             {
                 for (int j = 0; j < rows; j++)
                 {
-                    columnWidths[i] = Math.Max(childEquations[j * columns + i].Width, columnWidths[i]);
+                    columnWidths[i] = Math.Max(ChildEquations[j * columns + i].Width, columnWidths[i]);
                 }
             }
             Width = columnWidths.Sum() + CellSpace * (columns - 1);
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             double[] rowHeights = new double[rows];
             for (int i = 0; i < rows; i++)
             {
-                rowHeights[i] = childEquations.Skip(i * columns).Take(columns).Max(x => x.Height);
+                rowHeights[i] = ChildEquations.Skip(i * columns).Take(columns).Max(x => x.Height);
             }
             Height = rowHeights.Sum() + CellSpace * (rows - 1);
         }
@@ -134,7 +134,7 @@ namespace Editor
             {
                 if (rows == 1)
                 {
-                    return childEquations.Max(x => x.RefY);
+                    return ChildEquations.Max(x => x.RefY);
                 }
                 else if (rows % 2 == 0)
                 {
@@ -142,7 +142,7 @@ namespace Editor
                     double[] rowHeights = new double[rows / 2];
                     for (int i = 0; i < rows / 2; i++)
                     {
-                        rowHeights[i] = childEquations.Skip(i * columns).Take(columns).Max(x => x.Height);
+                        rowHeights[i] = ChildEquations.Skip(i * columns).Take(columns).Max(x => x.Height);
                     }
                     return rowHeights.Sum() + CellSpace * rows/2 - CellSpace/2 + FontSize * .1;
                 }
@@ -152,9 +152,9 @@ namespace Editor
                     double[] rowHeights = new double[rows / 2 + 1];
                     for (int i = 0; i < rows / 2; i++)
                     {
-                        rowHeights[i] = childEquations.Skip(i * columns).Take(columns).Max(x => x.Height);
+                        rowHeights[i] = ChildEquations.Skip(i * columns).Take(columns).Max(x => x.Height);
                     }
-                    rowHeights[rows / 2] = childEquations.Skip(rows / 2 * columns).Take(columns).Max(x => x.RefY);
+                    rowHeights[rows / 2] = ChildEquations.Skip(rows / 2 * columns).Take(columns).Max(x => x.RefY);
                     return rowHeights.Sum() + CellSpace * (rows / 2);// -FontSize * .1;
                 }
             }
@@ -167,12 +167,12 @@ namespace Editor
                 CalculateSize();
                 return true;
             }
-            int currentIndex = childEquations.IndexOf(ActiveChild);
+            int currentIndex = ChildEquations.IndexOf(ActiveChild);
             if (key == Key.Right)
             {
                 if (currentIndex % columns < columns - 1)//not last column?
                 {
-                    ActiveChild = childEquations[currentIndex + 1];
+                    ActiveChild = ChildEquations[currentIndex + 1];
                     return true;
                 }
             }
@@ -180,7 +180,7 @@ namespace Editor
             {
                 if (currentIndex % columns > 0)//not last column?
                 {
-                    ActiveChild = childEquations[currentIndex - 1];
+                    ActiveChild = ChildEquations[currentIndex - 1];
                     return true;
                 }
             }
@@ -189,7 +189,7 @@ namespace Editor
                 if (currentIndex / columns > 0)//not in first row?
                 {
                     Point point = ActiveChild.GetVerticalCaretLocation();
-                    ActiveChild = childEquations[currentIndex - columns]; ;
+                    ActiveChild = ChildEquations[currentIndex - columns]; ;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
                     return true;
@@ -200,7 +200,7 @@ namespace Editor
                 if (currentIndex / columns < rows - 1)//not in last row?
                 {
                     Point point = ActiveChild.GetVerticalCaretLocation();
-                    ActiveChild = childEquations[currentIndex + columns]; ;
+                    ActiveChild = ChildEquations[currentIndex + columns]; ;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
                     return true;

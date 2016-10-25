@@ -40,13 +40,13 @@ namespace Editor
             ApplySymbolGap = false;
             ActiveChild = rowContainer1 = new RowContainer(this);
             rowContainer1.FontFactor = SubFontFactor;
-            this.childEquations.Add(rowContainer1);
+            this.ChildEquations.Add(rowContainer1);
             CreateDecorations();
             if (equationPosition == Position.BottomAndTop)
             {
                 rowContainer2 = new RowContainer(this);
                 rowContainer2.FontFactor = SubFontFactor;
-                childEquations.Add(rowContainer2);
+                ChildEquations.Add(rowContainer2);
             }
         }
 
@@ -56,31 +56,31 @@ namespace Editor
             {
                 case ArrowType.LeftArrow:
                     arrow1 = new DecorationDrawing(this, DecorationType.LeftArrow);
-                    childEquations.Add(arrow1);
+                    ChildEquations.Add(arrow1);
                     break;
                 case ArrowType.RightArrow:
                     arrow1 = new DecorationDrawing(this, DecorationType.RightArrow);
-                    childEquations.Add(arrow1);
+                    ChildEquations.Add(arrow1);
                     break;
                 case ArrowType.DoubleArrow:
                     arrow1 = new DecorationDrawing(this, DecorationType.DoubleArrow);
-                    childEquations.Add(arrow1);
+                    ChildEquations.Add(arrow1);
                     break;
                 case ArrowType.RightLeftArrow:
                 case ArrowType.RightSmallLeftArrow:
                 case ArrowType.SmallRightLeftArrow:
                     arrow1 = new DecorationDrawing(this, DecorationType.RightArrow);
                     arrow2 = new DecorationDrawing(this, DecorationType.LeftArrow);
-                    childEquations.Add(arrow1);
-                    childEquations.Add(arrow2);
+                    ChildEquations.Add(arrow1);
+                    ChildEquations.Add(arrow2);
                     break;
                 case ArrowType.RightLeftHarpoon:
                 case ArrowType.RightSmallLeftHarpoon:
                 case ArrowType.SmallRightLeftHarpoon:
                     arrow1 = new DecorationDrawing(this, DecorationType.RightHarpoonUpBarb);
                     arrow2 = new DecorationDrawing(this, DecorationType.LeftHarpoonDownBarb);
-                    childEquations.Add(arrow1);
-                    childEquations.Add(arrow2);
+                    ChildEquations.Add(arrow1);
+                    ChildEquations.Add(arrow2);
                     break;
             }
         }
@@ -127,7 +127,7 @@ namespace Editor
             set
             {
                 base.Left = value;
-                foreach (EquationBase eb in childEquations)
+                foreach (var eb in ChildEquations)
                 {
                     eb.MidX = MidX;
                 }
@@ -210,12 +210,12 @@ namespace Editor
             }
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
-            Height = childEquations.Sum(x => x.Height) + ArrowGap;
+            Height = ChildEquations.Sum(x => x.Height) + ArrowGap;
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             if (arrowType.ToString().ToLower().Contains("small"))
             {

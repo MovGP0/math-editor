@@ -4,7 +4,7 @@ namespace Editor
 {   
     public class RowRemoveAction : EquationAction
     {
-        public EquationBase ActiveEquation { get; set; }
+        public IEquationBase ActiveEquation { get; set; }
         public TextEquation HeadTextEquation { get; set; }
         public TextEquation TailTextEquation { get; set; }
 
@@ -27,7 +27,7 @@ namespace Editor
         public int FirstTextSelectedItems { get; set; }
         public int LastTextSelectedItems { get; set; }
 
-        public List<EquationBase> Equations { get; set; }
+        public List<IEquationBase> Equations { get; set; }
 
         public RowRemoveAction(ISupportsUndo executor)
             : base(executor)

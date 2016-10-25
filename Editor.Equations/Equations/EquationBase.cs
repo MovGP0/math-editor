@@ -7,7 +7,25 @@ using System.Xml.Linq;
 
 namespace Editor
 {
-    public abstract class EquationBase
+    public static class EquationBaseCommon
+    {
+        private const double DefaultFontSize = 20;
+        public static TextManager TextManager = new TextManager();
+        public static double LineFactor = 0.06;
+        public static double LineThickness => DefaultFontSize * LineFactor;
+        public static double ThinLineThickness => DefaultFontSize * LineFactor * 0.7;
+        public static Pen StandardPen => PenManager.GetPen(LineThickness);
+        public static Pen ThinPen => PenManager.GetPen(ThinLineThickness);
+        public static Pen StandardMiterPen => PenManager.GetPen(LineThickness, PenLineJoin.Miter);
+        public static Pen ThinMiterPen => PenManager.GetPen(ThinLineThickness, PenLineJoin.Miter);
+        public static Pen StandardRoundPen => PenManager.GetPen(LineThickness, PenLineJoin.Round);
+        public static Pen ThinRoundPen => PenManager.GetPen(ThinLineThickness, PenLineJoin.Round);
+        public static double SubFontFactor = 0.6;
+        public static double SubSubFontFactor = 0.7;
+        public static Brush DebugBrush;
+    }
+
+    public abstract class EquationBase : IEquationBase
     {
         //do not use this.. just for debugging
         private int IndexInChildrenOfParent => ParentEquation.GetIndex(this);
@@ -66,9 +84,7 @@ namespace Editor
 
         public static bool ShowNesting { get; set; }
         public EquationContainer ParentEquation { get; set; }
-        //protected static Pen BluePen = new Pen(Brushes.Blue, 1);
         private Point _location;
-        //Point refPoint = new Point();
         private double _width;
         private double _height;
         private double _fontSize = 20;
@@ -84,7 +100,7 @@ namespace Editor
 
         protected EquationBase(EquationContainer parent)
         {
-            this.ParentEquation = parent;
+            ParentEquation = parent;
             if (parent != null)
             {
                 SubLevel = parent.SubLevel;
@@ -101,15 +117,14 @@ namespace Editor
 
         public virtual bool ConsumeMouseClick(Point mousePoint) { return false; }
         public virtual void HandleMouseDrag(Point mousePoint) { }
-
-        public virtual EquationBase Split(EquationContainer newParent) { return null; }
+        public virtual IEquationBase Split(EquationContainer newParent) { return null; }
         public virtual void ConsumeText(string text) { }
         public virtual void ConsumeFormattedText(string text, int[] formats, EditorMode[] modes, CharacterDecorationInfo[] decorations, bool addUndo) { }
         public virtual bool ConsumeKey(Key key) { return false; }
         public virtual Point GetVerticalCaretLocation() { return _location; }
         public virtual double GetVerticalCaretLength() { return _height; }
-        protected virtual void CalculateWidth() { }
-        protected virtual void CalculateHeight() { }
+        public virtual void CalculateWidth() { }
+        public virtual void CalculateHeight() { }
         public virtual XElement Serialize() { return null; }
         public virtual void DeSerialize(XElement xElement) { }
         public virtual void StartSelection() { SelectedItems = 0; }

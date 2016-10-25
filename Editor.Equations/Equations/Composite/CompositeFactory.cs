@@ -2,22 +2,19 @@
 {
     public static class CompositeFactory
     {
-        public static EquationBase CreateEquation(EquationContainer equationParent, Position position)
+        public static IEquationBase CreateEquation(EquationContainer equationParent, Position position)
         {
-            EquationBase equation = null;
             switch (position)
             {                
                 case Position.Bottom:
-                    equation = new CompositeBottom(equationParent);
-                    break;
+                    return new CompositeBottom(equationParent);
                 case Position.Top:
-                    equation = new CompositeTop(equationParent);
-                    break;
+                    return new CompositeTop(equationParent);
                 case Position.BottomAndTop:
-                    equation = new CompositeBottomTop(equationParent);
-                    break;                
+                    return new CompositeBottomTop(equationParent);
+                default:
+                    return null;
             }
-            return equation;
         }
     }
 }

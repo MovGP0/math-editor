@@ -2,7 +2,7 @@
 {
     public static class BigCompositeFactory
     {
-        public static EquationBase CreateEquation(EquationContainer equationParent, Position position)
+        public static IEquationBase CreateEquation(EquationContainer equationParent, Position position)
         {
             CompositeBase equation = null;
             switch (position)

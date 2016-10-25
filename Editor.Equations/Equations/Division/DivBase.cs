@@ -26,7 +26,7 @@ namespace Editor
                 topEquation.ApplySymbolGap = false;
                 bottomEquation.ApplySymbolGap = false;
             }
-            childEquations.AddRange(new EquationBase[] { topEquation, bottomEquation});
+            ChildEquations.AddRange(new IEquationBase[] { topEquation, bottomEquation});
         }
 
         public override XElement Serialize()

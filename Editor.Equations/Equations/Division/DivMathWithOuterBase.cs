@@ -14,7 +14,7 @@ namespace Editor
             outerEquation = new RowContainer(this);
             outerEquation.HAlignment = Editor.HAlignment.Right;
             //insideEquation.HAlignment = Editor.HAlignment.Right;
-            childEquations.Add(outerEquation);
+            ChildEquations.Add(outerEquation);
         }
 
         public override XElement Serialize()
@@ -39,12 +39,12 @@ namespace Editor
             CalculateWidth();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = Math.Max(insideEquation.Width, outerEquation.Width) + divMathSign.Width + LeftGap;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {            
             Height = outerEquation.Height + insideEquation.Height + ExtraHeight;
             divMathSign.Height = insideEquation.FirstRow.Height + ExtraHeight;

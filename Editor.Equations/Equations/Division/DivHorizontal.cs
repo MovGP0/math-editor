@@ -61,13 +61,13 @@ namespace Editor
         }
 
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {            
             Width = topEquation.Width + bottomEquation.Width + ExtraWidth;
             AdjustHorizontal();
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {            
             Height = Math.Max(topEquation.Height , bottomEquation.Height);            
         }

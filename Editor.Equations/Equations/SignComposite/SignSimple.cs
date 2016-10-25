@@ -13,13 +13,13 @@ namespace Editor
         {
             ActiveChild = mainEquation = new RowContainer(this);
             sign = new StaticSign(this, symbol, useUpright);  
-            childEquations.AddRange(new EquationBase[] {mainEquation, sign});            
+            ChildEquations.AddRange(new IEquationBase[] {mainEquation, sign});            
         }
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(sign.Symbol.GetType().Name, sign.Symbol));
             parameters.Add(new XElement(typeof(bool).FullName, sign.UseItalicIntegralSign));
             thisElement.Add(parameters);            
@@ -33,12 +33,12 @@ namespace Editor
             CalculateSize();
         }
         
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             Width = sign.Width + mainEquation.Width;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = Math.Max(sign.RefY, mainEquation.RefY) + Math.Max(sign.RefY, mainEquation.Height - mainEquation.RefY);
         }

@@ -2,59 +2,41 @@
 {
     public static class DivisionFactory
     {
-        public static EquationBase CreateEquation(EquationContainer equationParent, DivisionType divType)
+        public static IEquationBase CreateEquation(EquationContainer equationParent, DivisionType divType)
         {
-            EquationBase equation = null;
             switch (divType)
             {
                 case DivisionType.DivRegular:
-                    equation = new DivRegular(equationParent);
-                    break;
+                    return new DivRegular(equationParent);
                 case DivisionType.DivRegularSmall:
-                    equation = new DivRegularSmall(equationParent);
-                    break;
+                    return new DivRegularSmall(equationParent);
                 case DivisionType.DivDoubleBar:
-                    equation = new DivDoubleBar(equationParent);
-                    break;
+                    return new DivDoubleBar(equationParent);
                 case DivisionType.DivTripleBar:
-                    equation = new DivTripleBar(equationParent);
-                    break;
-
+                    return new DivTripleBar(equationParent);
                 case DivisionType.DivHoriz:
-                    equation = new DivHorizontal(equationParent);
-                    break;
+                    return new DivHorizontal(equationParent);
                 case DivisionType.DivHorizSmall:
-                    equation = new DivHorizSmall(equationParent);
-                    break;                
-
+                    return new DivHorizSmall(equationParent);
                 case DivisionType.DivMath:
-                    equation = new DivMath(equationParent);
-                    break;
+                    return new DivMath(equationParent);
                 case DivisionType.DivMathWithTop:
-                    equation = new DivMathWithTop(equationParent);
-                    break;
-                
+                    return new DivMathWithTop(equationParent);
                 case DivisionType.DivSlanted:
-                    equation = new DivSlanted(equationParent);
-                    break;  
+                    return new DivSlanted(equationParent); 
                 case DivisionType.DivSlantedSmall:
-                    equation = new DivSlantedSmall(equationParent);
-                    break;  
-
+                    return new DivSlantedSmall(equationParent);
                 case DivisionType.DivMathInverted:
-                    equation = new DivMathInverted(equationParent);
-                    break;
+                    return new DivMathInverted(equationParent);
                 case DivisionType.DivInvertedWithBottom:
-                    equation = new DivMathWithBottom(equationParent);
-                    break;
+                    return new DivMathWithBottom(equationParent);
                 case DivisionType.DivTriangleFixed:
-                    equation = new DivTriangle(equationParent, true);
-                    break;
+                    return new DivTriangle(equationParent, true);
                 case DivisionType.DivTriangleExpanding:
-                    equation = new DivTriangle(equationParent, false);
-                    break;                
+                    return new DivTriangle(equationParent, false);
+                default:
+                    return null;
             }
-            return equation;
         }
     }
 }

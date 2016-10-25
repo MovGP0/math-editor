@@ -56,7 +56,7 @@ namespace Editor
             CalculateWidth();
         }
 
-        protected override void CalculateWidth()
+        public override void CalculateWidth()
         {
             double width = topEquation.Width + bottomEquation.Width + ExtraWidth;
             Rect rect = new Rect(0, 0, width, Height);
@@ -68,7 +68,7 @@ namespace Editor
             centerX = rect.Width - Math.Max(slantXTop, bottomEquation.Width) - ExtraWidth/2;
         }
 
-        protected override void CalculateHeight()
+        public override void CalculateHeight()
         {
             Height = topEquation.Height + bottomEquation.Height + ExtraHeight;
         }

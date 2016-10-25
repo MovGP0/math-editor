@@ -107,92 +107,13 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bracket\Bracket.cs" />
-    <Compile Include="Bracket\BracketSign.cs" />
-    <Compile Include="Bracket\DoubleArrowBarBracket.cs" />
-    <Compile Include="Bracket\LeftBracket.cs" />
-    <Compile Include="Bracket\LeftRightBracket.cs" />
-    <Compile Include="Bracket\RightBracket.cs" />
-    <Compile Include="Common\CopyDataObject.cs" />
-    <Compile Include="Common\DrawingContextHelper.cs" />
-    <Compile Include="Common\FormattedTextHelper.cs" />
-    <Compile Include="Common\FunctionNames.cs" />
-    <Compile Include="Common\MathEditorData.cs" />
-    <Compile Include="Common\StaticText.cs" />
-    <Compile Include="Common\UndoRedo\DecorationAction.cs" />
-    <Compile Include="Common\UndoRedo\EquationAction.cs" />
-    <Compile Include="Common\UndoRedo\EquationRowFormatAction.cs" />
-    <Compile Include="Common\UndoRedo\EquationRowPasteAction.cs" />
-    <Compile Include="Common\UndoRedo\ISupportsUndo.cs" />
-    <Compile Include="Common\UndoRedo\ModeChangeAction.cs" />
-    <Compile Include="Common\UndoRedo\RowAction.cs" />
-    <Compile Include="Common\UndoRedo\RowContainerAction.cs" />
-    <Compile Include="Common\UndoRedo\RowContainerFormatAction.cs" />
-    <Compile Include="Common\UndoRedo\RowContainerPasteAction.cs" />
-    <Compile Include="Common\UndoRedo\RowContainerRemoveAction.cs" />
-    <Compile Include="Common\UndoRedo\RowContainerTextAction.cs" />
-    <Compile Include="Common\UndoRedo\RowRemoveAction.cs" />
-    <Compile Include="Common\UndoRedo\TextAction.cs" />
-    <Compile Include="Common\UndoRedo\TextFormatAction.cs" />
-    <Compile Include="Common\UndoRedo\TextRemoveAction.cs" />
-    <Compile Include="Common\UndoRedo\UndoEventArgs.cs" />
-    <Compile Include="Common\UndoRedo\UndoManager.cs" />
-    <Compile Include="Composite\BigCompositeFactory.cs" />
-    <Compile Include="Composite\CompositeBase.cs" />
-    <Compile Include="Composite\CompositeBottom.cs" />
-    <Compile Include="Composite\CompositeBottomTop.cs" />
-    <Compile Include="Composite\CompositeFactory.cs" />
-    <Compile Include="Composite\CompositeSub.cs" />
-    <Compile Include="Composite\CompositeSubSuper.cs" />
-    <Compile Include="Composite\CompositeSuper.cs" />
-    <Compile Include="Composite\CompositeTop.cs" />
-    <Compile Include="Decorated\Arrow.cs" />
-    <Compile Include="Decorated\Decorated.cs" />
-    <Compile Include="Decorated\DecorationDrawing.cs" />
-    <Compile Include="Division\DivBase.cs" />
-    <Compile Include="Division\DivHorizontal.cs" />
-    <Compile Include="Division\DivisionFactory.cs" />
-    <Compile Include="Division\DivisionsMisc.cs" />
-    <Compile Include="Division\DivMath.cs" />
-    <Compile Include="Division\DivMathInverted.cs" />
-    <Compile Include="Division\DivMathSign.cs" />
-    <Compile Include="Division\DivMathWithBottom.cs" />
-    <Compile Include="Division\DivMathWithOuterBase.cs" />
-    <Compile Include="Division\DivMathWithTop.cs" />
-    <Compile Include="Division\DivRegular.cs" />
-    <Compile Include="Division\DivSlanted.cs" />
-    <Compile Include="Division\DivTriangle.cs" />
-    <Compile Include="Division\DivTriangleSign.cs" />
-    <Compile Include="EquationBase.cs" />
-    <Compile Include="EquationContainer.cs" />
-    <Compile Include="EquationRoot.cs" />
-    <Compile Include="EquationRow.cs" />
-    <Compile Include="HorizontalBracket\BottomBracket.cs" />
-    <Compile Include="HorizontalBracket\HorizontalBracket.cs" />
-    <Compile Include="HorizontalBracket\HorizontalBracketSign.cs" />
-    <Compile Include="HorizontalBracket\TopBracket.cs" />
-    <Compile Include="Misc\Box.cs" />
-    <Compile Include="Misc\MatrixEquation.cs" />
+    <Compile Include="CharacterDecorationInfo.cs" />
+    <Compile Include="CopyDataObject.cs" />
+    <Compile Include="EquationContainer.xaml.cs">
+      <DependentUpon>EquationContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IEquationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Root\nRoot.cs" />
-    <Compile Include="Root\RadicalSign.cs" />
-    <Compile Include="Root\SquareRoot.cs" />
-    <Compile Include="RowContainer.cs" />
-    <Compile Include="SignComposite\SignBottom.cs" />
-    <Compile Include="SignComposite\SignBottomTop.cs" />
-    <Compile Include="SignComposite\SignCompositeFactory.cs" />
-    <Compile Include="SignComposite\SignSimple.cs" />
-    <Compile Include="SignComposite\SignSub.cs" />
-    <Compile Include="SignComposite\SignSubSuper.cs" />
-    <Compile Include="SignComposite\StaticSign.cs" />
-    <Compile Include="SubSuper\Sub.cs" />
-    <Compile Include="SubSuper\SubAndSuper.cs" />
-    <Compile Include="SubSuper\SubSuperBase.cs" />
-    <Compile Include="SubSuper\Super.cs" />
-    <Compile Include="TextEquation.cs" />
-    <Compile Include="Text\CharacterDecorationInfo.cs" />
-    <Compile Include="Text\TextFormat.cs" />
-    <Compile Include="Text\TextManager.cs" />
     <EmbeddedResource Include="Properties\Editor.Equations.Uwp.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +121,17 @@
       <Project>{8321EC94-A2C8-4404-8A53-B5A87E8A41AE}</Project>
       <Name>Editor.Common.Uwp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="EquationContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

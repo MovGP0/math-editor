@@ -7,8 +7,8 @@ namespace Editor
         public int SelectionStartIndex { get; set; }
         public int SelectedItems { get; set; }
 
-        public EquationBase ActiveEquation { get; set; }
-        public EquationBase ActiveEquationAfterChange { get; set; }
+        public IEquationBase ActiveEquation { get; set; }
+        public IEquationBase ActiveEquationAfterChange { get; set; }
         public int ActiveEquationSelectionIndex { get; set; }
         public int ActiveEquationSelectedItems { get; set; }
         
