@@ -104,7 +104,7 @@ namespace Editor
             if (parent != null)
             {
                 SubLevel = parent.SubLevel;
-                FontSize = parent.FontSize;
+                _fontSize = parent.FontSize;
                 ApplySymbolGap = parent.ApplySymbolGap;
                 R = (byte)(parent.R + 15);
                 G = (byte)(parent.R + 15);

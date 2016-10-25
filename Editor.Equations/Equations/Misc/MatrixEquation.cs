@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace Editor
 {
-    public class MatrixEquation : EquationContainer
+    public sealed class MatrixEquation : EquationContainer
     {
         int columns = 1;
         int rows = 1;

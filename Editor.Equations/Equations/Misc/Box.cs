@@ -6,100 +6,56 @@ namespace Editor
 {
     public sealed class Box : EquationContainer
     {
-        BoxType boxType;
-        RowContainer insideEq = null;
-        double paddingFactor = 0.2;
-        double Padding { get { return FontSize * paddingFactor;} }
-        double TopPadding
-        {
-            get
-            {
-                if (boxType == BoxType.All || boxType == BoxType.LeftTop || boxType == BoxType.RightTop)
-                {
-                    return 0; // paddingFactor* FontSize;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-        double BottomPadding
-        {
-            get
-            {
-                if (boxType == BoxType.All || boxType == BoxType.LeftBottom || boxType == BoxType.RightBottom)
-                {
-                    return paddingFactor * FontSize;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-        double LeftPadding
-        {
-            get
-            {
-                if (boxType == BoxType.All || boxType == BoxType.LeftTop || boxType == BoxType.LeftBottom)
-                {
-                    return paddingFactor * FontSize;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
-        double RightPadding
-        {
-            get
-            {
-                if (boxType == BoxType.All || boxType == BoxType.RightTop || boxType == BoxType.RightBottom)
-                {
-                    return paddingFactor * FontSize;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
+        private readonly BoxType _boxType;
+        private readonly RowContainer _insideEq;
+        private readonly double _paddingFactor = 0.2;
+        private double TopPadding => _boxType == BoxType.All || _boxType == BoxType.LeftTop || _boxType == BoxType.RightTop ? 0 : 0;
 
-        Point LeftTop { get { return new Point(Left + LeftPadding / 2, Top + TopPadding / 2); } }
-        Point RightTop { get { return new Point(Right - RightPadding / 2, Top + TopPadding / 2); } }
-        Point LeftBottom { get { return new Point(Left + LeftPadding / 2, Bottom - BottomPadding / 2); } }
-        Point RightBottom { get { return new Point(Right - RightPadding / 2, Bottom - BottomPadding / 2); } }
+        private double BottomPadding => _boxType == BoxType.All || _boxType == BoxType.LeftBottom || _boxType == BoxType.RightBottom
+            ? _paddingFactor*FontSize
+            : 0;
+
+        private double LeftPadding => _boxType == BoxType.All || _boxType == BoxType.LeftTop || _boxType == BoxType.LeftBottom
+            ? _paddingFactor*FontSize
+            : 0;
+
+        private double RightPadding => _boxType == BoxType.All || _boxType == BoxType.RightTop || _boxType == BoxType.RightBottom
+            ? _paddingFactor*FontSize
+            : 0;
+
+        private Point LeftTop => new Point(Left + LeftPadding / 2, Top + TopPadding / 2);
+        private Point RightTop => new Point(Right - RightPadding / 2, Top + TopPadding / 2);
+        private Point LeftBottom => new Point(Left + LeftPadding / 2, Bottom - BottomPadding / 2);
+        private Point RightBottom => new Point(Right - RightPadding / 2, Bottom - BottomPadding / 2);
 
         public Box(IEquationContainer parent, BoxType boxType)
             :base (parent)
         {
-            this.boxType = boxType;
-            ActiveChild = insideEq = new RowContainer(this);
-            ChildEquations.Add(insideEq);
+            _boxType = boxType;
+            ActiveChild = _insideEq = new RowContainer(this);
+            ChildEquations.Add(_insideEq);
         }
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
-            parameters.Add(new XElement(boxType.GetType().Name, boxType));
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
+            parameters.Add(new XElement(_boxType.GetType().Name, _boxType));
             thisElement.Add(parameters);
-            thisElement.Add(insideEq.Serialize());
+            thisElement.Add(_insideEq.Serialize());
             return thisElement;
         }
 
         public override void DeSerialize(XElement xElement)
         {
-            insideEq.DeSerialize(xElement.Element(insideEq.GetType().Name));
+            _insideEq.DeSerialize(xElement.Element(_insideEq.GetType().Name));
             CalculateSize();
         }
 
-        public override void DrawEquation(System.Windows.Media.DrawingContext dc)
+        public override void DrawEquation(DrawingContext dc)
         {
             base.DrawEquation(dc);
-            switch (boxType)
+            switch (_boxType)
             {
                 case BoxType.All:
                     dc.DrawPolyline(LeftTop, new PointCollection{RightTop, RightBottom, LeftBottom, LeftTop, RightTop}, StandardMiterPen);
@@ -125,7 +81,7 @@ namespace Editor
             set
             {
                 base.Top = value;
-                insideEq.Top = value + TopPadding;        
+                _insideEq.Top = value + TopPadding;        
             }
         }
 
@@ -135,26 +91,20 @@ namespace Editor
             set
             {
                 base.Left = value;
-                insideEq.Left = value + LeftPadding;
+                _insideEq.Left = value + LeftPadding;
             }
         }
 
         public override void CalculateWidth()
         {
-            Width = insideEq.Width + LeftPadding + RightPadding; 
+            Width = _insideEq.Width + LeftPadding + RightPadding; 
         }
 
         public override void CalculateHeight()
         {
-            Height = insideEq.Height + TopPadding + BottomPadding;            
+            Height = _insideEq.Height + TopPadding + BottomPadding;            
         }
 
-        public override double RefY
-        {
-            get
-            {
-                return insideEq.RefY + TopPadding;
-            }
-        }
+        public override double RefY => _insideEq.RefY + TopPadding;
     }
 }
