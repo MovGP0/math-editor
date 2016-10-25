@@ -67,16 +67,7 @@ namespace Editor
             mainEquation.MidY = MidY;
             subEquation.Top = sign.Bottom - SubOverlap;
         }
-
-        public override double Height
-        {
-            get { return base.Height; }
-            set
-            {
-                base.Height = value;
-            }
-        }
-
+        
         public override double RefY
         {
             get

@@ -11,17 +11,18 @@ namespace Editor
     {
         public static void ProcessPastedXML(this TextManager manager, XElement rootXE)
         {
-            XElement[] formatElements = rootXE.Element(typeof(TextManager).Name).Elements("Formats").Elements().ToArray();
-            IEnumerable<XElement> formats = rootXE.Descendants(typeof(TextEquation).Name).Descendants("Formats");
-            Dictionary<int, int> allFormatIds = new Dictionary<int, int>();
-            foreach (XElement xe in formats)
+            var formatElements = rootXE.Element(typeof(TextManager).Name).Elements("Formats").Elements().ToArray();
+            var formats = rootXE.Descendants(typeof(TextEquation).Name).Descendants("Formats");
+            var allFormatIds = new Dictionary<int, int>();
+
+            foreach (var xe in formats)
             {
                 if (xe.Value.Length > 0)
                 {
-                    string[] formatStrings = xe.Value.Split(',');
-                    foreach (string s in formatStrings)
+                    var formatStrings = xe.Value.Split(',');
+                    foreach (var s in formatStrings)
                     {
-                        int id = int.Parse(s);
+                        var id = int.Parse(s);
                         if (!allFormatIds.Keys.Contains(id))
                         {
                             allFormatIds.Add(id, id);
@@ -29,22 +30,19 @@ namespace Editor
                     }
                 }
             }
-            for (int i=0;i < allFormatIds.Count;i++)
+            for (var i=0;i < allFormatIds.Count;i++)
             {
-                int key = allFormatIds.ElementAt(i).Key;
-                TextFormat tf = TextFormat.DeSerialize(formatElements[key]);
-                TextFormat match = manager.formattingList.Where(x =>
-                {
-                    return x.FontSize == Math.Round(tf.FontSize, 1) &&
-                           x.FontType == tf.FontType &&
-                           x.FontStyle == tf.FontStyle &&
-                           x.UseUnderline == tf.UseUnderline &&
-                           Color.AreClose(x.TextBrush.Color, tf.TextBrush.Color) &&
-                           x.FontWeight == tf.FontWeight;
+                var key = allFormatIds.ElementAt(i).Key;
+                var tf = TextFormat.DeSerialize(formatElements[key]);
+                var match = manager.formattingList
+                    .Where(x => Math.Abs(x.FontSize - Math.Round(tf.FontSize, 1)) < double.Epsilon )
+                    .Where(x => x.FontType == tf.FontType )
+                    .Where(x => x.FontStyle == tf.FontStyle )
+                    .Where(x => x.UseUnderline == tf.UseUnderline )
+                    .Where(x => Color.AreClose(x.TextBrush.Color, tf.TextBrush.Color))
+                    .FirstOrDefault(x => x.FontWeight == tf.FontWeight);
 
-                }).FirstOrDefault();
-
-                int newValue = 0;
+                int newValue;
                 if (match == null)
                 {
                     manager.AddToList(tf);
@@ -56,19 +54,19 @@ namespace Editor
                 }
                 allFormatIds[key] = newValue;
             }
-            IEnumerable<XElement> textElements = rootXE.Descendants(typeof(TextEquation).Name);
-            foreach (XElement xe in textElements)
+            var textElements = rootXE.Descendants(typeof(TextEquation).Name);
+            foreach (var xe in textElements)
             {
-                XElement formatsElement = xe.Elements("Formats").FirstOrDefault();
+                var formatsElement = xe.Elements("Formats").FirstOrDefault();
                 if (formatsElement != null)
                 {
-                    StringBuilder strBuilder = new StringBuilder();
-                    string[] formatStrings = formatsElement.Value.Split(',');
-                    foreach (string s in formatStrings)
+                    var strBuilder = new StringBuilder();
+                    var formatStrings = formatsElement.Value.Split(',');
+                    foreach (var s in formatStrings)
                     {
                         if (s.Length > 0)
                         {
-                            int id = int.Parse(s);
+                            var id = int.Parse(s);
                             strBuilder.Append(allFormatIds[id] + ",");
                         }
                     }

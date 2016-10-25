@@ -276,7 +276,7 @@ namespace Editor
 
         public void DrawVisibleRows(DrawingContext dc, double top, double bottom)
         {
-            ((RowContainer)ActiveChild).DrawVisibleRows(dc, top, bottom);
+            ((IRowContainer)ActiveChild).DrawVisibleRows(dc, top, bottom);
         }
 
         public void SaveImageToFile(string path)
@@ -336,7 +336,7 @@ namespace Editor
                 if (!IsSelecting)
                 {
                     IsSelecting = true;
-                    ((RowContainer)ActiveChild).StartSelection();
+                    ((IRowContainer)ActiveChild).StartSelection();
                 }
                 ActiveChild.Select(key);
                 AdjustCarets();
