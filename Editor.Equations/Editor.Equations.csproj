@@ -135,6 +135,7 @@
     <Compile Include="Equations\Text\CharacterDecorationInfo.cs" />
     <Compile Include="Equations\Text\TextFormat.cs" />
     <Compile Include="Equations\Text\TextManager.cs" />
+    <Compile Include="Equations\Text\TextManagerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>

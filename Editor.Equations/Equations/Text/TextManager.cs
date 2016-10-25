@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Media;
 using System.Windows;
 using System.Globalization;
@@ -12,7 +11,7 @@ namespace Editor
     //Only those EquationBase classes should use it which are able to remeber the formats (as of May 15, 2013 only TextEquation)!!
     public class TextManager
     {
-        List<TextFormat> formattingList = new List<TextFormat>();
+        public List<TextFormat> formattingList = new List<TextFormat>();
         List<TextDecorationCollection> decorations = new List<TextDecorationCollection>();
         Dictionary<int, int> mapping = new Dictionary<int, int>();
         List<TextFormat> formattingListBeforeSave = null;
@@ -66,7 +65,7 @@ namespace Editor
             return thisElement;
         }
 
-        void AddToList(TextFormat tf)
+        public void AddToList(TextFormat tf)
         {
             tf.Index = formattingList.Count;
             formattingList.Add(tf);
@@ -79,79 +78,6 @@ namespace Editor
             foreach (XElement xe in children.Elements())
             {                
                 AddToList(TextFormat.DeSerialize(xe));
-            }
-        }
-
-        public void ProcessPastedXML(XElement rootXE)
-        {
-            //XElement thisElement = rootXE.Element(GetType().Name);
-            XElement[] formatElements = rootXE.Element(GetType().Name).Elements("Formats").Elements().ToArray();
-            IEnumerable<XElement> formats = rootXE.Descendants(typeof(TextEquation).Name).Descendants("Formats");
-            Dictionary<int, int> allFormatIds = new Dictionary<int, int>();
-            foreach (XElement xe in formats)
-            {
-                if (xe.Value.Length > 0)
-                {
-                    string[] formatStrings = xe.Value.Split(',');
-                    foreach (string s in formatStrings)
-                    {
-                        int id = int.Parse(s);
-                        if (!allFormatIds.Keys.Contains(id))
-                        {
-                            allFormatIds.Add(id, id);
-                        }
-                    }
-                }
-            }
-            for (int i=0;i < allFormatIds.Count;i++)
-            {
-                int key = allFormatIds.ElementAt(i).Key;
-                TextFormat tf = TextFormat.DeSerialize(formatElements[key]);
-                TextFormat match = formattingList.Where(x =>
-                    {
-                        return x.FontSize == Math.Round(tf.FontSize, 1) &&
-                               x.FontType == tf.FontType &&
-                               x.FontStyle == tf.FontStyle &&
-                               x.UseUnderline == tf.UseUnderline &&
-                               Color.AreClose(x.TextBrush.Color, tf.TextBrush.Color) &&
-                               x.FontWeight == tf.FontWeight;
-
-                    }).FirstOrDefault();
-
-                int newValue = 0;
-                if (match == null)
-                {
-                    AddToList(tf);
-                    newValue = tf.Index;
-                }
-                else
-                {
-                    newValue = match.Index;
-                }
-                allFormatIds[key] = newValue;
-            }
-            IEnumerable<XElement> textElements = rootXE.Descendants(typeof(TextEquation).Name);
-            foreach (XElement xe in textElements)
-            {
-                XElement formatsElement = xe.Elements("Formats").FirstOrDefault();
-                if (formatsElement != null)
-                {
-                    StringBuilder strBuilder = new StringBuilder();
-                    string[] formatStrings = formatsElement.Value.Split(',');
-                    foreach (string s in formatStrings)
-                    {
-                        if (s.Length > 0)
-                        {
-                            int id = int.Parse(s);
-                            strBuilder.Append(allFormatIds[id] + ",");
-                        }
-                    }
-                    if (strBuilder.Length > 0)
-                    {
-                        strBuilder.Remove(strBuilder.Length - 1, 1);
-                    }
-                    formatsElement.Value = strBuilder.ToString();
-                }                
             }
         }
 
