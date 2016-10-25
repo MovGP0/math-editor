@@ -87,8 +87,8 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(arrowType.GetType().Name, arrowType));
             parameters.Add(new XElement(equationPosition.GetType().Name, equationPosition));
             thisElement.Add(parameters);
@@ -102,7 +102,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elements = xElement.Elements(rowContainer1.GetType().Name).ToArray();
+            var elements = xElement.Elements(rowContainer1.GetType().Name).ToArray();
             rowContainer1.DeSerialize(elements[0]);
             if (rowContainer2 != null)
             {
@@ -264,7 +264,7 @@ namespace Editor
             {
                 if (ActiveChild == rowContainer1)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = rowContainer2;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
@@ -275,7 +275,7 @@ namespace Editor
             {
                 if (ActiveChild == rowContainer2)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = rowContainer1;
                     point.Y = ActiveChild.Bottom - 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);

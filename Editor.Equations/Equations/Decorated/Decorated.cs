@@ -29,8 +29,8 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(decorationType.GetType().Name, decorationType));
             parameters.Add(new XElement(decorationPosition.GetType().Name, decorationPosition));
             thisElement.Add(parameters);

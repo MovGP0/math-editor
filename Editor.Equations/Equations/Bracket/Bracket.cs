@@ -18,8 +18,8 @@ namespace Editor
         
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(bracketSign.SignType.GetType().Name, bracketSign.SignType));
             thisElement.Add(parameters);
             thisElement.Add(insideEq.Serialize());
@@ -57,8 +57,8 @@ namespace Editor
         public override void CalculateHeight()
         {
             ExtraHeight = FontSize * 0.2;
-            double upperMax = insideEq.RefY;
-            double lowerMax = insideEq.RefYReverse;
+            var upperMax = insideEq.RefY;
+            var lowerMax = insideEq.RefYReverse;
             Height = Math.Max(upperMax, lowerMax) * 2 + ExtraHeight;
             bracketSign.Height = Height;
         }

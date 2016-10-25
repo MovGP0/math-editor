@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    class SignSubSuper : EquationContainer
+    public sealed class SignSubSuper : EquationContainer
     {
         RowContainer mainEquation;
         StaticSign sign;
@@ -32,8 +32,8 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(sign.Symbol.GetType().Name, sign.Symbol));
             parameters.Add(new XElement(typeof(bool).FullName, sign.UseItalicIntegralSign));
             thisElement.Add(parameters);
@@ -45,7 +45,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
+            var elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
             mainEquation.DeSerialize(elements[0]);
             subEquation.DeSerialize(elements[1]);
             superEquation.DeSerialize(elements[2]);

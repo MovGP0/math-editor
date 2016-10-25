@@ -5,12 +5,12 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    public class SubAndSuper : SubSuperBase
+    public sealed class SubAndSuper : SubSuperBase
     {
         readonly IRowContainer _superEquation;
         readonly IRowContainer _subEquation;
 
-        public SubAndSuper(IEquationRow parent, Position position)
+        public SubAndSuper(IEquationContainer parent, Position position)
             : base(parent, position)
         {
             ActiveChild = _superEquation = new RowContainer(this);
@@ -57,8 +57,8 @@ namespace Editor
         {
             if (Buddy.GetType() == typeof(TextEquation))
             {
-                double superHeight = _superEquation.Height + Buddy.RefY - SuperOverlap; ;
-                double subHeight = _subEquation.Height - SubOverlap;
+                var superHeight = _superEquation.Height + Buddy.RefY - SuperOverlap; ;
+                var subHeight = _subEquation.Height - SubOverlap;
                 Height = subHeight + superHeight;
             }
             else

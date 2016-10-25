@@ -24,7 +24,7 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
+            var thisElement = new XElement(GetType().Name);
             thisElement.Add(mainRowContainer.Serialize());
             thisElement.Add(subRow.Serialize());
             thisElement.Add(superRow.Serialize());
@@ -33,7 +33,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elementArray = xElement.Elements().ToArray();
+            var elementArray = xElement.Elements().ToArray();
             mainRowContainer.DeSerialize(elementArray[0]);
             subRow.DeSerialize(elementArray[1]);
             superRow.DeSerialize(elementArray[2]);
@@ -84,7 +84,7 @@ namespace Editor
 
         public override bool ConsumeMouseClick(Point mousePoint)
         {
-            bool returnValue = false;
+            var returnValue = false;
             if (mainRowContainer.Bounds.Contains(mousePoint))
             {
                 ActiveChild = mainRowContainer;

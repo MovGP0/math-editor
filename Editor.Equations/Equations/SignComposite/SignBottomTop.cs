@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    class SignBottomTop : EquationContainer
+    public sealed class SignBottomTop : EquationContainer
     {
         RowContainer mainEquation;
         RowContainer topEquation;
@@ -31,8 +31,8 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(sign.Symbol.GetType().Name, sign.Symbol));
             parameters.Add(new XElement(typeof(bool).FullName, sign.UseItalicIntegralSign));
             thisElement.Add(parameters);
@@ -44,7 +44,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
+            var elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
             mainEquation.DeSerialize(elements[0]);
             bottomEquation.DeSerialize(elements[1]);
             topEquation.DeSerialize(elements[2]);
@@ -53,7 +53,7 @@ namespace Editor
 
         public override void CalculateWidth()
         {
-            double maxLeft = Math.Max(sign.Width, Math.Max(bottomEquation.Width, topEquation.Width));
+            var maxLeft = Math.Max(sign.Width, Math.Max(bottomEquation.Width, topEquation.Width));
             Width = maxLeft + mainEquation.Width + HGap;
             sign.MidX = Left + maxLeft / 2;
             topEquation.MidX = sign.MidX;
@@ -63,8 +63,8 @@ namespace Editor
 
         public override void CalculateHeight()
         {
-            double upperHalf = Math.Max(sign.RefY + VGap + topEquation.Height, mainEquation.RefY);
-            double lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);
+            var upperHalf = Math.Max(sign.RefY + VGap + topEquation.Height, mainEquation.RefY);
+            var lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);
             Height = upperHalf + lowerHalf;
         }
 
@@ -74,8 +74,8 @@ namespace Editor
             set
             {
                 base.Top = value;
-                double upperHalf = Math.Max(sign.RefY + VGap + topEquation.Height, mainEquation.RefY);
-                double lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);
+                var upperHalf = Math.Max(sign.RefY + VGap + topEquation.Height, mainEquation.RefY);
+                var lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);
                 Height = upperHalf + lowerHalf;
                 if (mainEquation.RefY > sign.RefY + VGap + topEquation.Height)
                 {
@@ -117,7 +117,7 @@ namespace Editor
             set
             {
                 base.Left = value;
-                double maxLeft = Math.Max(sign.Width, Math.Max(bottomEquation.Width, topEquation.Width));
+                var maxLeft = Math.Max(sign.Width, Math.Max(bottomEquation.Width, topEquation.Width));
                 sign.MidX = value + maxLeft / 2;
                 topEquation.MidX = sign.MidX;
                 bottomEquation.MidX = sign.MidX;

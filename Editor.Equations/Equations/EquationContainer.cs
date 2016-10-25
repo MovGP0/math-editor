@@ -51,7 +51,7 @@ namespace Editor
 
         public override string GetSelectedText()
         {
-            StringBuilder stringBulider = new StringBuilder("");
+            var stringBulider = new StringBuilder("");
             foreach (var eb in ChildEquations)
             {
                 stringBulider.Append(eb.GetSelectedText());
@@ -88,7 +88,7 @@ namespace Editor
 
         public override CopyDataObject Copy(bool removeSelection)
         {
-            CopyDataObject temp = ActiveChild.Copy(removeSelection);
+            var temp = ActiveChild.Copy(removeSelection);
             if (removeSelection)
             {
                 CalculateSize();
@@ -140,7 +140,7 @@ namespace Editor
 
         public override bool ConsumeKey(Key key)
         {
-            bool temp = ActiveChild.ConsumeKey(key);
+            var temp = ActiveChild.ConsumeKey(key);
             CalculateSize();
             return temp;
         }
@@ -197,9 +197,9 @@ namespace Editor
         {
             if (key == Key.Up)
             {
-                for (int i = ChildEquations.Count - 1; i >= 0; i--)
+                for (var i = ChildEquations.Count - 1; i >= 0; i--)
                 {
-                    Type type = ChildEquations[i].GetType();
+                    var type = ChildEquations[i].GetType();
                     if (type == typeof(IRowContainer) || type == typeof(IEquationRow))
                     {
                         ChildEquations[i].SetCursorOnKeyUpDown(key, point);
@@ -210,9 +210,9 @@ namespace Editor
             }
             else
             {
-                for (int i = 0; i < ChildEquations.Count; i++)
+                for (var i = 0; i < ChildEquations.Count; i++)
                 {
-                    Type type = ChildEquations[i].GetType();
+                    var type = ChildEquations[i].GetType();
                     if (type == typeof(IRowContainer) || type == typeof(IEquationRow))
                     {
                         ChildEquations[i].SetCursorOnKeyUpDown(key, point);
@@ -264,13 +264,13 @@ namespace Editor
 
         public override HashSet<int> GetUsedTextFormats()
         {
-            HashSet<int> list = new HashSet<int>();
+            var list = new HashSet<int>();
             foreach (var eb in ChildEquations)
             {
                 var listFormats = eb.GetUsedTextFormats();
                 if (listFormats != null) //This check is necessary as the base returns 'null'
                 {
-                    foreach (int i in listFormats)
+                    foreach (var i in listFormats)
                     {
                         if (!list.Contains(i))
                         {

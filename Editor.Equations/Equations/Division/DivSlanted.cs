@@ -58,8 +58,8 @@ namespace Editor
 
         public override void CalculateWidth()
         {
-            double width = topEquation.Width + bottomEquation.Width + ExtraWidth;
-            Rect rect = new Rect(0, 0, width, Height);
+            var width = topEquation.Width + bottomEquation.Width + ExtraWidth;
+            var rect = new Rect(0, 0, width, Height);
             slantXTop = Math.Sin(Math.PI / 5) * (topEquation.Height + ExtraHeight/2);
             slantXBottom = Math.Sin(Math.PI / 5) * (bottomEquation.Height + ExtraHeight/2);
             rect.Union(new Point(topEquation.Width + slantXTop + ExtraWidth/2, Top));

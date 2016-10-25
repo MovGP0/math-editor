@@ -31,7 +31,7 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
+            var thisElement = new XElement(GetType().Name);
             thisElement.Add(topEquation.Serialize());
             thisElement.Add(bottomEquation.Serialize());
             return thisElement;
@@ -72,7 +72,7 @@ namespace Editor
             {
                 if (ActiveChild == topEquation)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = bottomEquation;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
@@ -83,7 +83,7 @@ namespace Editor
             {
                 if (ActiveChild == bottomEquation)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = topEquation;
                     point.Y = ActiveChild.Bottom - 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);

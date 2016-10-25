@@ -24,7 +24,7 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
+            var thisElement = new XElement(GetType().Name);
             thisElement.Add(mainRowContainer.Serialize());
             thisElement.Add(bottomRow.Serialize());
             thisElement.Add(topRow.Serialize());
@@ -33,7 +33,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elementArray = xElement.Elements().ToArray();
+            var elementArray = xElement.Elements().ToArray();
             mainRowContainer.DeSerialize(elementArray[0]);
             bottomRow.DeSerialize(elementArray[1]);
             topRow.DeSerialize(elementArray[2]);
@@ -84,7 +84,7 @@ namespace Editor
 
         public override bool ConsumeMouseClick(Point mousePoint)
         {
-            bool returnValue = false;
+            var returnValue = false;
             if (mainRowContainer.Bounds.Contains(mousePoint))
             {
                 ActiveChild = mainRowContainer;
@@ -115,7 +115,7 @@ namespace Editor
             {
                 if (ActiveChild == mainRowContainer)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = bottomRow;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
@@ -123,7 +123,7 @@ namespace Editor
                 }
                 else if (ActiveChild == topRow)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = mainRowContainer;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
@@ -134,7 +134,7 @@ namespace Editor
             {
                 if (ActiveChild == bottomRow)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = mainRowContainer;
                     point.Y = ActiveChild.Bottom - 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
@@ -142,7 +142,7 @@ namespace Editor
                 }
                 else if (ActiveChild == mainRowContainer)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = topRow;
                     point.Y = ActiveChild.Bottom - 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);

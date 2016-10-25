@@ -55,27 +55,27 @@ namespace Editor
                 allFormatIds[key] = newValue;
             }
             var textElements = rootXE.Descendants(typeof(TextEquation).Name);
+
             foreach (var xe in textElements)
             {
                 var formatsElement = xe.Elements("Formats").FirstOrDefault();
-                if (formatsElement != null)
+                if (formatsElement == null) continue;
+
+                var strBuilder = new StringBuilder();
+                var formatStrings = formatsElement.Value.Split(',');
+                foreach (var s in formatStrings)
                 {
-                    var strBuilder = new StringBuilder();
-                    var formatStrings = formatsElement.Value.Split(',');
-                    foreach (var s in formatStrings)
+                    if (s.Length > 0)
                     {
-                        if (s.Length > 0)
-                        {
-                            var id = int.Parse(s);
-                            strBuilder.Append(allFormatIds[id] + ",");
-                        }
+                        var id = int.Parse(s);
+                        strBuilder.Append(allFormatIds[id] + ",");
                     }
-                    if (strBuilder.Length > 0)
-                    {
-                        strBuilder.Remove(strBuilder.Length - 1, 1);
-                    }
-                    formatsElement.Value = strBuilder.ToString();
-                }                
+                }
+                if (strBuilder.Length > 0)
+                {
+                    strBuilder.Remove(strBuilder.Length - 1, 1);
+                }
+                formatsElement.Value = strBuilder.ToString();
             }
         }
 

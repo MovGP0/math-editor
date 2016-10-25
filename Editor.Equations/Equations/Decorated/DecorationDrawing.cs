@@ -124,7 +124,7 @@ namespace Editor
 
         private void FitFirstSignToWidth(FontType fontType, string unicodeChar, FontWeight weight)
         {
-            double factor = .1;
+            var factor = .1;
             do
             {
                 firstSign = FontFactory.GetFormattedText(unicodeChar, fontType, FontSize * factor);
@@ -305,8 +305,8 @@ namespace Editor
         {
             if (Width < FontSize * 0.8)
             {
-                FormattedText text = FontFactory.GetFormattedText("\u2194", FontType.StixGeneral, Width * 1.5);
-                double factor = .1;
+                var text = FontFactory.GetFormattedText("\u2194", FontType.StixGeneral, Width * 1.5);
+                var factor = .1;
                 do
                 {
                     text = FontFactory.GetFormattedText("\u2194", FontType.StixGeneral, FontSize * factor);
@@ -334,13 +334,13 @@ namespace Editor
                 firstSign.DrawTextTopLeftAligned(dc, Location);
                 secondSign.DrawTextTopLeftAligned(dc, new Point(Right - secondSign.Width + secondSign.OverhangLeading, Top));
                 //dc.DrawLine(StandardPen, new Point(Left + secondSign.Width + secondSign.OverhangLeading, Top + FontSize * .03), new Point(Right - (secondSign.Width + secondSign.OverhangLeading), Top + FontSize * .03));
-                double left = Left + firstSign.GetFullWidth() * .85;
-                double right = Right - secondSign.GetFullWidth() * .85;
+                var left = Left + firstSign.GetFullWidth() * .85;
+                var right = Right - secondSign.GetFullWidth() * .85;
                 while (left < right)
                 {
                     bar.DrawTextTopLeftAligned(dc, new Point(left, Top));
                     left += bar.GetFullWidth() * .8;
-                    double shoot = (left + bar.GetFullWidth() * .8) - right;
+                    var shoot = (left + bar.GetFullWidth() * .8) - right;
                     if (shoot > 0)
                     {
                         left -= shoot;
@@ -353,7 +353,7 @@ namespace Editor
 
         private void DrawLeftHarpoonUpBarb(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(Left + FontSize * .3, Top),
                                                             //new Point(Left + FontSize * .31, Top + FontSize * .041),
                                                             new Point(Left + FontSize * .18, Bottom - FontSize * .06),
@@ -365,7 +365,7 @@ namespace Editor
 
         private void DrawRightHarpoonUpBarb(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(Right - FontSize * .3, Top),
                                                             //new Point(Right - FontSize * .31, Top + FontSize * .041),
                                                             new Point(Right - FontSize * .18, Bottom - FontSize * .06),
@@ -377,7 +377,7 @@ namespace Editor
 
         private void DrawLeftHarpoonDownBarb(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(Left + FontSize * .3, Bottom),
                                                             //new Point(Left + FontSize * .31, Bottom - FontSize * .041),
                                                             new Point(Left + FontSize * .18, Top + FontSize * .06),
@@ -389,7 +389,7 @@ namespace Editor
 
         private void DrawRightHarpoonDownBarb(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(Right - FontSize * .3, Bottom),
                                                             //new Point(Right - FontSize * .31, Bottom - FontSize * .041),
                                                             new Point(Right - FontSize * .18, Top + FontSize * .06),
@@ -401,7 +401,7 @@ namespace Editor
 
         private void DrawTortoise(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(Left + Height * .5, Top),
                                                             new Point(Right - Height * .5, Top),
                                                             new Point(Right, Bottom),

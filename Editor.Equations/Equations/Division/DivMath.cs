@@ -34,7 +34,7 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
+            var thisElement = new XElement(GetType().Name);
             thisElement.Add(insideEquation.Serialize());            
             return thisElement;
         }

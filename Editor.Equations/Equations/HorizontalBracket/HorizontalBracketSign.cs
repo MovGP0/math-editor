@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Editor
 {
-    public class HorizontalBracketSign : EquationBase
+    public sealed class HorizontalBracketSign : EquationBase
     {
         public HorizontalBracketSignType SignType { get; private set; }
         FormattedText sign = null;
@@ -38,7 +38,7 @@ namespace Editor
 
         void DrawTopSquare(DrawingContext dc)
         {
-            PointCollection points = new PointCollection
+            var points = new PointCollection
             {
                 new Point(Left, Top), 
                 new Point(Right, Top),
@@ -53,7 +53,7 @@ namespace Editor
 
         void DrawBottomSquare(DrawingContext dc)
         {
-            PointCollection points = new PointCollection
+            var points = new PointCollection
             {
                 new Point(Left, Top), 
                 new Point(Left + ThinLineThickness, Top),
@@ -78,13 +78,13 @@ namespace Editor
                 leftCurlyPart.DrawTextTopLeftAligned(dc, Location);
                 sign.DrawTextTopLeftAligned(dc, new Point(MidX - sign.GetFullWidth() * .5, Top + leftCurlyPart.Extent - line.Extent));
                 rightCurlyPart.DrawTextTopLeftAligned(dc, new Point(Right - rightCurlyPart.GetFullWidth(), Top));
-                double left = Left + leftCurlyPart.GetFullWidth() * .85;
-                double right = MidX - sign.GetFullWidth() * .4;
+                var left = Left + leftCurlyPart.GetFullWidth() * .85;
+                var right = MidX - sign.GetFullWidth() * .4;
                 while (left < right)
                 {
                     line.DrawTextTopLeftAligned(dc, new Point(left, Top + leftCurlyPart.Extent - line.Extent));
                     left += line.GetFullWidth() * .8;
-                    double shoot = (left + line.GetFullWidth() * .8) - right;
+                    var shoot = (left + line.GetFullWidth() * .8) - right;
                     if (shoot > 0)
                     {
                         left -= shoot;
@@ -98,7 +98,7 @@ namespace Editor
                 {
                     line.DrawTextTopLeftAligned(dc, new Point(left, Top + leftCurlyPart.Extent - line.Extent));
                     left += line.GetFullWidth() * .8;
-                    double shoot = (left + line.GetFullWidth() * .8) - right;
+                    var shoot = (left + line.GetFullWidth() * .8) - right;
                     if (shoot > 0)
                     {
                         left -= shoot;
@@ -127,8 +127,8 @@ namespace Editor
                 leftCurlyPart.DrawTextTopLeftAligned(dc, new Point(Left, Top + sign.Extent - extension.Extent));
                 sign.DrawTextTopLeftAligned(dc, new Point(MidX - sign.GetFullWidth() * .5, Top));
                 rightCurlyPart.DrawTextTopLeftAligned(dc, new Point(Right - rightCurlyPart.GetFullWidth(), Top + sign.Extent - extension.Extent));
-                double left = Left + leftCurlyPart.GetFullWidth() * .9;
-                double right = MidX - sign.GetFullWidth() * .4;
+                var left = Left + leftCurlyPart.GetFullWidth() * .9;
+                var right = MidX - sign.GetFullWidth() * .4;
                 //var geometry = extension.BuildGeometry(new Point(0, Top + sign.Extent - extension.Height - extension.OverhangAfter));
                 //PointCollection points = new PointCollection { new Point(right, geometry.Bounds.Top),
                 //                                                   new Point(right, geometry.Bounds.Bottom),
@@ -139,7 +139,7 @@ namespace Editor
                 {
                     extension.DrawTextTopLeftAligned(dc, new Point(left, Top + sign.Extent - extension.Extent));
                     left += extension.GetFullWidth() * .8;
-                    double shoot = (left + extension.GetFullWidth() * .8) - right;
+                    var shoot = (left + extension.GetFullWidth() * .8) - right;
                     if (shoot > 0)
                     {
                         left -= shoot;
@@ -158,7 +158,7 @@ namespace Editor
                 {
                     extension.DrawTextTopLeftAligned(dc, new Point(left, Top + sign.Extent - extension.Extent));
                     left += extension.GetFullWidth() * .8;
-                    double shoot = (left + extension.GetFullWidth() * .8) - right;
+                    var shoot = (left + extension.GetFullWidth() * .8) - right;
                     if (shoot > 0)
                     {
                         left -= shoot;
@@ -208,7 +208,7 @@ namespace Editor
 
         private void CreateBrokenCurlyTop()
         {
-            double fontSize = FontSize * .55;
+            var fontSize = FontSize * .55;
             leftCurlyPart = FontFactory.GetFormattedText("\uE13B", FontType.StixNonUnicode, fontSize); //Top left of overbrace 
             sign = FontFactory.GetFormattedText("\uE140", FontType.StixNonUnicode, fontSize); //middle of overbrace
             rightCurlyPart = FontFactory.GetFormattedText("\uE13C", FontType.StixNonUnicode, fontSize); //Top right of overbrace             
@@ -216,7 +216,7 @@ namespace Editor
 
         private void CreateBrokenCurlyBottom()
         {
-            double fontSize = FontSize * .55;
+            var fontSize = FontSize * .55;
             leftCurlyPart = FontFactory.GetFormattedText("\uE13D", FontType.StixNonUnicode, fontSize); //Top left of overbrace 
             sign = FontFactory.GetFormattedText("\uE141", FontType.StixNonUnicode, fontSize); //middle of overbrace
             rightCurlyPart = FontFactory.GetFormattedText("\uE13E", FontType.StixNonUnicode, fontSize); //Top right of overbrace
@@ -224,7 +224,7 @@ namespace Editor
 
         private void CreateSingleCharacterCurlySign()
         {
-            string signStr = SignType == HorizontalBracketSignType.TopCurly ? "\u23DE" : "\u23DF";
+            var signStr = SignType == HorizontalBracketSignType.TopCurly ? "\u23DE" : "\u23DF";
             FontType fontType;
             if (Width < FontSize)
             {

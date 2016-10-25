@@ -9,7 +9,7 @@ namespace Editor
         {
             //double descent = text.Height - text.Baseline + text.OverhangAfter;
             //double topExtra = text.Baseline - text.Extent + descent;
-            double topExtra = text.Height + text.OverhangAfter - text.Extent;
+            var topExtra = text.Height + text.OverhangAfter - text.Extent;
             double padding = 0;
             if (text.Text.Length > 0 && !char.IsWhiteSpace(text.Text[0]))
             {
@@ -58,36 +58,36 @@ namespace Editor
 
         public static void DrawTextTopRightAligned(this FormattedText text, DrawingContext dc, Point topRight)
         {
-            double descent = text.Height - text.Baseline + text.OverhangAfter;
-            double topExtra = text.Baseline - text.Extent + descent;
+            var descent = text.Height - text.Baseline + text.OverhangAfter;
+            var topExtra = text.Baseline - text.Extent + descent;
             dc.DrawText(text, new Point(topRight.X - text.GetFullWidth() - text.OverhangLeading, topRight.Y - topExtra));
         }
 
         public static void DrawTextBottomLeftAligned(this FormattedText text, DrawingContext dc, Point bottomLeft)
         {
-            double descent = text.Height - text.Baseline + text.OverhangAfter;
-            double topExtra = text.Baseline - text.Extent + descent;
+            var descent = text.Height - text.Baseline + text.OverhangAfter;
+            var topExtra = text.Baseline - text.Extent + descent;
             dc.DrawText(text, new Point(bottomLeft.X - text.OverhangLeading, bottomLeft.Y - topExtra - text.Extent));
         }
 
         public static void DrawTextBottomCenterAligned(this FormattedText text, DrawingContext dc, Point bottomCenter)
         {
-            double descent = text.Height - text.Baseline + text.OverhangAfter;
-            double topExtra = text.Baseline - text.Extent + descent;
+            var descent = text.Height - text.Baseline + text.OverhangAfter;
+            var topExtra = text.Baseline - text.Extent + descent;
             dc.DrawText(text, new Point(bottomCenter.X - text.OverhangLeading - text.GetFullWidth()/2, bottomCenter.Y - topExtra - text.Extent));
         }
 
         public static void DrawTextTopCenterAligned(this FormattedText text, DrawingContext dc, Point topCenter)
         {
-            double descent = text.Height - text.Baseline + text.OverhangAfter;
-            double topExtra = text.Baseline - text.Extent + descent;
+            var descent = text.Height - text.Baseline + text.OverhangAfter;
+            var topExtra = text.Baseline - text.Extent + descent;
             dc.DrawText(text, new Point(topCenter.X - text.OverhangLeading - text.GetFullWidth() / 2, topCenter.Y - topExtra));
         }
 
         public static void DrawTextBottomRightAligned(this FormattedText text, DrawingContext dc, Point bottomRight)
         {
-            double descent = text.Height - text.Baseline + text.OverhangAfter;
-            double topExtra = text.Baseline - text.Extent + descent;
+            var descent = text.Height - text.Baseline + text.OverhangAfter;
+            var topExtra = text.Baseline - text.Extent + descent;
             dc.DrawText(text, new Point(bottomRight.X - text.GetFullWidth() - text.OverhangLeading, bottomRight.Y - topExtra - text.Extent));
         }
 

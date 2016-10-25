@@ -2,44 +2,46 @@
 
 namespace Editor
 {
-    public class Sub : SubSuperBase
+    public sealed class Sub : SubSuperBase
     {
-        RowContainer rowContainer;
+        private readonly RowContainer _rowContainer;
 
-        public Sub(IEquationRow parent, Position position)
+        public Sub(IEquationContainer parent, Position position)
             : base(parent, position)
         {   
-            ActiveChild = rowContainer = new RowContainer(this);
-            ChildEquations.Add(rowContainer);
-            if (SubLevel == 1)
+            ActiveChild = _rowContainer = new RowContainer(this);
+            ChildEquations.Add(_rowContainer);
+
+            switch (SubLevel)
             {
-                rowContainer.FontFactor = SubFontFactor;
-            }
-            else if (SubLevel == 2)
-            {
-                rowContainer.FontFactor = SubSubFontFactor;
+                case 1:
+                    _rowContainer.FontFactor = SubFontFactor;
+                    break;
+                case 2:
+                    _rowContainer.FontFactor = SubSubFontFactor;
+                    break;
             }            
         }
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(Position.GetType().Name, Position));
             thisElement.Add(parameters);
-            thisElement.Add(rowContainer.Serialize());
+            thisElement.Add(_rowContainer.Serialize());
             return thisElement;
         }
 
         public override void DeSerialize(XElement xElement)
         {
-            rowContainer.DeSerialize(xElement.Element(rowContainer.GetType().Name));
+            _rowContainer.DeSerialize(xElement.Element(_rowContainer.GetType().Name));
             CalculateSize();
         }
 
         public override void CalculateWidth()
         {
-            Width = rowContainer.Width + Padding * 2;
+            Width = _rowContainer.Width + Padding * 2;
         }
 
         public override double Left
@@ -48,7 +50,7 @@ namespace Editor
             set
             {
                 base.Left = value;
-                rowContainer.Left = this.Left + Padding;
+                _rowContainer.Left = Left + Padding;
             }
         }
 
@@ -57,7 +59,7 @@ namespace Editor
             get
             {
                 double left = 0;
-                TextEquation te = Buddy as TextEquation;
+                var te = Buddy as TextEquation;
                 if (te != null)
                 {
                     left += te.OverhangTrailing;
@@ -68,7 +70,7 @@ namespace Editor
 
         public override void CalculateHeight()
         {
-            Height = rowContainer.Height - SubOverlap;
+            Height = _rowContainer.Height - SubOverlap;
         }
 
         public override double Top
@@ -77,16 +79,10 @@ namespace Editor
             set
             {
                 base.Top = value;
-                rowContainer.Bottom = Bottom;
+                _rowContainer.Bottom = Bottom;
             }
         }
 
-        public override double RefY
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public override double RefY => 0;
     }
 }

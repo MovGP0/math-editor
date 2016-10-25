@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    class SignBottom : EquationContainer
+    public sealed class SignBottom : EquationContainer
     {
         RowContainer mainEquation;
         RowContainer bottomEquation;
@@ -27,8 +27,8 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);            
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);            
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(sign.Symbol.GetType().Name, sign.Symbol));
             parameters.Add(new XElement(typeof(bool).FullName, sign.UseItalicIntegralSign));
             thisElement.Add(parameters);
@@ -39,7 +39,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {   
-            XElement[] elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
+            var elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
             mainEquation.DeSerialize(elements[0]);
             bottomEquation.DeSerialize(elements[1]);
             CalculateSize();
@@ -47,7 +47,7 @@ namespace Editor
 
         public override void CalculateWidth()
         {
-            double maxLeft = Math.Max(sign.Width, bottomEquation.Width);
+            var maxLeft = Math.Max(sign.Width, bottomEquation.Width);
             Width = maxLeft + mainEquation.Width + HGap;
             sign.MidX = Left + maxLeft / 2;
             bottomEquation.MidX = sign.MidX;
@@ -56,8 +56,8 @@ namespace Editor
 
         public override void CalculateHeight()
         {
-            double upperHalf = Math.Max(mainEquation.RefY, sign.RefY);
-            double lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);
+            var upperHalf = Math.Max(mainEquation.RefY, sign.RefY);
+            var lowerHalf = Math.Max(sign.RefY + VGap + bottomEquation.Height, mainEquation.Height - mainEquation.RefY);
             Height = upperHalf + lowerHalf;
             AdjustVertical();
         }
@@ -90,18 +90,13 @@ namespace Editor
                 AdjustVertical();
             }
         }
-
-
+        
         public override bool ConsumeMouseClick(System.Windows.Point mousePoint)
         {
-            if (bottomEquation.Bounds.Contains(mousePoint))
-            {
-                ActiveChild = bottomEquation;
-            }
-            else
-            {
-                ActiveChild = mainEquation;
-            }
+            ActiveChild = bottomEquation.Bounds.Contains(mousePoint) 
+                ? bottomEquation 
+                : mainEquation;
+
             return ActiveChild.ConsumeMouseClick(mousePoint);
         }
 
@@ -111,29 +106,14 @@ namespace Editor
             set
             {
                 base.Left = value;
-                double maxLeft = Math.Max(sign.Width, bottomEquation.Width);
+                var maxLeft = Math.Max(sign.Width, bottomEquation.Width);
                 sign.MidX = value + maxLeft / 2;
                 bottomEquation.MidX = sign.MidX;
                 mainEquation.Left = Math.Max(bottomEquation.Right, sign.Right) + HGap;
             }
         }
-
-        public override double Height
-        {
-            get { return base.Height; }
-            set
-            {
-                base.Height = value;                
-            }
-        }
-
-        public override double RefY
-        {
-            get
-            {
-                return Math.Max(sign.RefY, mainEquation.RefY);
-            }
-        }
+        
+        public override double RefY => Math.Max(sign.RefY, mainEquation.RefY);
 
         public override bool ConsumeKey(Key key)
         {
@@ -142,21 +122,23 @@ namespace Editor
                 CalculateSize();
                 return true;
             }
-            if (key == Key.Down)
+
+            switch (key)
             {
-                if (ActiveChild == mainEquation)
-                {
-                    ActiveChild = bottomEquation;
-                    return true;
-                }
-            }
-            else if (key == Key.Up)
-            {
-                if (ActiveChild == bottomEquation)
-                {
-                    ActiveChild = mainEquation;
-                    return true;
-                }
+                case Key.Down:
+                    if (ActiveChild == mainEquation)
+                    {
+                        ActiveChild = bottomEquation;
+                        return true;
+                    }
+                    break;
+                case Key.Up:
+                    if (ActiveChild == bottomEquation)
+                    {
+                        ActiveChild = mainEquation;
+                        return true;
+                    }
+                    break;
             }
             return false;
         }

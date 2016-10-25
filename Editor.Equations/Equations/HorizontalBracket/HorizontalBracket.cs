@@ -23,8 +23,8 @@ namespace Editor
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            XElement parameters = new XElement("parameters");
+            var thisElement = new XElement(GetType().Name);
+            var parameters = new XElement("parameters");
             parameters.Add(new XElement(bracketSign.SignType.GetType().Name, bracketSign.SignType));
             thisElement.Add(parameters);
             thisElement.Add(topEquation.Serialize());
@@ -34,7 +34,7 @@ namespace Editor
 
         public override void DeSerialize(XElement xElement)
         {
-            XElement[] elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
+            var elements = xElement.Elements(typeof(RowContainer).Name).ToArray();
             topEquation.DeSerialize(elements[0]);
             bottomEquation.DeSerialize(elements[1]);
             CalculateSize();

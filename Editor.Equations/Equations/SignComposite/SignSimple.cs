@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace Editor
 {
-    internal sealed class SignSimple : EquationContainer
+    public sealed class SignSimple : EquationContainer
     {
         private RowContainer MainEquation { get; set; }
         private readonly StaticSign _sign;            

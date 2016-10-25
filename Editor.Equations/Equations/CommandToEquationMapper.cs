@@ -15,7 +15,7 @@
                 case CommandType.SquareRoot:
                     return new SquareRoot(container);
                 case CommandType.NRoot:
-                    return new nRoot(container);
+                    return new NRoot(container);
                 case CommandType.LeftBracket:
                     return new LeftBracket(container, (BracketSignType) data);
                 case CommandType.RightBracket:

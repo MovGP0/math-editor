@@ -22,7 +22,7 @@ namespace Editor
                 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
+            var thisElement = new XElement(GetType().Name);
             thisElement.Add(mainRowContainer.Serialize());
             thisElement.Add(bottomRowContainer.Serialize());
             return thisElement;
@@ -105,7 +105,7 @@ namespace Editor
             {
                 if (ActiveChild == mainRowContainer)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = bottomRowContainer;
                     point.Y = ActiveChild.Top + 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);
@@ -116,7 +116,7 @@ namespace Editor
             {
                 if (ActiveChild == bottomRowContainer)
                 {
-                    Point point = ActiveChild.GetVerticalCaretLocation();
+                    var point = ActiveChild.GetVerticalCaretLocation();
                     ActiveChild = mainRowContainer;
                     point.Y = ActiveChild.Bottom - 1;
                     ActiveChild.SetCursorOnKeyUpDown(key, point);

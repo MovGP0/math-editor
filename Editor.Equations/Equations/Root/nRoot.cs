@@ -5,51 +5,52 @@ using System.Windows.Input;
 
 namespace Editor
 {
-    public class nRoot : EquationContainer
+    public sealed class NRoot : EquationContainer
     {
-        protected RowContainer insideEquation = null;
-        RowContainer nthRootEquation = null;
-        protected RadicalSign radicalSign;
-        protected double ExtraHeight { get { return FontSize * .15; }}
+        private readonly RowContainer _insideEquation;
+        private readonly RowContainer _nthRootEquation;
+        private readonly RadicalSign _radicalSign;
+        private double ExtraHeight => FontSize * .15;
+        private double HGap => FontSize * .5;
+        private double LeftPadding => FontSize * .1;
 
-        double HGap { get { return FontSize * .5; } }
-        double LeftPadding { get { return FontSize * .1; } }       
-
-        public nRoot(IEquationContainer parent)
+        public NRoot(IEquationContainer parent)
             : base(parent)
         {
-            radicalSign = new RadicalSign(this);
-            ActiveChild = insideEquation = new RowContainer(this);
-            nthRootEquation = new RowContainer(this);
-            nthRootEquation.ApplySymbolGap = false;
-            nthRootEquation.FontFactor = SubFontFactor;
-            ChildEquations.AddRange(new EquationBase[] { insideEquation, radicalSign, nthRootEquation });
+            _radicalSign = new RadicalSign(this);
+            ActiveChild = _insideEquation = new RowContainer(this);
+            _nthRootEquation = new RowContainer(this)
+            {
+                ApplySymbolGap = false,
+                FontFactor = SubFontFactor
+            };
+            ChildEquations.AddRange(new EquationBase[] { _insideEquation, _radicalSign, _nthRootEquation });
         }
 
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
-            thisElement.Add(insideEquation.Serialize());
-            thisElement.Add(nthRootEquation.Serialize());
+            var thisElement = new XElement(GetType().Name);
+            thisElement.Add(_insideEquation.Serialize());
+            thisElement.Add(_nthRootEquation.Serialize());
             return thisElement;
         }
 
         public override void DeSerialize(XElement xElement)
         {
-            insideEquation.DeSerialize(xElement.Elements().First());
-            nthRootEquation.DeSerialize(xElement.Elements().Last());
+            _insideEquation.DeSerialize(xElement.Elements().First());
+            _nthRootEquation.DeSerialize(xElement.Elements().Last());
             CalculateSize();
         }
 
         public override bool ConsumeMouseClick(System.Windows.Point mousePoint)
         {
-            if (nthRootEquation.Bounds.Contains(mousePoint))
+            if (_nthRootEquation.Bounds.Contains(mousePoint))
             {
-                ActiveChild = nthRootEquation;
+                ActiveChild = _nthRootEquation;
             }
-            else if (insideEquation.Bounds.Contains(mousePoint))
+            else if (_insideEquation.Bounds.Contains(mousePoint))
             {
-                ActiveChild = insideEquation;
+                ActiveChild = _insideEquation;
             }
             return ActiveChild.ConsumeMouseClick(mousePoint);
         }
@@ -66,19 +67,19 @@ namespace Editor
 
         private void AdjustVertical()
         {
-            insideEquation.Bottom = Bottom;
-            radicalSign.Bottom = Bottom;
-            nthRootEquation.Bottom = radicalSign.MidY - FontSize * .05;
+            _insideEquation.Bottom = Bottom;
+            _radicalSign.Bottom = Bottom;
+            _nthRootEquation.Bottom = _radicalSign.MidY - FontSize * .05;
         }
 
         public override void CalculateWidth()
         {
-            Width = Math.Max(nthRootEquation.Width + HGap, radicalSign.Width) + insideEquation.Width + LeftPadding;            
+            Width = Math.Max(_nthRootEquation.Width + HGap, _radicalSign.Width) + _insideEquation.Width + LeftPadding;            
         }
 
         public override void CalculateHeight()
         {
-            Height = insideEquation.Height + Math.Max(0, nthRootEquation.Height - insideEquation.Height / 2 + FontSize * .05) + ExtraHeight;
+            Height = _insideEquation.Height + Math.Max(0, _nthRootEquation.Height - _insideEquation.Height / 2 + FontSize * .05) + ExtraHeight;
         }
 
         public override double Height
@@ -90,18 +91,12 @@ namespace Editor
             set
             {
                 base.Height = value;
-                radicalSign.Height = insideEquation.Height + ExtraHeight;
+                _radicalSign.Height = _insideEquation.Height + ExtraHeight;
                 AdjustVertical();
             }
         }
 
-        public override double RefY
-        {
-            get
-            {
-                return insideEquation.RefY + Math.Max(0, nthRootEquation.Height - insideEquation.Height / 2 + FontSize * .05) + ExtraHeight;
-            }
-        }
+        public override double RefY => _insideEquation.RefY + Math.Max(0, _nthRootEquation.Height - _insideEquation.Height / 2 + FontSize * .05) + ExtraHeight;
 
         public override double Left
         {
@@ -109,17 +104,17 @@ namespace Editor
             set
             {
                 base.Left = value;                
-                if (nthRootEquation.Width + HGap > radicalSign.Width)
+                if (_nthRootEquation.Width + HGap > _radicalSign.Width)
                 {
-                    nthRootEquation.Left = Left + LeftPadding;
-                    radicalSign.Right = nthRootEquation.Right + HGap;
+                    _nthRootEquation.Left = Left + LeftPadding;
+                    _radicalSign.Right = _nthRootEquation.Right + HGap;
                 }
                 else
                 {
-                    radicalSign.Left = Left + LeftPadding;
-                    nthRootEquation.Right = radicalSign.Right - HGap;
+                    _radicalSign.Left = Left + LeftPadding;
+                    _nthRootEquation.Right = _radicalSign.Right - HGap;
                 }
-                insideEquation.Left = radicalSign.Right;
+                _insideEquation.Left = _radicalSign.Right;
             }
         }
         public override bool ConsumeKey(Key key)
@@ -129,21 +124,22 @@ namespace Editor
                 CalculateSize();
                 return true;
             }
-            if (key == Key.Left)
+
+            switch (key)
             {
-                if (ActiveChild == insideEquation)
-                {
-                    ActiveChild = nthRootEquation;
+                case Key.Left:
+                    if (ActiveChild != _insideEquation)
+                        return false;
+
+                    ActiveChild = _nthRootEquation;
                     return true;
-                }
-            }
-            else if (key == Key.Right)
-            {
-                if (ActiveChild == nthRootEquation)
-                {
-                    ActiveChild = insideEquation;
+
+                case Key.Right:
+                    if (ActiveChild != _nthRootEquation)
+                        return false;
+
+                    ActiveChild = _insideEquation;
                     return true;
-                }
             }
             return false;
         }

@@ -62,34 +62,34 @@ namespace Editor
         {
             if (Height < FontSize * 1.2)
             {
-                string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
+                var signText = SignType == BracketSignType.LeftRound ? "(" : ")";
                 FitSignToHeight(FontType.StixGeneral, signText);
             }
             if (Height < FontSize * 1.5)
             {
-                string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
+                var signText = SignType == BracketSignType.LeftRound ? "(" : ")";
                 FitSignToHeight(FontType.StixSizeOneSym, signText);
             }
             else if (Height < FontSize * 1.9)
             {
-                string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
+                var signText = SignType == BracketSignType.LeftRound ? "(" : ")";
                 FitSignToHeight(FontType.StixSizeTwoSym, signText);
             }
             else if (Height < FontSize * 2.5)
             {
-                string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
+                var signText = SignType == BracketSignType.LeftRound ? "(" : ")";
                 FitSignToHeight(FontType.StixSizeThreeSym, signText);
             }
             else if (Height < BracketBreakLimit)
             {
-                string signText = SignType == BracketSignType.LeftRound ? "(" : ")";
+                var signText = SignType == BracketSignType.LeftRound ? "(" : ")";
                 FitSignToHeight(FontType.StixSizeFourSym, signText);
             }
             else
             {
-                string text1 = SignType == BracketSignType.LeftRound ? "\u239b" : "\u239e";
-                string text2 = SignType == BracketSignType.LeftRound ? "\u239d" : "\u23a0";
-                string ext = SignType == BracketSignType.LeftRound ? "\u239c" : "\u239f";
+                var text1 = SignType == BracketSignType.LeftRound ? "\u239b" : "\u239e";
+                var text2 = SignType == BracketSignType.LeftRound ? "\u239d" : "\u23a0";
+                var ext = SignType == BracketSignType.LeftRound ? "\u239c" : "\u239f";
                 signText = FontFactory.GetFormattedText(text1, FontType.StixSizeOneSym, FontSize * .5);
                 signText2 = FontFactory.GetFormattedText(text2, FontType.StixSizeOneSym, FontSize * .5);
                 extension = FontFactory.GetFormattedText(ext, FontType.StixSizeOneSym, FontSize * .5);
@@ -100,29 +100,29 @@ namespace Editor
         {
             if (Height < FontSize * 1.5)
             {
-                string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
+                var signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
                 FitSignToHeight(FontType.StixSizeOneSym, signText);
             }
             else if (Height < FontSize * 1.9)
             {
-                string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
+                var signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
                 FitSignToHeight(FontType.StixSizeTwoSym, signText);
             }
             else if (Height < FontSize * 2.5)
             {
-                string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
+                var signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
                 FitSignToHeight(FontType.StixSizeThreeSym, signText);
             }
             else if (Height < BracketBreakLimit)
             {
-                string signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
+                var signText = SignType == BracketSignType.LeftCurly ? "{" : "}";
                 FitSignToHeight(FontType.StixSizeFourSym, signText);
             }
             else
             {
-                string text1 = SignType == BracketSignType.LeftCurly ? "\u23a7" : "\u23ab";
-                string midtex = SignType == BracketSignType.LeftCurly ? "\u23a8" : "\u23ac";
-                string text2 = SignType == BracketSignType.LeftCurly ? "\u23a9" : "\u23ad";
+                var text1 = SignType == BracketSignType.LeftCurly ? "\u23a7" : "\u23ab";
+                var midtex = SignType == BracketSignType.LeftCurly ? "\u23a8" : "\u23ac";
+                var text2 = SignType == BracketSignType.LeftCurly ? "\u23a9" : "\u23ad";
                 signText = FontFactory.GetFormattedText(text1, FontType.StixSizeOneSym, FontSize * .5);
                 midText = FontFactory.GetFormattedText(midtex, FontType.StixSizeOneSym, FontSize * .5);
                 extension = FontFactory.GetFormattedText("\u23AA", FontType.StixSizeOneSym, FontSize * .5);
@@ -162,7 +162,7 @@ namespace Editor
 
         void DetermineWidth()
         {
-            double width = FontSize * .2;
+            var width = FontSize * .2;
             switch (SignType)
             {
                 case BracketSignType.LeftRound:
@@ -260,7 +260,7 @@ namespace Editor
 
         void PaintVerticalBar(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Bottom),                                                            
                                                             new Point(SignLeft, Bottom),
@@ -270,7 +270,7 @@ namespace Editor
 
         void PaintLeftCeiling(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Top + ThinLineThickness),
                                                             new Point(SignLeft + ThinLineThickness, Top + ThinLineThickness),
@@ -282,7 +282,7 @@ namespace Editor
 
         void PaintRightCeiling(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Bottom),
                                                             new Point(SignRight - ThinLineThickness, Bottom),
@@ -294,7 +294,7 @@ namespace Editor
 
         void PaintLeftFloor(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignLeft + ThinLineThickness, Top),
                                                             new Point(SignLeft + ThinLineThickness, Bottom - ThinLineThickness),
                                                             new Point(SignRight, Bottom - ThinLineThickness),
@@ -306,7 +306,7 @@ namespace Editor
 
         void PaintRightFloor(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Bottom),
                                                             new Point(SignLeft, Bottom),
                                                             new Point(SignLeft, Bottom - ThinLineThickness),
@@ -318,7 +318,7 @@ namespace Editor
 
         void PaintLeftSquareBar(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Top + ThinLineThickness),
                                                             new Point(SignLeft + ThinLineThickness, Top + ThinLineThickness),
@@ -333,7 +333,7 @@ namespace Editor
 
         void PaintRightSquareBar(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Bottom),
                                                             new Point(SignLeft, Bottom),
@@ -348,7 +348,7 @@ namespace Editor
 
         void PaintLeftSquare(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Top + ThinLineThickness),
                                                             new Point(SignLeft + LineThickness, Top + ThinLineThickness),
@@ -362,7 +362,7 @@ namespace Editor
 
         void PaintRightSquare(DrawingContext dc)
         {
-            PointCollection points = new PointCollection {  
+            var points = new PointCollection {  
                                                             new Point(SignRight, Top),
                                                             new Point(SignRight, Bottom),
                                                             new Point(SignLeft, Bottom),
@@ -391,16 +391,16 @@ namespace Editor
             {
                 if (SignType == BracketSignType.LeftRound)
                 {
-                    double left = Math.Floor(SignLeft);
+                    var left = Math.Floor(SignLeft);
                     signText.DrawTextTopLeftAligned(dc, new Point(left, Top));
                     signText2.DrawTextBottomLeftAligned(dc, new Point(left, Bottom));
-                    double top = Top + signText.Extent * .9;
-                    double bottom = Bottom - signText2.Extent * .9;
+                    var top = Top + signText.Extent * .9;
+                    var bottom = Bottom - signText2.Extent * .9;
                     //double topExtra = extension.Height + extension.OverhangAfter - extension.Extent;
-                    double padding = extension.OverhangLeading;
+                    var padding = extension.OverhangLeading;
                     var geometry = extension.BuildGeometry(new Point(left - padding, 0));
 
-                    PointCollection points = new PointCollection { new Point(geometry.Bounds.Right, top),
+                    var points = new PointCollection { new Point(geometry.Bounds.Right, top),
                                                                    new Point(geometry.Bounds.Right, bottom),
                                                                    new Point(geometry.Bounds.Left, bottom),
                                                                  };
@@ -453,11 +453,11 @@ namespace Editor
                 {
                     signText.DrawTextTopRightAligned(dc, new Point(SignRight, Top));
                     signText2.DrawTextBottomRightAligned(dc, new Point(SignRight, Bottom));
-                    double top = Top + signText.Extent * .9;
-                    double bottom = Bottom - signText2.Extent * .9;
+                    var top = Top + signText.Extent * .9;
+                    var bottom = Bottom - signText2.Extent * .9;
                     var geometry = extension.BuildGeometry(new Point(SignRight - extension.GetFullWidth() - extension.OverhangLeading, 0));
 
-                    PointCollection points = new PointCollection { new Point(geometry.Bounds.Right, top),
+                    var points = new PointCollection { new Point(geometry.Bounds.Right, top),
                                                                    new Point(geometry.Bounds.Right, bottom),
                                                                    new Point(geometry.Bounds.Left, bottom),
                                                                  };
@@ -498,19 +498,19 @@ namespace Editor
             {
                 if (SignType == BracketSignType.LeftCurly)
                 {
-                    double left = SignLeft + midText.GetFullWidth() - extension.GetFullWidth();
+                    var left = SignLeft + midText.GetFullWidth() - extension.GetFullWidth();
                     signText.DrawTextTopLeftAligned(dc, new Point(left, Top));
                     //dc.DrawLine(new Pen(Brushes.Red, 1), new Point(left, Top), new Point(left, Bottom));
                     midText.DrawTextTopLeftAligned(dc, new Point(SignLeft, MidY - midText.Extent / 2));
                     signText2.DrawTextBottomLeftAligned(dc, new Point(left, Bottom));
-                    double top = Top + signText.Extent * .9;
-                    double bottom = MidY - midText.Extent * .4;
+                    var top = Top + signText.Extent * .9;
+                    var bottom = MidY - midText.Extent * .4;
 
 
-                    double padding = extension.OverhangLeading;
+                    var padding = extension.OverhangLeading;
                     var geometry = extension.BuildGeometry(new Point(left - padding, 0));
 
-                    PointCollection points = new PointCollection { new Point(geometry.Bounds.Right, top),
+                    var points = new PointCollection { new Point(geometry.Bounds.Right, top),
                                                                    new Point(geometry.Bounds.Right, bottom),
                                                                    new Point(geometry.Bounds.Left, bottom),
                                                                  };
@@ -573,17 +573,17 @@ namespace Editor
                 }
                 else
                 {
-                    double left = SignLeft + signText.GetFullWidth() - extension.GetFullWidth();
+                    var left = SignLeft + signText.GetFullWidth() - extension.GetFullWidth();
                     signText.DrawTextTopLeftAligned(dc, new Point(SignLeft, Top));
                     midText.DrawTextTopLeftAligned(dc, new Point(left, MidY - midText.Extent / 2));
                     signText2.DrawTextBottomLeftAligned(dc, new Point(SignLeft, Bottom));
-                    double top = Top + signText.Extent * .9;
-                    double bottom = MidY - midText.Extent * .4;
+                    var top = Top + signText.Extent * .9;
+                    var bottom = MidY - midText.Extent * .4;
 
-                    double padding = extension.OverhangLeading;
+                    var padding = extension.OverhangLeading;
                     var geometry = extension.BuildGeometry(new Point(left - padding, 0));
 
-                    PointCollection points = new PointCollection { new Point(geometry.Bounds.Right, top),
+                    var points = new PointCollection { new Point(geometry.Bounds.Right, top),
                                                                    new Point(geometry.Bounds.Right, bottom),
                                                                    new Point(geometry.Bounds.Left, bottom),
                                                                  };
@@ -639,13 +639,13 @@ namespace Editor
 
         void PaintLeftAngle(DrawingContext dc)
         {
-            PointCollection points = new PointCollection { new Point(SignLeft, MidY), new Point(SignRight, Bottom) };
+            var points = new PointCollection { new Point(SignLeft, MidY), new Point(SignRight, Bottom) };
             dc.DrawPolyline(new Point(SignRight, Top), points, ThinPen);
         }
 
         void PaintRightAngle(DrawingContext dc)
         {
-            PointCollection points = new PointCollection { new Point(SignRight, MidY), new Point(SignLeft, Bottom) };
+            var points = new PointCollection { new Point(SignRight, MidY), new Point(SignLeft, Bottom) };
             dc.DrawPolyline(new Point(SignLeft, Top), points, ThinPen);
         }
     }

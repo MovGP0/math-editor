@@ -71,7 +71,7 @@ namespace Editor
 
         public override void CalculateHeight()
         {
-            double height = topEquation.Height + bottomEquation.Height + ExtraHeight * 1.6;
+            var height = topEquation.Height + bottomEquation.Height + ExtraHeight * 1.6;
             height += (barCount - 1) * ExtraHeight;             
             Height = height;
         }

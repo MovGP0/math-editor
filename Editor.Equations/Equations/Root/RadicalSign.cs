@@ -3,13 +3,13 @@ using System.Windows;
 
 namespace Editor
 {
-    public class RadicalSign : EquationBase
+    public sealed class RadicalSign : EquationBase
     {
-        static double widthFactor = .9;
+        private static readonly double WidthFactor = .9;
         public RadicalSign(IEquationContainer parent)
             : base(parent)
         {
-            Width = FontSize * widthFactor;
+            Width = FontSize * WidthFactor;
             IsStatic = true;
         }
 
@@ -22,7 +22,7 @@ namespace Editor
             set
             {
                 base.FontSize = value;
-                Width = value * widthFactor;
+                Width = value * WidthFactor;
             }
         }
 

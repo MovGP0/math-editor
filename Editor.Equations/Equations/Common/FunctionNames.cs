@@ -22,7 +22,7 @@ namespace Editor
 
         public static string CheckForFunctionName(string text)
         {
-            foreach (string s in names)
+            foreach (var s in names)
             {
                 if (text.EndsWith(s))
                 {

@@ -1,6 +1,6 @@
 ﻿namespace Editor
 {
-    public class StaticSign : StaticText
+    public sealed class StaticSign : StaticText
     {
         bool integralSignItalic = false;
         public SignCompositeSymbol Symbol { get; set; }
@@ -58,7 +58,7 @@
 
         void DetermineFontType()
         {
-            FontType fontType = FontType.StixSizeOneSym;
+            var fontType = FontType.StixSizeOneSym;
             switch (Symbol)
             {
                 case SignCompositeSymbol.Integral:
@@ -111,7 +111,7 @@
 
         void DetermineSignString()
         {
-            string signStr = "";
+            var signStr = "";
             switch (Symbol)
             {
                 case SignCompositeSymbol.Sum:

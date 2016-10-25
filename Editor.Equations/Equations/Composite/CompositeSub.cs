@@ -21,7 +21,7 @@ namespace Editor
         
         public override XElement Serialize()
         {
-            XElement thisElement = new XElement(GetType().Name);
+            var thisElement = new XElement(GetType().Name);
             thisElement.Add(mainRowContainer.Serialize());
             thisElement.Add(bottomRowContainer.Serialize());
             return thisElement;
