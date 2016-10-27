@@ -2,7 +2,7 @@
 
 namespace Editor
 {   
-    public class RowContainerPasteAction : EquationAction
+    public sealed class RowContainerPasteAction : EquationAction
     {
         public int SelectionStartIndex { get; set; }
         public int SelectedItems { get; set; }

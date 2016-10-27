@@ -1,6 +1,6 @@
 ﻿namespace Editor
 {
-    public class RowAction : EquationAction
+    public sealed class RowAction : EquationAction
     {
         public int Index { get; set; }
         public int CaretIndex { get; set; }

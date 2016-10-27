@@ -1,6 +1,6 @@
 ﻿namespace Editor
 {
-    public class RowContainerFormatAction : EquationAction
+    public sealed class RowContainerFormatAction : EquationAction
     {
         public IEquationBase ActiveChild { get; set; }
         public int SelectionStartIndex { get; set; }

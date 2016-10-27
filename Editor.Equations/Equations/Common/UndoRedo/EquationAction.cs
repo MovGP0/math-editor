@@ -6,7 +6,7 @@
         public ISupportsUndo Executor { get; set; }
         public int FurtherUndoCount { get; set; }
 
-        public EquationAction(ISupportsUndo executor)
+        protected EquationAction(ISupportsUndo executor)
         {
             Executor = executor;
             UndoFlag = true;

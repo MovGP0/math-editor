@@ -1074,7 +1074,7 @@ namespace Editor
 
         private void ProcessRowRemoveAction(EquationAction action)
         {
-            var rowAction = action as RowRemoveAction;
+            var rowAction = action as RowRemoveActionBase;
             rowAction.HeadTextEquation.ResetTextEquation(rowAction.FirstTextCaretIndex, rowAction.FirstTextSelectionIndex,
                                                          rowAction.FirstTextSelectedItems, rowAction.FirstText, rowAction.FirstFormats, 
                                                          rowAction.FirstModes, rowAction.FirstDecorations);

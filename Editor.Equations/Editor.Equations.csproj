@@ -74,6 +74,7 @@
     <Compile Include="Equations\Common\UndoRedo\RowContainerRemoveAction.cs" />
     <Compile Include="Equations\Common\UndoRedo\RowContainerTextAction.cs" />
     <Compile Include="Equations\Common\UndoRedo\RowRemoveAction.cs" />
+    <Compile Include="Equations\Common\UndoRedo\RowRemoveActionBase.cs" />
     <Compile Include="Equations\Common\UndoRedo\TextAction.cs" />
     <Compile Include="Equations\Common\UndoRedo\TextFormatAction.cs" />
     <Compile Include="Equations\Common\UndoRedo\TextRemoveAction.cs" />

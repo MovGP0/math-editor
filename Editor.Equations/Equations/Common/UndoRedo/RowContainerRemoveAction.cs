@@ -2,7 +2,7 @@
 
 namespace Editor
 {   
-    public class RowContainerRemoveAction : RowRemoveAction
+    public sealed class RowContainerRemoveAction : RowRemoveActionBase
     {
         public IEquationRow HeadEquationRow { get; set; }
         public IEquationRow TailEquationRow { get; set; }

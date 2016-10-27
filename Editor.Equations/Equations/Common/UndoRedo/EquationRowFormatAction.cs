@@ -1,6 +1,6 @@
 ﻿namespace Editor
 {
-    public class EquationRowFormatAction : EquationAction
+    public sealed class EquationRowFormatAction : EquationAction
     {
         public int SelectionStartIndex { get; set; }
         public int SelectedItems { get; set; }
