@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:Editor"
         xmlns:trace="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:editor="clr-namespace:Editor;assembly=Editor.Common"
+        xmlns:converter="clr-namespace:Editor.Converter;assembly=Editor.Common"
         x:Class="Editor.MainWindow"        
         Title="MainWindow" 
         Height="550" Width="928"  
@@ -18,8 +19,8 @@
         WindowState="Maximized"
     >
     <Window.Resources>
-        <editor:EditorModeToBoolConverter x:Key="editorModeToBoolconverter" />
-        <editor:EditorModeToVisibilityConverter x:Key="editorModeToVisibilityconverter" />
+        <converter:EditorModeToBoolConverter x:Key="editorModeToBoolconverter" />
+        <converter:EditorModeToVisibilityConverter x:Key="editorModeToVisibilityconverter" />
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="Close"	        Executed="CloseCommandHandler"/>

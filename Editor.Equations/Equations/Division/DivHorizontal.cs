@@ -7,10 +7,10 @@ namespace Editor
 {
     public class DivHorizontal : DivBase
     {
-        double ExtraWidth => FontSize * .3;
+        private double ExtraWidth => FontSize * .3;
 
         public DivHorizontal(IEquationContainer parent)
-            : base(parent, false)
+            : base(parent)
         {
         }
 
@@ -38,9 +38,10 @@ namespace Editor
         private void AdjustHorizontal()
         {
 
-            topEquation.Left = this.Left;
+            topEquation.Left = Left;
             bottomEquation.Left = topEquation.Right + ExtraWidth;
         }
+
         public override double Top
         {
             get { return base.Top; }
@@ -52,15 +53,8 @@ namespace Editor
             }
         }
 
-        public override double RefY
-        {
-            get
-            {
-                return Math.Max(topEquation.RefY, bottomEquation.RefY);
-            }
-        }
-
-
+        public override double RefY => Math.Max(topEquation.RefY, bottomEquation.RefY);
+        
         public override void CalculateWidth()
         {            
             Width = topEquation.Width + bottomEquation.Width + ExtraWidth;
@@ -79,23 +73,26 @@ namespace Editor
                 CalculateSize();
                 return true;
             }
-            if (key == Key.Right)
+
+            switch (key)
             {
-                if (ActiveChild == topEquation)
-                {
-                    ActiveChild = bottomEquation;
-                    return true;
-                }
+                case Key.Right:
+                    if (ActiveChild == topEquation)
+                    {
+                        ActiveChild = bottomEquation;
+                        return true;
+                    }
+                    return false;
+                case Key.Left:
+                    if (ActiveChild == bottomEquation)
+                    {
+                        ActiveChild = topEquation;
+                        return true;
+                    }
+                    return false;
+                default:
+                    return false;
             }
-            else if (key == Key.Left)
-            {
-                if (ActiveChild == bottomEquation)
-                {
-                    ActiveChild = topEquation;
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

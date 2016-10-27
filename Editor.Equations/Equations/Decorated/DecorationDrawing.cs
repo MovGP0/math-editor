@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace Editor
 {
-    class DecorationDrawing : EquationBase
+    internal sealed class DecorationDrawing : EquationBase
     {
         DecorationType decorationType;
         FormattedText firstSign; //only used by certain decorations

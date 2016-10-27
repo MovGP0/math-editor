@@ -72,8 +72,8 @@
     <Compile Include="Enums\DivisionType.cs" />
     <Compile Include="EditorControlGlobal.cs" />
     <Compile Include="Enums\EditorMode.cs" />
-    <Compile Include="EditorModeToBoolConverter.cs" />
-    <Compile Include="EditorModeToVisibilityConverter.cs" />
+    <Compile Include="Converter\EditorModeToBoolConverter.cs" />
+    <Compile Include="Converter\EditorModeToVisibilityConverter.cs" />
     <Compile Include="Enums\CommandType.cs" />
     <Compile Include="FontFactory.cs" />
     <Compile Include="Enums\FontType.cs" />

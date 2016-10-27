@@ -2,35 +2,36 @@
 {
     public sealed class StaticSign : StaticText
     {
-        bool integralSignItalic = false;
         public SignCompositeSymbol Symbol { get; set; }
+
+        private bool _integralSignItalic;
         public bool UseItalicIntegralSign 
         { 
-            get {return integralSignItalic;}
+            get { return _integralSignItalic; }
             set 
             { 
-                integralSignItalic = value;
-                DetermineMargin();
-                DetermineFontType();
+                _integralSignItalic = value;
+                DetermineMargin(Symbol);
+                FontType = DetermineFontType(Symbol, UseItalicIntegralSign);
                 ReformatSign();
             }
         }
 
-        public StaticSign(EquationContainer parent, SignCompositeSymbol symbol, bool useItalic)
+        public StaticSign(IEquationContainer parent, SignCompositeSymbol symbol, bool useItalic)
             : base(parent)
         {
-            integralSignItalic = useItalic;
+            _integralSignItalic = useItalic;
             Symbol = symbol;
-            DetermineSignString();
-            DetermineFontType();
-            DetermineFontSizeFactor();
-            DetermineMargin();
+            Text = DetermineSignString(symbol);
+            FontType = DetermineFontType(symbol, UseItalicIntegralSign);
+            FontSizeFactor = DetermineFontSizeFactor(symbol);
+            DetermineMargin(symbol);
             ReformatSign();
         }
 
-        void DetermineMargin()
+        private void DetermineMargin(SignCompositeSymbol symbol)
         {            
-            switch (Symbol)
+            switch (symbol)
             {
                 case SignCompositeSymbol.Integral:
                 case SignCompositeSymbol.DoubleIntegral:
@@ -56,10 +57,9 @@
             }            
         }
 
-        void DetermineFontType()
+        private static FontType DetermineFontType(SignCompositeSymbol symbol, bool useItalicIntegralSign)
         {
-            var fontType = FontType.StixSizeOneSym;
-            switch (Symbol)
+            switch (symbol)
             {
                 case SignCompositeSymbol.Integral:
                 case SignCompositeSymbol.DoubleIntegral:
@@ -69,27 +69,20 @@
                 case SignCompositeSymbol.VolumeIntegral:                
                 case SignCompositeSymbol.ClockContourIntegral:
                 case SignCompositeSymbol.AntiClockContourIntegral:
-                    if (UseItalicIntegralSign)
-                    {
-                        fontType = FontType.StixGeneral;
-                    }
-                    else
-                    {
-                        fontType = FontType.StixIntegralsUp;
-                    }
-                    break;
+                    return useItalicIntegralSign ? FontType.StixGeneral : FontType.StixIntegralsUp;
+
                 case SignCompositeSymbol.Intersection:
                 case SignCompositeSymbol.Union:
-                    fontType = FontType.StixGeneral;
-                    break;
-            }            
-            FontType = fontType;
+                    return FontType.StixGeneral;
+
+                default:
+                    return FontType.StixSizeOneSym;
+            }
         }
 
-        void DetermineFontSizeFactor()
+        private static double DetermineFontSizeFactor(SignCompositeSymbol symbol)
         {
-            double factor = 1;
-            switch (Symbol)
+            switch (symbol)
             {
                 case SignCompositeSymbol.Integral:
                 case SignCompositeSymbol.DoubleIntegral:
@@ -99,62 +92,61 @@
                 case SignCompositeSymbol.VolumeIntegral:
                 case SignCompositeSymbol.ClockContourIntegral:
                 case SignCompositeSymbol.AntiClockContourIntegral:
-                    factor = 1.5;
-                    break;
+                    return 1.5;
                 case SignCompositeSymbol.Intersection:
                 case SignCompositeSymbol.Union:
-                    factor = 1.2;
-                    break;
+                    return 1.2;
+                default:
+                    return 1d;
             }
-            FontSizeFactor = factor;
         }
 
-        void DetermineSignString()
+        private static string DetermineSignString(SignCompositeSymbol symbol)
         {
-            var signStr = "";
-            switch (Symbol)
+            switch (symbol)
             {
                 case SignCompositeSymbol.Sum:
-                    signStr = "\u2211";
-                    break;
+                    return "\u2211";
+                    
                 case SignCompositeSymbol.Product:
-                    signStr = "\u220F";
-                    break;
+                    return "\u220F";
+                    
                 case SignCompositeSymbol.CoProduct:
-                    signStr = "\u2210";
-                    break;
+                    return "\u2210";
+                    
                 case SignCompositeSymbol.Intersection:
-                    signStr = "\u22C2";
-                    break;
+                    return "\u22C2";
+                    
                 case SignCompositeSymbol.Union:
-                    signStr = "\u22C3";
-                    break;
+                    return "\u22C3";
+                    
                 case SignCompositeSymbol.Integral:
-                    signStr = "\u222B";
-                    break;
+                    return "\u222B";
+                    
                 case SignCompositeSymbol.DoubleIntegral:
-                    signStr = "\u222C";
-                    break;
+                    return "\u222C";
+                    
                 case SignCompositeSymbol.TripleIntegral:
-                    signStr = "\u222D";
-                    break;
+                    return "\u222D";
+                    
                 case SignCompositeSymbol.ContourIntegral:
-                    signStr = "\u222E";
-                    break;
+                    return "\u222E";
+                    
                 case SignCompositeSymbol.SurfaceIntegral:
-                    signStr = "\u222F";
-                    break;
+                    return "\u222F";
+                    
                 case SignCompositeSymbol.VolumeIntegral:
-                    signStr = "\u2230";
-                    break;
+                    return "\u2230";
+                    
                 case SignCompositeSymbol.ClockContourIntegral:
-                    signStr = "\u2232";
-                    break;
+                    return "\u2232";
+                    
                 case SignCompositeSymbol.AntiClockContourIntegral:
-                    signStr = "\u2233";
-                    break;
+                    return "\u2233";
+                    
+                default: 
+                    return string.Empty;
             }
-            Text = signStr;
         }
     }
 }

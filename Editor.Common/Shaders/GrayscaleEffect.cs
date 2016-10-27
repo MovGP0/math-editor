@@ -14,7 +14,7 @@ namespace Editor
     /// &lt;/Image.Effect&gt;
     /// </code>
     /// </example>
-    public class GrayscaleEffect : ShaderEffect
+    public sealed class GrayscaleEffect : ShaderEffect
     {
         private static readonly PixelShader Shader = new PixelShader
         {

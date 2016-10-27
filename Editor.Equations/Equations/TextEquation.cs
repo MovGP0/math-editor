@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace Editor
 {
-    public class TextEquation : EquationBase, ISupportsUndo
+    public sealed class TextEquation : EquationBase, ISupportsUndo
     {
         private static readonly HashSet<char> Symbols = new HashSet<char>() 
         { 

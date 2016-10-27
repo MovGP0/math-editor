@@ -93,9 +93,11 @@
     <Compile Include="Equations\Decorated\Decorated.cs" />
     <Compile Include="Equations\Decorated\DecorationDrawing.cs" />
     <Compile Include="Equations\Division\DivBase.cs" />
+    <Compile Include="Equations\Division\DivDoubleBar.cs" />
     <Compile Include="Equations\Division\DivHorizontal.cs" />
+    <Compile Include="Equations\Division\DivHorizSmall.cs" />
     <Compile Include="Equations\Division\DivisionFactory.cs" />
-    <Compile Include="Equations\Division\DivisionsMisc.cs" />
+    <Compile Include="Equations\Division\DivRegularSmall.cs" />
     <Compile Include="Equations\Division\DivMath.cs" />
     <Compile Include="Equations\Division\DivMathInverted.cs" />
     <Compile Include="Equations\Division\DivMathSign.cs" />
@@ -104,9 +106,12 @@
     <Compile Include="Equations\Division\DivMathWithTop.cs" />
     <Compile Include="Equations\Division\DivRegular.cs" />
     <Compile Include="Equations\Division\DivSlanted.cs" />
+    <Compile Include="Equations\Division\DivSlantedSmall.cs" />
     <Compile Include="Equations\Division\DivTriangle.cs" />
     <Compile Include="Equations\Division\DivTriangleSign.cs" />
+    <Compile Include="Equations\Division\DivTripleBar.cs" />
     <Compile Include="Equations\EquationBase.cs" />
+    <Compile Include="Equations\EquationBaseCommon.cs" />
     <Compile Include="Equations\EquationContainer.cs" />
     <Compile Include="Equations\EquationRoot.cs" />
     <Compile Include="Equations\EquationRow.cs" />

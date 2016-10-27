@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Editor
 {
-    public class StaticText : EquationBase
+    public abstract class StaticText : EquationBase
     {
         protected string Text { get; set; }        
         protected FontType FontType { get; set; }
@@ -15,7 +15,7 @@ namespace Editor
 
         FormattedText formattedText;
 
-        public StaticText(IEquationContainer parent)
+        protected StaticText(IEquationContainer parent)
             :base(parent)
         {
             IsStatic = true;
@@ -47,14 +47,8 @@ namespace Editor
             Height = formattedText.Extent;
         }
 
-        public double OverhangTrailing
-        {
-            get { return formattedText.OverhangTrailing; }
-        }
+        public double OverhangTrailing => formattedText.OverhangTrailing;
 
-        public double OverhangLeading
-        {
-            get { return formattedText.OverhangLeading; }
-        }
+        public double OverhangLeading => formattedText.OverhangLeading;
     }
 }

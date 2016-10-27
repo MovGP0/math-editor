@@ -141,8 +141,8 @@
     </Compile>
     <Compile Include="CommandDetails.cs" />
     <Compile Include="EditorControlGlobal.cs" />
-    <Compile Include="EditorModeToBoolConverter.cs" />
-    <Compile Include="EditorModeToVisibilityConverter.cs" />
+    <Compile Include="Converter\EditorModeToBoolConverter.cs" />
+    <Compile Include="Converter\EditorModeToVisibilityConverter.cs" />
     <Compile Include="Enums\ArrowType.cs" />
     <Compile Include="Enums\BoxType.cs" />
     <Compile Include="Enums\BracketSignType.cs" />

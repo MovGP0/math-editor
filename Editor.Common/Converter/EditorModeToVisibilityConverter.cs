@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Windows.Data;
 using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
 
-namespace Editor
+namespace Editor.Converter
 {
-    public sealed class EditorModeToBoolConverter : IValueConverter
+    public sealed class EditorModeToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var mode = (EditorMode)value;
-            return mode != EditorMode.Math;
+            return mode == EditorMode.Math 
+                ? Visibility.Collapsed 
+                : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
